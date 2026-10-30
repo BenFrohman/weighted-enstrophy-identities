@@ -1,0 +1,2 @@
+import WeightedEnstrophy.Abstract
+import WeightedEnstrophy.TrigModel

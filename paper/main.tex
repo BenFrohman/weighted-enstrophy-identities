@@ -1,0 +1,149 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,geometry,hyperref}
+\geometry{margin=1in}
+\newtheorem{theorem}{Theorem}\newtheorem{lemma}[theorem]{Lemma}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\title{Enstrophy and Weighted-Enstrophy Balance Identities on $\mathbb{T}^3$:\\ a Lean 4 Formalization}
+\author{Benjamin Stanley Frohman\\ ORCID 0009-0006-7068-3718}
+\date{October 2026}
+\begin{document}\maketitle
+\begin{abstract}
+We formalize in Lean~4 with Mathlib two exact balance identities from the a-posteriori Lyapunov
+functional approach to the 3-D incompressible Navier--Stokes vorticity equation on the torus:
+the enstrophy identity $\frac{dE}{dt}=P-\nu\int|\nabla\omega|^2$ and the weighted identity for
+$Q=\int|\omega|^4\phi$. Both are proved for every periodic differential algebra whose integral
+annihilates spatial derivatives and commutes with the time derivative, and unconditionally for
+trigonometric polynomials on $\mathbb{T}^3$. The development has $0$ \texttt{sorry} and uses only
+the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}.
+\end{abstract}
+
+\section{Introduction}
+\emph{Commentary (adapted from the author's paper).} Classical energy methods for the
+Navier--Stokes equations control the kinetic energy but not the enstrophy in three dimensions;
+the vortex-stretching term can produce growth that is difficult to absorb. The approach studies
+the exact classical equations together with an auxiliary scalar field $\phi$ transported by
+$|\omega|^2$, and the two integrals $E=\tfrac12\int|\omega|^2$ and $Q=\int|\omega|^4\phi$. The first
+step is to compute $dE/dt$ and $dQ/dt$ exactly. Those two computations are what this paper
+formalizes. They are identities: no inequality and no bound on the solution is involved.
+
+\section{Setting}
+Let $u,\omega:\mathbb{T}^3\to\mathbb{R}^3$ and $\phi:\mathbb{T}^3\to\mathbb{R}$ depend on $t$, with
+\begin{align}
+&\partial_k u_k=0, \label{div}\\
+&\partial_t\omega_i=-u_k\partial_k\omega_i+\omega_k\partial_k u_i+\nu\,\partial_k\partial_k\omega_i,\label{vort}\\
+&\partial_t\phi=-u_k\partial_k\phi+|\omega|^2,\label{wt}
+\end{align}
+summing over repeated indices. The relation $\omega=\nabla\times u$ is not needed for either identity.
+
+\begin{definition}[Periodic setting, \texttt{PeriodicSetting}]
+A commutative $K$-algebra $A$ with $K$-derivations $\partial_1,\partial_2,\partial_3,\partial_t$, a
+$K$-module $B$, a $K$-linear map $I:A\to B$ and a $K$-linear $D_t:B\to B$ such that
+$I(\partial_k f)=0$ for all $k,f$ and $I(\partial_t f)=D_t(If)$.
+\end{definition}
+For smooth periodic fields, $I=\int_{\mathbb{T}^3}$, $D_t=\frac{d}{dt}$; the two axioms are the
+divergence theorem on the torus and differentiation under the integral.
+
+\begin{definition}[Trigonometric model, \texttt{Trig.setting}]
+$A=R[\mathbb{Z}^3]$ (finite sums $\sum_n f_n e^{2\pi i n\cdot x}$, $f_n\in R$), where $R$ is a
+commutative $\mathbb{C}$-algebra with a derivation $D$. Set
+$\partial_k(\sum f_n e_n)=\sum 2\pi i n_k f_n e_n$, $\partial_t(\sum f_n e_n)=\sum D(f_n)e_n$,
+$I(f)=f_0$, $D_t=D$.
+\end{definition}
+
+\begin{lemma}[\texttt{dx}, \texttt{dt}]
+$\partial_k$ and $\partial_t$ are derivations of $R[\mathbb{Z}^3]$.
+\end{lemma}
+\begin{proof}
+Both are linear, so the Leibniz rule reduces to monomials. For $\partial_k$:
+$\partial_k(a e_n\cdot b e_m)=2\pi i(n_k+m_k)ab\,e_{n+m}
+=a e_n\cdot 2\pi i m_k b e_m+b e_m\cdot 2\pi i n_k a e_n$. For $\partial_t$:
+$D(ab)e_{n+m}=(aD b+bDa)e_{n+m}$.
+\end{proof}
+\begin{lemma}[Torus divergence lemma, \texttt{integral\_dx}, \texttt{integral\_dt}]
+$I(\partial_k f)=2\pi i\cdot 0\cdot f_0=0$ and $I(\partial_t f)=D(f_0)=D(If)$.
+\end{lemma}
+Hence the trigonometric model is a periodic setting, and every theorem below holds for it.
+
+\section{Pointwise lemmas}
+\begin{lemma}[\texttt{adv\_eq}]
+$u_k\partial_k g=\partial_k(u_k g)-(\partial_k u_k)g$. Hence (\texttt{int\_adv\_eq\_zero}) if
+(\ref{div}) holds, $I(u_k\partial_k g)=0$.
+\end{lemma}
+\begin{proof}Leibniz: $\partial_k(u_kg)=u_k\partial_kg+g\partial_ku_k$. Apply $I$ and use
+$I\circ\partial_k=0$ and (\ref{div}).\end{proof}
+\begin{lemma}[\texttt{wLapW\_eq}]
+$\omega_i\partial_k\partial_k\omega_i=\partial_k(\omega_i\partial_k\omega_i)-\partial_k\omega_i\,\partial_k\omega_i$.
+\end{lemma}
+\begin{proof}Leibniz on $\partial_k(\omega_i\cdot\partial_k\omega_i)$.\end{proof}
+\begin{lemma}[\texttt{two\_w\_adv}]
+$2\,\omega_i\,u_k\partial_k\omega_i=u_k\partial_k|\omega|^2$.
+\end{lemma}
+\begin{proof}$\partial_k(\omega_i\omega_i)=2\omega_i\partial_k\omega_i$.\end{proof}
+\begin{lemma}[\texttt{stretch\_eq}]
+$\omega_i\omega_j\partial_ju_i=\omega\cdot(\omega\cdot\nabla)u$.
+\end{lemma}
+
+\section{Identity (1)}
+\begin{lemma}[\texttt{dt\_half\_sq}, \texttt{dt\_vsq\_div}]
+Under (\ref{div}), (\ref{vort}):
+\[\partial_t|\omega|^2=2\,\omega_i\omega_j\partial_ju_i-2\nu\,|\nabla\omega|^2
++\partial_k\big(2\nu\,\omega_i\partial_k\omega_i-u_k|\omega|^2\big).\]
+\end{lemma}
+\begin{proof}
+$\partial_t|\omega|^2=2\omega_i\partial_t\omega_i$. Substitute (\ref{vort}):
+$2\omega_i\partial_t\omega_i=-2\omega_iu_k\partial_k\omega_i+2\omega_i\omega_k\partial_ku_i+2\nu\,\omega_i\partial_k\partial_k\omega_i$.
+By \texttt{two\_w\_adv} and \texttt{adv\_eq} with (\ref{div}), the first term is
+$-\partial_k(u_k|\omega|^2)$. The second is $2\omega_i\omega_j\partial_ju_i$. By \texttt{wLapW\_eq},
+the third is $2\nu\,\partial_k(\omega_i\partial_k\omega_i)-2\nu|\nabla\omega|^2$.
+\end{proof}
+\emph{Commentary.} The transport term vanishes by periodicity and $\nabla\cdot u=0$; the viscous
+term integrates by parts to $-\nu\int|\nabla\omega|^2$; the stretching term remains.
+\begin{theorem}[Identity (1), \texttt{enstrophy\_identity}, \texttt{enstrophy\_identity\_T3}]
+With $E=\frac12\int|\omega|^2$ and $P=\int\omega_i\omega_j\partial_ju_i$,
+\[\frac{dE}{dt}=P-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
+(Formalized as $D_t\,I(|\omega|^2)=2\,I(\omega_i\omega_j\partial_ju_i)-2\nu\,I(|\nabla\omega|^2)$.)
+\end{theorem}
+\begin{proof}$D_tI(|\omega|^2)=I(\partial_t|\omega|^2)$; apply $I$ to the lemma; the divergence
+term has $I=0$.\end{proof}
+
+\section{Identity (2)}
+Write $s=|\omega|^2$, so $|\omega|^4\phi=s^2\phi$.
+\begin{lemma}[\texttt{dt\_weighted}]
+Under (\ref{vort}), (\ref{wt}):
+\[\partial_t(s^2\phi)=4s\phi\,\omega_i\omega_j\partial_ju_i+4\nu\,s\phi\,\omega\cdot\Delta\omega+s^3-u_k\partial_k(s^2\phi).\]
+\end{lemma}
+\begin{proof}
+$\partial_t(s^2\phi)=2s\phi\,\partial_ts+s^2\partial_t\phi$. From the proof of (1),
+$\partial_ts=2\omega_i\omega_j\partial_ju_i+2\nu\,\omega\cdot\Delta\omega-u_k\partial_ks$, and by (\ref{wt})
+$\partial_t\phi=-u_k\partial_k\phi+s$. So
+\[\partial_t(s^2\phi)=4s\phi\,\omega_i\omega_j\partial_ju_i+4\nu s\phi\,\omega\cdot\Delta\omega
+-\big(2s\phi\,u_k\partial_ks+s^2u_k\partial_k\phi\big)+s^3,\]
+and $2s\phi\,u_k\partial_ks+s^2u_k\partial_k\phi=u_k\partial_k(s^2\phi)$ by Leibniz.
+\end{proof}
+\emph{Commentary (adapted from the author's paper).} The transport contributions cancel exactly.
+Using $\omega\cdot(u\cdot\nabla)\omega=\frac12(u\cdot\nabla)|\omega|^2$ they combine into the pure
+divergence $-\int u\cdot\nabla(\phi|\omega|^4)$, which vanishes on $\mathbb{T}^3$.
+\begin{lemma}[\texttt{dt\_weighted\_div}]
+Under (\ref{div}) as well,
+$\partial_t(s^2\phi)=4s\phi\,\omega_i\omega_j\partial_ju_i+4\nu s\phi\,\omega\cdot\Delta\omega+s^3-\partial_k(u_ks^2\phi)$.
+\end{lemma}
+\begin{proof}\texttt{adv\_eq} with $g=s^2\phi$ and (\ref{div}).\end{proof}
+\begin{theorem}[Identity (2), \texttt{weighted\_identity}, \texttt{weighted\_identity\_T3}]
+With $Q=\int|\omega|^4\phi$,
+\[\frac{dQ}{dt}=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
+\end{theorem}
+\begin{proof}$D_tI(s^2\phi)=I(\partial_t(s^2\phi))$; apply $I$, the divergence has $I=0$, and use
+\texttt{stretch\_eq}.\end{proof}
+
+\section{Scope}
+Both identities are proved for every periodic setting and, with the two integral properties
+proved, for trigonometric polynomials on $\mathbb{T}^3$ with coefficients in any commutative
+$\mathbb{C}$-algebra with a derivation. Instantiating the abstract theorems for general smooth
+periodic fields requires the divergence theorem on $\mathbb{T}^3$ and differentiation under the
+integral for smooth functions, which are not formalized here. The paper states identities only
+and makes no regularity claim.
+
+\section*{Verification}
+\texttt{lake build}: success, 0 \texttt{sorry}. \texttt{lake env lean AxiomAudit.lean}: only
+\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. Toolchain
+\texttt{leanprover/lean4:v4.30.0-rc1}, Mathlib \texttt{v4.30.0-rc1}.
+\end{document}
