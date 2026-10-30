@@ -1,2 +1,7 @@
 import WeightedEnstrophy.Abstract
 import WeightedEnstrophy.TrigModel
+import WeightedEnstrophy.TorusCalculus
+import WeightedEnstrophy.Smooth
+import WeightedEnstrophy.Lyapunov
+import WeightedEnstrophy.Fourier.Basic
+import WeightedEnstrophy.Fourier.Strain

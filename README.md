@@ -1,7 +1,7 @@
 # weighted-enstrophy-identities
 
 Lean 4 + Mathlib (`leanprover/lean4:v4.30.0-rc1`, Mathlib `v4.30.0-rc1`) formalization of two
-exact balance identities for the 3-D incompressible Navier–Stokes vorticity equation on the
+exact balance identities, and related lemmas, for the 3-D incompressible Navier–Stokes vorticity equation on the
 torus `T³`, from *An a-posteriori Lyapunov functional approach* by Benjamin Stanley Frohman.
 Build: `lake build`, 0 `sorry`; `lake env lean AxiomAudit.lean` reports only `propext`,
 `Classical.choice`, `Quot.sound`.
@@ -33,26 +33,54 @@ Supporting results: the torus divergence lemma `int_adv_eq_zero` (`∫(u·∇)g 
 ## On what class these are proved
 
 1. **Any periodic differential algebra** (`WeightedEnstrophy/Abstract.lean`): a commutative
-   `K`-algebra `A` of fields with three spatial derivations `∂ₖ`, a time derivation `∂ₜ`,
-   and a `K`-linear integral `I` with `I(∂ₖf) = 0` and `I(∂ₜf) = Dₜ(I f)`. Both identities are
-   proved from these two properties of `I` alone.
-2. **Trigonometric polynomials on `T³`** (`WeightedEnstrophy/TrigModel.lean`): fields
-   `Σₙ fₙ e^{2πi n·x}` (finite sums, `n ∈ ℤ³`) with coefficients in any commutative
-   `ℂ`-algebra `R` with a derivation `D` acting as `d/dt` on coefficients. Here `∂ₖ` is
-   multiplication of mode `n` by `2πi nₖ`, `∫_{T³}` is the zero-mode coefficient, and the two
-   properties of `I` are proved (`integral_dx`, `integral_dt`), so identities (1) and (2)
-   hold unconditionally on this class.
+   `K`-algebra `A` with three spatial derivations `∂ₖ`, a time derivation `∂ₜ`, a `K`-linear
+   integral `I : A → B` and a map `Dₜ : B → B` with `I(∂ₖf) = 0` and `I(∂ₜf) = Dₜ(I f)`.
+   Both identities follow from these two properties alone.
+2. **Trigonometric polynomials on `T³`** (`WeightedEnstrophy/TrigModel.lean`): finite sums
+   `Σₙ fₙ e^{2πi n·x}`, coefficients in any commutative `ℂ`-algebra `R` with a derivation `D`
+   (`enstrophy_identity_T3`, `weighted_identity_T3`).
+3. **Smooth periodic fields** (`WeightedEnstrophy/Smooth.lean`): `A` is the algebra of real
+   `C^∞` functions `f(t,a,b,c)` on `ℝ × ℝ³` that are 1-periodic in each of `a, b, c`, i.e.
+   smooth time-dependent fields on `T³ = (ℝ/ℤ)³`. Here `∂ₖ, ∂ₜ` are Fréchet partial derivatives,
+   `I f (t) = ∫₀¹∫₀¹∫₀¹ f(t,a,b,c) dc db da` and `Dₜ = d/dt`. Both properties of `I` are proved:
+   - `Smooth.int_d`: `∫_{T³} ∂ₖ f = 0` (from `Torus.torusIntegral_deriv_a/b/c`, which hold for
+     `C¹` integrands periodic in the differentiated variable);
+   - `Smooth.hasDerivAt_I`, `Smooth.int_dt`: `d/dt ∫_{T³} f = ∫_{T³} ∂ₜ f` (from
+     `Torus.hasDerivAt_torusIntegral`, which holds when `f` and `∂ₜf` are jointly continuous).
 
-General smooth periodic fields are not instantiated: that requires differentiation under
-the integral sign and the divergence theorem for smooth functions on `T³`, which are not
-formalized here.
+   So `Smooth.enstrophy_identity_smooth` and `Smooth.weighted_identity_smooth` hold for every
+   smooth periodic `u, ω, φ` satisfying `div u = 0`, the vorticity equation and the weight
+   equation, which enter as hypotheses.
 
-The repository contains only these identities. It makes no regularity statement about
-Navier–Stokes solutions.
+## Further results (`WeightedEnstrophy/Lyapunov.lean`, `WeightedEnstrophy/Fourier/`)
+
+Proved:
+- `Fourier.L2_strain_eq`: for `L²(T³)` fields whose Fourier coefficients are those of a
+  divergence-free `u`, its vorticity and its strain `S = ½(∇u+∇uᵀ)`,
+  `Σᵢⱼ‖Sᵢⱼ‖₂² = ½ Σᵢ‖ωᵢ‖₂²`. `Fourier.L2_strain_le` gives `‖S‖₂ ≤ ‖ω‖₂`.
+- `Lyapunov.dS_identity_smooth`: for `S = ½∫|ω|² − (κ/2)∫|ω|⁴φ` and smooth periodic solutions,
+  `S' = ∫ωᵢωⱼ∂ⱼuᵢ − ν∫|∇ω|² − (κ/2)(4∫|ω|²φ ωᵢωⱼ∂ⱼuᵢ + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶)`. This is an
+  exact identity. It contains no sup-norm `M(t)`.
+- `Lyapunov.le_integral_sq_of_deriv`: if `g(0)=0` and `g' = h ≤ M²` on `[0,t]` (`h, M`
+  continuous), then `g(t) ≤ ∫₀ᵗ M²`. Applied to `g(s) = φ(s,X(s))` along a particle path, this is
+  the bound `φ ≤ ∫₀ᵗ M²`. The chain rule along the path is not formalized.
+- `Lyapunov.ode_bounded`: when `κ > 0`, every solution of `y' = y²(C − κy)` on `[0,T]` satisfies
+  `min(y₀, C/κ, 0) ≤ y(t) ≤ max(y₀, C/κ, 0)`. This needs no assumption on `T`.
+
+Stated as `Prop` definitions. They are not proved, and no theorem above uses them:
+- `CalderonZygmundLp p`: `∫|∂ⱼuᵢ|^p ≤ C∫|ω|^p` on smooth periodic divergence-free fields. This
+  is the classical theorem for `1 < p < ∞`, and it is not formalized here. The `L∞` version is
+  false and is not stated.
+- `WeightedToSupReduction κ ν`: a bound on `S` over `[0,T)` would force a bound on `sup|ω|²`.
+- `PhiSupControl ν`: a uniform bound on `|φ|` over `[0,T)`.
+
+The repository contains no regularity theorem for Navier–Stokes. The absorption step that uses
+an `L∞` Calderón–Zygmund bound, the reduction from `S` to `M`, and the bootstrap are not proved.
 
 ## Layout
 
-- `WeightedEnstrophy/Abstract.lean`, `WeightedEnstrophy/TrigModel.lean`
+- `WeightedEnstrophy/Abstract.lean`, `TrigModel.lean`, `TorusCalculus.lean`, `Smooth.lean`,
+  `Lyapunov.lean`, `Fourier/Basic.lean`, `Fourier/Strain.lean`
 - `AxiomAudit.lean`: kernel axiom audit
 - `paper/main.tex`: step-by-step derivations
 - `ip_pipeline/seal_and_verify.py`, `audit/`, `PROVENANCE_MERKLE_ROOT.json`: Titan-Audit,

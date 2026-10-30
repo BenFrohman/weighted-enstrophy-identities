@@ -11,8 +11,9 @@ We formalize in Lean~4 with Mathlib two exact balance identities from the a-post
 functional approach to the 3-D incompressible Navier--Stokes vorticity equation on the torus:
 the enstrophy identity $\frac{dE}{dt}=P-\nu\int|\nabla\omega|^2$ and the weighted identity for
 $Q=\int|\omega|^4\phi$. Both are proved for every periodic differential algebra whose integral
-annihilates spatial derivatives and commutes with the time derivative, and unconditionally for
-trigonometric polynomials on $\mathbb{T}^3$. The development has $0$ \texttt{sorry} and uses only
+annihilates spatial derivatives and commutes with the time derivative, for trigonometric polynomials on $\mathbb{T}^3$, and for smooth ($C^\infty$) fields on
+$\mathbb{R}\times\mathbb{T}^3$. We also formalize the $L^2$ strain identity, the exact evolution of
+$S=E-\frac{\kappa}{2}Q$, a weight-along-paths bound, and boundedness of the comparison ODE. The development has $0$ \texttt{sorry} and uses only
 the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}.
 \end{abstract}
 
@@ -36,11 +37,10 @@ summing over repeated indices. The relation $\omega=\nabla\times u$ is not neede
 
 \begin{definition}[Periodic setting, \texttt{PeriodicSetting}]
 A commutative $K$-algebra $A$ with $K$-derivations $\partial_1,\partial_2,\partial_3,\partial_t$, a
-$K$-module $B$, a $K$-linear map $I:A\to B$ and a $K$-linear $D_t:B\to B$ such that
+$K$-module $B$, a $K$-linear map $I:A\to B$ and a map $D_t:B\to B$ such that
 $I(\partial_k f)=0$ for all $k,f$ and $I(\partial_t f)=D_t(If)$.
 \end{definition}
-For smooth periodic fields, $I=\int_{\mathbb{T}^3}$, $D_t=\frac{d}{dt}$; the two axioms are the
-divergence theorem on the torus and differentiation under the integral.
+Section~\ref{smooth} proves both axioms for smooth periodic fields.
 
 \begin{definition}[Trigonometric model, \texttt{Trig.setting}]
 $A=R[\mathbb{Z}^3]$ (finite sums $\sum_n f_n e^{2\pi i n\cdot x}$, $f_n\in R$), where $R$ is a
@@ -134,13 +134,63 @@ With $Q=\int|\omega|^4\phi$,
 \begin{proof}$D_tI(s^2\phi)=I(\partial_t(s^2\phi))$; apply $I$, the divergence has $I=0$, and use
 \texttt{stretch\_eq}.\end{proof}
 
+\section{Smooth periodic fields}\label{smooth}
+\begin{definition}[\texttt{Smooth.A}, \texttt{Smooth.setting}]
+$A$ is the algebra of $f\in C^\infty(\mathbb{R}\times\mathbb{R}^3,\mathbb{R})$, $f=f(t,a,b,c)$, with
+$f(p+e_k)=f(p)$ for the unit spatial vectors $e_1,e_2,e_3$. $\partial_k f(p)=Df(p)e_k$,
+$\partial_tf(p)=Df(p)e_t$, $I(f)(t)=\int_0^1\!\int_0^1\!\int_0^1 f(t,a,b,c)\,dc\,db\,da$, $D_t=\frac{d}{dt}$.
+\end{definition}
+\begin{lemma}[\texttt{Torus.hasDerivAt\_integral01}]
+If $F,\partial_sF$ are jointly continuous on $\mathbb{R}\times\mathbb{R}$, then
+$\frac{d}{ds}\int_0^1F(s,x)\,dx=\int_0^1\partial_sF(s,x)\,dx$.
+\end{lemma}
+\begin{proof}Dominated differentiation: $\partial_sF$ is bounded on the compact set
+$\bar B(s_0,1)\times[0,1]$.\end{proof}
+\begin{lemma}[\texttt{Torus.hasDerivAt\_torusIntegral}; (b)]
+If $f,\partial_tf$ are jointly continuous, then $\frac{d}{dt}\int_{\mathbb{T}^3}f=\int_{\mathbb{T}^3}\partial_tf$.
+\end{lemma}
+\begin{proof}Apply the previous lemma three times; each inner integral is jointly continuous.\end{proof}
+\begin{lemma}[\texttt{Torus.torusIntegral\_deriv\_a/b/c}; (a)]
+If $f$ is $C^1$ and $1$-periodic in the differentiated variable, then $\int_{\mathbb{T}^3}\partial_kf=0$.
+\end{lemma}
+\begin{proof}Differentiate the inner integrals in that variable using the first lemma, then apply
+$\int_0^1g'=g(1)-g(0)=0$.\end{proof}
+\begin{theorem}[\texttt{Smooth.int\_d}, \texttt{Smooth.int\_dt}, \texttt{Smooth.enstrophy\_identity\_smooth}, \texttt{Smooth.weighted\_identity\_smooth}]
+The smooth model is a periodic setting. Hence identities (1) and (2) hold for all
+$u,\omega,\phi\in A$ satisfying (\ref{div})--(\ref{wt}).
+\end{theorem}
+
+\section{Strain, the functional $S$, the weight, and the comparison ODE}
+\begin{theorem}[\texttt{Fourier.L2\_strain\_eq}, \texttt{Fourier.L2\_strain\_le}]
+Take $u,\omega,S\in L^2(\mathbb{T}^3)$ whose Fourier coefficients are those of a divergence-free
+velocity, its curl, and $S=\frac12(\nabla u+\nabla u^T)$. Then
+$\sum_{ij}\|S_{ij}\|_2^2=\frac12\sum_i\|\omega_i\|_2^2$, so $\|S\|_2\le\|\omega\|_2$.
+\end{theorem}
+\begin{proof}Mode by mode, $\sum|\hat S_{ij}|^2=\frac12|\hat\omega|^2$ when $k\cdot\hat u=0$. Then apply Parseval.\end{proof}
+\begin{theorem}[\texttt{Lyapunov.dS\_identity\_smooth}]
+Let $S=\frac12\int|\omega|^2-\frac{\kappa}{2}\int|\omega|^4\phi$. For smooth periodic solutions of (\ref{div})--(\ref{wt}),
+\[S'=\int\omega_i\omega_j\partial_ju_i-\nu\int|\nabla\omega|^2-\tfrac{\kappa}{2}\Big(4\int|\omega|^2\phi\,\omega_i\omega_j\partial_ju_i+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6\Big).\]
+\end{theorem}
+\begin{theorem}[\texttt{Lyapunov.le\_integral\_sq\_of\_deriv}]
+Let $h,M$ be continuous, $g(0)=0$, and $g'=h\le M^2$ on $[0,t]$. Then $g(t)\le\int_0^tM^2$.
+\end{theorem}
+Take $g(s)=\phi(s,X(s))$ along a particle path. Then $g'=|\omega|^2(s,X(s))$, so $\phi\le\int_0^tM^2$
+along paths. The chain rule step is not formalized.
+\begin{theorem}[\texttt{Lyapunov.ode\_bounded}]
+Let $\kappa>0$, and let $y'=y^2(C-\kappa y)$ on $[0,T]$. Then $\min(y_0,C/\kappa,0)\le y(t)\le\max(y_0,C/\kappa,0)$.
+\end{theorem}
+\begin{proof}Comparison with the barrier $B+\varepsilon$, where $B=\max(y_0,C/\kappa,0)$: at $y=B+\varepsilon$ we have $y'<0$.
+Then let $\varepsilon\to0$. The lower bound follows in the same way.\end{proof}
+\paragraph{Stated, not proved.} \texttt{CalderonZygmundLp}~$p$ is the bound
+$\int|\partial_ju_i|^p\le C\int|\omega|^p$; it is classical for $1<p<\infty$ and is not formalized here.
+\texttt{WeightedToSupReduction} says a bound on $S$ implies a bound on $\sup|\omega|^2$.
+\texttt{PhiSupControl} is a uniform bound on $|\phi|$. These are \texttt{Prop} definitions only, and
+no theorem uses them. The $L^\infty$ Calder\'on--Zygmund bound is false and is not stated.
+
 \section{Scope}
-Both identities are proved for every periodic setting and, with the two integral properties
-proved, for trigonometric polynomials on $\mathbb{T}^3$ with coefficients in any commutative
-$\mathbb{C}$-algebra with a derivation. Instantiating the abstract theorems for general smooth
-periodic fields requires the divergence theorem on $\mathbb{T}^3$ and differentiation under the
-integral for smooth functions, which are not formalized here. The paper states identities only
-and makes no regularity claim.
+Identities (1) and (2) and the results of the last section are proved as stated. The absorption
+step that uses an $L^\infty$ Calder\'on--Zygmund bound, the reduction from $S$ to $\sup|\omega|$, and the
+bootstrap are not proved. The paper makes no regularity claim.
 
 \section*{Verification}
 \texttt{lake build}: success, 0 \texttt{sorry}. \texttt{lake env lean AxiomAudit.lean}: only

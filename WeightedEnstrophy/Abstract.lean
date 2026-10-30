@@ -25,7 +25,7 @@ structure PeriodicSetting (K A B : Type*) [CommRing K] [CommRing A] [Algebra K A
   d : Fin 3 → Derivation K A A
   dt : Derivation K A A
   I : A →ₗ[K] B
-  Dt : B →ₗ[K] B
+  Dt : B → B
   int_d : ∀ k f, I (d k f) = 0
   int_dt : ∀ f, I (dt f) = Dt (I f)
 

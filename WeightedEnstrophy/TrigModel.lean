@@ -105,7 +105,7 @@ theorem integral_dx (k : Fin 3) (f : Field R) : integral (dx (R := R) k f) = 0 :
 
 /-- `∫ ∂t f = D (∫ f)`. -/
 theorem integral_dt (D : Derivation ℂ R R) (f : Field R) :
-    integral (dt D f) = D.toLinearMap (integral f) := by
+    integral (dt D f) = D (integral f) := by
   show (mapCoeff D f) 0 = D (f 0)
   simp
 
@@ -114,7 +114,7 @@ noncomputable def setting (D : Derivation ℂ R R) : PeriodicSetting ℂ (Field 
   d := dx
   dt := dt D
   I := integral
-  Dt := D.toLinearMap
+  Dt := D
   int_d := integral_dx
   int_dt := integral_dt D
 
