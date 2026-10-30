@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "architecture": "SealGuard 4-Plane Cryptographic Containment & Provenance (DOI: 10.5281/zenodo.23631670)",
+  "policy_gate": {
+    "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
+    "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+    "action_type": "seal_and_attest_public_release",
+    "action_id": "0b0ff58e7f14c59f8d2c1c50567721a0b18d9c61dded5aedf06e70abfc04d874",
+    "permitted": true,
+    "reason": "PERMITTED_DETERMINISTIC_POLICY",
+    "receipt_sha256": "3a99114d3d693d92183814108f9719424e4e7dca343df7082244b652b21bf9dd"
+  },
+  "author": {
+    "name": "Benjamin Stanley Frohman",
+    "orcid": "0009-0006-7068-3718"
+  },
+  "repository": "weighted-enstrophy-identities",
+  "public_merkle_root_sha256": "0b0ff58e7f14c59f8d2c1c50567721a0b18d9c61dded5aedf06e70abfc04d874",
+  "classified_ip_containment": {
+    "plane": "Plane-4 Encrypted Parameterization Capsule",
+    "plaintext_commitment_sha256": "85980844b0091ead86f126f436cf3c50627b3db22bce36a986a3c98c2fc3eed5",
+    "ciphertext_hex": "aaab9aec6169ffacb714b124d3eb6fda2417df77d8cabca9cde6e9b87ae3b2929eeb1c7b27c31ef5da6db0654bc151cfddcbe1cd81f6d4b323b2ebd9ba5bbbb0e0ae7b21d3d5927352bd61d5896e6477facebf37db12a5da9c414c6804192184c24f8692eb6faf20d0eb32294c508e027391cf051b01e7a8ca9ee49d638fed1538b71447769fa136259639dd2efc30106aa957fe85bb2745b9b0db73182e987d983f8061b608b93e0d716de526494a603b7a15faf3d909a358288fdfe7c8e7d7f09e48aea870cfbf013cccbdcfbabe5ceba5f936e028a02e986be1dc2fe613b2ae928720a3fba2854dbb7351f92cf71a2ff47d2197a3e99ad9d23db851e00cb7798dfb8df53dfd05e0456a740365722ab12206a1125f71df540ccdb8a813e546612d5dfb0094d1a3a23b5cd6410bee9c0fd1d62b8d30f8b7998841a7381486ad1276465d22bff5ba1eb6a957cd81a4",
+    "hmac_sha256_tag": "a10bd1e5c479ee2d99598d803d037ae655c9454798d044a6ba5db4f6c3d8dc90",
+    "key_custody": "External vault key (/workspace/ip_vault_keys/) \u2014 never committed to repository"
+  }
+}

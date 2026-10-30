@@ -1,0 +1,88 @@
+{
+  "tool": {
+    "name": "titan-audit",
+    "version": "1.0.0",
+    "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+    "doi": "10.5281/zenodo.23630648"
+  },
+  "project": {
+    "path": "/workspace/weighted-enstrophy-identities",
+    "name": "weighted-enstrophy-identities",
+    "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
+    "git_head": "c29682ef315586cae2b35b901d92fd209613d95b"
+  },
+  "build": {
+    "requested": false
+  },
+  "axiom_audit": {
+    "ran": true,
+    "exit_code": 0,
+    "errors": [],
+    "modules": 3,
+    "theorems": 38,
+    "clean_theorems": 38,
+    "nonstandard": [],
+    "per_module": {
+      "WeightedEnstrophy.TrigModel": {
+        "theorems": 14,
+        "nonstandard": 0
+      },
+      "WeightedEnstrophy.Abstract": {
+        "theorems": 24,
+        "nonstandard": 0
+      }
+    }
+  },
+  "source_scan": {
+    "forbidden": [],
+    "vacuity_heuristics": [],
+    "counts": {}
+  },
+  "tree": {
+    "sha256": "3c1b2466a5068d7bb3ae58b06faff7e1d098a45401ee758d2badb71c9917477c",
+    "files": 7,
+    "entries": [
+      {
+        "path": "AxiomAudit.lean",
+        "sha256": "cc833009d167beefa08c08f70d27e597a3e60cba1be5f02544403188fd5d0732"
+      },
+      {
+        "path": "WeightedEnstrophy.lean",
+        "sha256": "3ff88747c65af01beb661590df18cfbb5b36a3a69a6cf38e903b45a827316b32"
+      },
+      {
+        "path": "WeightedEnstrophy/Abstract.lean",
+        "sha256": "a532c8afc131a5c8db80f83be182a5ffef7bde879ef9b2a500e8ca831ad162e2"
+      },
+      {
+        "path": "WeightedEnstrophy/TrigModel.lean",
+        "sha256": "c389eb2981cef236fbec48d2ae572db0824a125d416f29c5562399bc7b273260"
+      },
+      {
+        "path": "lake-manifest.json",
+        "sha256": "c555d6ea977bf91b2e18686450cdd4d22cb5936fa63e782319b27f152c2b0560"
+      },
+      {
+        "path": "lakefile.lean",
+        "sha256": "96fe4a304aaf3e028890b9a781184571725f999cf451ee18415ffe29047de679"
+      },
+      {
+        "path": "lean-toolchain",
+        "sha256": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76"
+      }
+    ],
+    "method": "sha256 of 'sha256  path\\n' lines, sorted by path, over *.lean (excluding .lake/.git) + lakefile/manifest/toolchain"
+  },
+  "verdict": {
+    "status": "PASS",
+    "reasons": [],
+    "vacuity_warnings_in_build": 0
+  },
+  "generated_at_utc": "2026-10-30T17:14:45+00:00",
+  "signature": {
+    "alg": "ed25519",
+    "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
+    "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
+    "value_b64": "fsiWXLx/qJi/g84Pmba5Web8cFnPshe3YxXNJpsdm/TBEjJl1cYrtQg2zvjC2icMY8MM0NQ3zqRSlBzEEeNmBw=="
+  }
+}

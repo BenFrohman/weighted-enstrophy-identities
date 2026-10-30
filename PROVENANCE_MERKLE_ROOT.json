@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "repository": "weighted-enstrophy-identities",
+  "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+  "license": "Apache-2.0",
+  "technologies": {
+    "titan_audit_doi": "10.5281/zenodo.23630648",
+    "sealguard_doi": "10.5281/zenodo.23631670",
+    "sentinel_gate_doi": "10.5281/zenodo.23632766"
+  },
+  "merkle_root_sha256": "0b0ff58e7f14c59f8d2c1c50567721a0b18d9c61dded5aedf06e70abfc04d874",
+  "sentinel_gate_receipt": {
+    "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
+    "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+    "action_type": "seal_and_attest_public_release",
+    "action_id": "0b0ff58e7f14c59f8d2c1c50567721a0b18d9c61dded5aedf06e70abfc04d874",
+    "permitted": true,
+    "reason": "PERMITTED_DETERMINISTIC_POLICY",
+    "receipt_sha256": "3a99114d3d693d92183814108f9719424e4e7dca343df7082244b652b21bf9dd"
+  },
+  "files": {
+    ".gitignore": {
+      "sha256": "a191db30dd6cce3693528aa0dea5389d783f578194cd3ae9c216cda0634aba4e",
+      "bytes": 51
+    },
+    "AxiomAudit.lean": {
+      "sha256": "cc833009d167beefa08c08f70d27e597a3e60cba1be5f02544403188fd5d0732",
+      "bytes": 1416
+    },
+    "LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "README.md": {
+      "sha256": "25ac13e9ba4fe6cf98920ea193fe5f92b27c9c7bbbf551b19a046699817253df",
+      "bytes": 3366
+    },
+    "WeightedEnstrophy/Abstract.lean": {
+      "sha256": "a532c8afc131a5c8db80f83be182a5ffef7bde879ef9b2a500e8ca831ad162e2",
+      "bytes": 7037
+    },
+    "WeightedEnstrophy/TrigModel.lean": {
+      "sha256": "c389eb2981cef236fbec48d2ae572db0824a125d416f29c5562399bc7b273260",
+      "bytes": 6466
+    },
+    "WeightedEnstrophy.lean": {
+      "sha256": "3ff88747c65af01beb661590df18cfbb5b36a3a69a6cf38e903b45a827316b32",
+      "bytes": 69
+    },
+    "audit/TITAN_AUDIT_CERTIFICATE.json": {
+      "sha256": "35ddfc7185082fdcb1ed73a17439a694c822f5a0de7c877f27e7f304420f40e2",
+      "bytes": 2659
+    },
+    "audit/TITAN_AUDIT_REPORT.md": {
+      "sha256": "526fc7d82cf8e2718e16113e3f96e1c0aab445c41924b3c5df7f2ad76d2210fe",
+      "bytes": 1000
+    },
+    "audit/report.json": {
+      "sha256": "35ddfc7185082fdcb1ed73a17439a694c822f5a0de7c877f27e7f304420f40e2",
+      "bytes": 2659
+    },
+    "audit/report.md": {
+      "sha256": "526fc7d82cf8e2718e16113e3f96e1c0aab445c41924b3c5df7f2ad76d2210fe",
+      "bytes": 1000
+    },
+    "ip_pipeline/seal_and_verify.py": {
+      "sha256": "068778b54560ca539e2cada7df4db80272abc58859f9dca8f30ab4265fdf2f17",
+      "bytes": 7646
+    },
+    "lake-manifest.json": {
+      "sha256": "c555d6ea977bf91b2e18686450cdd4d22cb5936fa63e782319b27f152c2b0560",
+      "bytes": 3232
+    },
+    "lakefile.lean": {
+      "sha256": "96fe4a304aaf3e028890b9a781184571725f999cf451ee18415ffe29047de679",
+      "bytes": 245
+    },
+    "lean-toolchain": {
+      "sha256": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76",
+      "bytes": 29
+    },
+    "paper/main.pdf": {
+      "sha256": "029aacfcb55dba729c76df5db47ba4ee07b25fc127c782404b8ee40ffbf42a64",
+      "bytes": 70085
+    },
+    "paper/main.tex": {
+      "sha256": "5c693f7ac2ea11cc43d605459f2815d2601f715b82247869d8710c72e655d9b8",
+      "bytes": 8646
+    }
+  }
+}
