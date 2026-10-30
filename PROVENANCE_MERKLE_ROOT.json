@@ -8,15 +8,15 @@
     "sealguard_doi": "10.5281/zenodo.23631670",
     "sentinel_gate_doi": "10.5281/zenodo.23632766"
   },
-  "merkle_root_sha256": "e683a19d6b107e2a41795d850f0e1889cc71195b2f09bc02fb8f7a7aa957d178",
+  "merkle_root_sha256": "acf2b51d8ef44ad6ab06bc4409f2e00e200a6f1fb6aa63145d8e58dfe48c800e",
   "sentinel_gate_receipt": {
     "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
     "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
     "action_type": "seal_and_attest_public_release",
-    "action_id": "e683a19d6b107e2a41795d850f0e1889cc71195b2f09bc02fb8f7a7aa957d178",
+    "action_id": "acf2b51d8ef44ad6ab06bc4409f2e00e200a6f1fb6aa63145d8e58dfe48c800e",
     "permitted": true,
     "reason": "PERMITTED_DETERMINISTIC_POLICY",
-    "receipt_sha256": "98c8c17edf59ec3d8b9a3e94561034d141df1c8d4a32326f4cd7145f5600518e"
+    "receipt_sha256": "0048b15dc23c81dd1db9276a6a7209e8ec1902eb8915339456dbaf96698ff1fe"
   },
   "files": {
     ".gitignore": {
@@ -32,8 +32,8 @@
       "bytes": 11358
     },
     "README.md": {
-      "sha256": "28b7cb9a5bf3948c7dcf1f13f5bfa0b237cbee4393724a91cec2aabf47ce8da4",
-      "bytes": 5754
+      "sha256": "b59e34f9b1aea37670969f17c09226f12bb1e7c6c6a9484d17c634f37f39b88a",
+      "bytes": 5859
     },
     "WeightedEnstrophy/Abstract.lean": {
       "sha256": "26f4ca364760b85df4dbd4d1d7229c4eed35459588a99f21435cb9e7f7e49898",
@@ -48,8 +48,8 @@
       "bytes": 8799
     },
     "WeightedEnstrophy/Lyapunov.lean": {
-      "sha256": "909569b360768af7cf47a590cbb8bec1bced4530f3d189965f7f1dd9b6831184",
-      "bytes": 7932
+      "sha256": "51970a1610c2fa30f26d1d4cfc70a8e907bc0b1104916dc798d4a1f98f65ea49",
+      "bytes": 8187
     },
     "WeightedEnstrophy/Smooth.lean": {
       "sha256": "ecacd716b0371dcc623af4047ead8b46bbe277084b4d68aca6e481891fff2803",
@@ -68,19 +68,19 @@
       "bytes": 253
     },
     "audit/TITAN_AUDIT_CERTIFICATE.json": {
-      "sha256": "4de0d1125efbe40cc9e9e2cbc0410fa17896298a51509f71d79b1d21f64d2334",
-      "bytes": 3934
+      "sha256": "1dc41fa6c98cd07021039c498d611121c2e7cf704bad27c9e3e75ac7ee5ec574",
+      "bytes": 3938
     },
     "audit/TITAN_AUDIT_REPORT.md": {
-      "sha256": "6a9447fce9e59be2f54b9b8bba3f4755292a24e1764bfbfc59c4dd1a7c2c816b",
+      "sha256": "6ea486494e6f46a58f11f3ecdf53aaae83810c43188a5e6543d4653746220003",
       "bytes": 1226
     },
     "audit/report.json": {
-      "sha256": "4de0d1125efbe40cc9e9e2cbc0410fa17896298a51509f71d79b1d21f64d2334",
-      "bytes": 3934
+      "sha256": "1dc41fa6c98cd07021039c498d611121c2e7cf704bad27c9e3e75ac7ee5ec574",
+      "bytes": 3938
     },
     "audit/report.md": {
-      "sha256": "6a9447fce9e59be2f54b9b8bba3f4755292a24e1764bfbfc59c4dd1a7c2c816b",
+      "sha256": "6ea486494e6f46a58f11f3ecdf53aaae83810c43188a5e6543d4653746220003",
       "bytes": 1226
     },
     "ip_pipeline/seal_and_verify.py": {
@@ -100,12 +100,12 @@
       "bytes": 29
     },
     "paper/main.pdf": {
-      "sha256": "bbb74258d9530f61560d27d89009a6b3b2e54c4b602f6c7772abebae3bd469d3",
-      "bytes": 87841
+      "sha256": "e59cf13b3a1465a5b8524f6732002689507b13a70ade4e2902b0f5f54c482f7e",
+      "bytes": 87945
     },
     "paper/main.tex": {
-      "sha256": "2a48e640eee3d66c0a16dba38eff3cf0e64b7132f9526b66a53b5bc618b5636a",
-      "bytes": 12300
+      "sha256": "d75a02995bbb0392ea208c002a3da7e61489102e15565070b01545c674c074db",
+      "bytes": 12351
     }
   }
 }

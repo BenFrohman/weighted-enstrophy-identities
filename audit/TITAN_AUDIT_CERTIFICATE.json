@@ -6,10 +6,10 @@
     "doi": "10.5281/zenodo.23630648"
   },
   "project": {
-    "path": "/workspace/weighted-enstrophy-identities",
+    "path": "/workspace/fin/weighted-enstrophy-identities",
     "name": "weighted-enstrophy-identities",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "2efffa814145df03a7baac9d0077b06d444d3d91"
+    "git_head": "b3947ae7bb2261bf913ccde8d9cdbf750d17e086"
   },
   "build": {
     "requested": false
@@ -59,7 +59,7 @@
     "counts": {}
   },
   "tree": {
-    "sha256": "410df46bb674f56d8bc9c540adefa64f14a5c77c23d4d853b6a65db6d9c9ea39",
+    "sha256": "a24fcde5c83bcb0dd4456c5474e0cf46ed73ac3d6a5ea58e3af1f218d4173ef1",
     "files": 12,
     "entries": [
       {
@@ -84,7 +84,7 @@
       },
       {
         "path": "WeightedEnstrophy/Lyapunov.lean",
-        "sha256": "909569b360768af7cf47a590cbb8bec1bced4530f3d189965f7f1dd9b6831184"
+        "sha256": "51970a1610c2fa30f26d1d4cfc70a8e907bc0b1104916dc798d4a1f98f65ea49"
       },
       {
         "path": "WeightedEnstrophy/Smooth.lean",
@@ -118,11 +118,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 0
   },
-  "generated_at_utc": "2026-10-30T17:38:15+00:00",
+  "generated_at_utc": "2026-10-30T18:28:04+00:00",
   "signature": {
     "alg": "ed25519",
-    "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
+    "public_key_b64": "YoEHEghXFxrXvYKQoWQb+oDunzwdxBgpk03gxrdC7WI=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "YyfYirJ6pnKFApkeY+HIWTLnIVKQaYBsZ2QpCfB2ScLK11awNhA6G65iA7NH5do++dvdcmk7sdDTH6fqQCwsDQ=="
+    "value_b64": "ciQWgi2ckh7hv49FY2rSsilSMzSdTzm7QYGRHHXNpDA+9BmExj1hBKYNJSPebNYZ4N/8bc3G9Hc4E7KRPqGVCQ=="
   }
 }
