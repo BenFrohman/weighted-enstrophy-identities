@@ -9,7 +9,7 @@
     "path": "/workspace/weighted-enstrophy-identities",
     "name": "weighted-enstrophy-identities",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "c29682ef315586cae2b35b901d92fd209613d95b"
+    "git_head": "2efffa814145df03a7baac9d0077b06d444d3d91"
   },
   "build": {
     "requested": false
@@ -18,13 +18,33 @@
     "ran": true,
     "exit_code": 0,
     "errors": [],
-    "modules": 3,
-    "theorems": 38,
-    "clean_theorems": 38,
+    "modules": 8,
+    "theorems": 101,
+    "clean_theorems": 101,
     "nonstandard": [],
     "per_module": {
       "WeightedEnstrophy.TrigModel": {
         "theorems": 14,
+        "nonstandard": 0
+      },
+      "WeightedEnstrophy.Smooth": {
+        "theorems": 14,
+        "nonstandard": 0
+      },
+      "WeightedEnstrophy.Fourier.Basic": {
+        "theorems": 11,
+        "nonstandard": 0
+      },
+      "WeightedEnstrophy.Fourier.Strain": {
+        "theorems": 17,
+        "nonstandard": 0
+      },
+      "WeightedEnstrophy.TorusCalculus": {
+        "theorems": 16,
+        "nonstandard": 0
+      },
+      "WeightedEnstrophy.Lyapunov": {
+        "theorems": 5,
         "nonstandard": 0
       },
       "WeightedEnstrophy.Abstract": {
@@ -39,8 +59,8 @@
     "counts": {}
   },
   "tree": {
-    "sha256": "3c1b2466a5068d7bb3ae58b06faff7e1d098a45401ee758d2badb71c9917477c",
-    "files": 7,
+    "sha256": "410df46bb674f56d8bc9c540adefa64f14a5c77c23d4d853b6a65db6d9c9ea39",
+    "files": 12,
     "entries": [
       {
         "path": "AxiomAudit.lean",
@@ -48,15 +68,35 @@
       },
       {
         "path": "WeightedEnstrophy.lean",
-        "sha256": "3ff88747c65af01beb661590df18cfbb5b36a3a69a6cf38e903b45a827316b32"
+        "sha256": "d09ae641c95b1016618fed179d2a02d2156eb6940d77eea06246c0954280b80f"
       },
       {
         "path": "WeightedEnstrophy/Abstract.lean",
-        "sha256": "a532c8afc131a5c8db80f83be182a5ffef7bde879ef9b2a500e8ca831ad162e2"
+        "sha256": "26f4ca364760b85df4dbd4d1d7229c4eed35459588a99f21435cb9e7f7e49898"
+      },
+      {
+        "path": "WeightedEnstrophy/Fourier/Basic.lean",
+        "sha256": "b5441e7a557b58b6ed8d39e1de839da5f6f08589cce70493b53ea55efa29fd28"
+      },
+      {
+        "path": "WeightedEnstrophy/Fourier/Strain.lean",
+        "sha256": "27b82330230e8cce1fc3ae6f7acf2448566b3dd85074782d2b578135075ec22c"
+      },
+      {
+        "path": "WeightedEnstrophy/Lyapunov.lean",
+        "sha256": "909569b360768af7cf47a590cbb8bec1bced4530f3d189965f7f1dd9b6831184"
+      },
+      {
+        "path": "WeightedEnstrophy/Smooth.lean",
+        "sha256": "ecacd716b0371dcc623af4047ead8b46bbe277084b4d68aca6e481891fff2803"
+      },
+      {
+        "path": "WeightedEnstrophy/TorusCalculus.lean",
+        "sha256": "19149dcfc37253b772b09be7975c58f6a94739d76b327e3d6be65db38c68e8c9"
       },
       {
         "path": "WeightedEnstrophy/TrigModel.lean",
-        "sha256": "c389eb2981cef236fbec48d2ae572db0824a125d416f29c5562399bc7b273260"
+        "sha256": "113b7c57aa92687887f785bf988f4915c96b5caa183be772719cc7d0c028a377"
       },
       {
         "path": "lake-manifest.json",
@@ -78,11 +118,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 0
   },
-  "generated_at_utc": "2026-10-30T17:14:45+00:00",
+  "generated_at_utc": "2026-10-30T17:38:15+00:00",
   "signature": {
     "alg": "ed25519",
     "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "fsiWXLx/qJi/g84Pmba5Web8cFnPshe3YxXNJpsdm/TBEjJl1cYrtQg2zvjC2icMY8MM0NQ3zqRSlBzEEeNmBw=="
+    "value_b64": "YyfYirJ6pnKFApkeY+HIWTLnIVKQaYBsZ2QpCfB2ScLK11awNhA6G65iA7NH5do++dvdcmk7sdDTH6fqQCwsDQ=="
   }
 }

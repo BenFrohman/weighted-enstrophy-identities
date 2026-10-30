@@ -8,15 +8,15 @@
     "sealguard_doi": "10.5281/zenodo.23631670",
     "sentinel_gate_doi": "10.5281/zenodo.23632766"
   },
-  "merkle_root_sha256": "0b0ff58e7f14c59f8d2c1c50567721a0b18d9c61dded5aedf06e70abfc04d874",
+  "merkle_root_sha256": "e683a19d6b107e2a41795d850f0e1889cc71195b2f09bc02fb8f7a7aa957d178",
   "sentinel_gate_receipt": {
     "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
     "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
     "action_type": "seal_and_attest_public_release",
-    "action_id": "0b0ff58e7f14c59f8d2c1c50567721a0b18d9c61dded5aedf06e70abfc04d874",
+    "action_id": "e683a19d6b107e2a41795d850f0e1889cc71195b2f09bc02fb8f7a7aa957d178",
     "permitted": true,
     "reason": "PERMITTED_DETERMINISTIC_POLICY",
-    "receipt_sha256": "3a99114d3d693d92183814108f9719424e4e7dca343df7082244b652b21bf9dd"
+    "receipt_sha256": "98c8c17edf59ec3d8b9a3e94561034d141df1c8d4a32326f4cd7145f5600518e"
   },
   "files": {
     ".gitignore": {
@@ -32,36 +32,56 @@
       "bytes": 11358
     },
     "README.md": {
-      "sha256": "25ac13e9ba4fe6cf98920ea193fe5f92b27c9c7bbbf551b19a046699817253df",
-      "bytes": 3366
+      "sha256": "28b7cb9a5bf3948c7dcf1f13f5bfa0b237cbee4393724a91cec2aabf47ce8da4",
+      "bytes": 5754
     },
     "WeightedEnstrophy/Abstract.lean": {
-      "sha256": "a532c8afc131a5c8db80f83be182a5ffef7bde879ef9b2a500e8ca831ad162e2",
-      "bytes": 7037
+      "sha256": "26f4ca364760b85df4dbd4d1d7229c4eed35459588a99f21435cb9e7f7e49898",
+      "bytes": 7031
+    },
+    "WeightedEnstrophy/Fourier/Basic.lean": {
+      "sha256": "b5441e7a557b58b6ed8d39e1de839da5f6f08589cce70493b53ea55efa29fd28",
+      "bytes": 3846
+    },
+    "WeightedEnstrophy/Fourier/Strain.lean": {
+      "sha256": "27b82330230e8cce1fc3ae6f7acf2448566b3dd85074782d2b578135075ec22c",
+      "bytes": 8799
+    },
+    "WeightedEnstrophy/Lyapunov.lean": {
+      "sha256": "909569b360768af7cf47a590cbb8bec1bced4530f3d189965f7f1dd9b6831184",
+      "bytes": 7932
+    },
+    "WeightedEnstrophy/Smooth.lean": {
+      "sha256": "ecacd716b0371dcc623af4047ead8b46bbe277084b4d68aca6e481891fff2803",
+      "bytes": 5770
+    },
+    "WeightedEnstrophy/TorusCalculus.lean": {
+      "sha256": "19149dcfc37253b772b09be7975c58f6a94739d76b327e3d6be65db38c68e8c9",
+      "bytes": 8296
     },
     "WeightedEnstrophy/TrigModel.lean": {
-      "sha256": "c389eb2981cef236fbec48d2ae572db0824a125d416f29c5562399bc7b273260",
-      "bytes": 6466
+      "sha256": "113b7c57aa92687887f785bf988f4915c96b5caa183be772719cc7d0c028a377",
+      "bytes": 6442
     },
     "WeightedEnstrophy.lean": {
-      "sha256": "3ff88747c65af01beb661590df18cfbb5b36a3a69a6cf38e903b45a827316b32",
-      "bytes": 69
+      "sha256": "d09ae641c95b1016618fed179d2a02d2156eb6940d77eea06246c0954280b80f",
+      "bytes": 253
     },
     "audit/TITAN_AUDIT_CERTIFICATE.json": {
-      "sha256": "35ddfc7185082fdcb1ed73a17439a694c822f5a0de7c877f27e7f304420f40e2",
-      "bytes": 2659
+      "sha256": "4de0d1125efbe40cc9e9e2cbc0410fa17896298a51509f71d79b1d21f64d2334",
+      "bytes": 3934
     },
     "audit/TITAN_AUDIT_REPORT.md": {
-      "sha256": "526fc7d82cf8e2718e16113e3f96e1c0aab445c41924b3c5df7f2ad76d2210fe",
-      "bytes": 1000
+      "sha256": "6a9447fce9e59be2f54b9b8bba3f4755292a24e1764bfbfc59c4dd1a7c2c816b",
+      "bytes": 1226
     },
     "audit/report.json": {
-      "sha256": "35ddfc7185082fdcb1ed73a17439a694c822f5a0de7c877f27e7f304420f40e2",
-      "bytes": 2659
+      "sha256": "4de0d1125efbe40cc9e9e2cbc0410fa17896298a51509f71d79b1d21f64d2334",
+      "bytes": 3934
     },
     "audit/report.md": {
-      "sha256": "526fc7d82cf8e2718e16113e3f96e1c0aab445c41924b3c5df7f2ad76d2210fe",
-      "bytes": 1000
+      "sha256": "6a9447fce9e59be2f54b9b8bba3f4755292a24e1764bfbfc59c4dd1a7c2c816b",
+      "bytes": 1226
     },
     "ip_pipeline/seal_and_verify.py": {
       "sha256": "068778b54560ca539e2cada7df4db80272abc58859f9dca8f30ab4265fdf2f17",
@@ -80,12 +100,12 @@
       "bytes": 29
     },
     "paper/main.pdf": {
-      "sha256": "029aacfcb55dba729c76df5db47ba4ee07b25fc127c782404b8ee40ffbf42a64",
-      "bytes": 70085
+      "sha256": "bbb74258d9530f61560d27d89009a6b3b2e54c4b602f6c7772abebae3bd469d3",
+      "bytes": 87841
     },
     "paper/main.tex": {
-      "sha256": "5c693f7ac2ea11cc43d605459f2815d2601f715b82247869d8710c72e655d9b8",
-      "bytes": 8646
+      "sha256": "2a48e640eee3d66c0a16dba38eff3cf0e64b7132f9526b66a53b5bc618b5636a",
+      "bytes": 12300
     }
   }
 }

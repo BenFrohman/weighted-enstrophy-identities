@@ -2,10 +2,10 @@
 
 **Verdict: PASS**
 
-- Generated (UTC): 2026-10-30T17:14:45+00:00
+- Generated (UTC): 2026-10-30T17:38:15+00:00
 - Tool: titan-audit 1.0.0 (Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718))
-- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `c29682ef315586cae2b35b901d92fd209613d95b`
-- Tree SHA-256: `3c1b2466a5068d7bb3ae58b06faff7e1d098a45401ee758d2badb71c9917477c` over 7 files
+- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `2efffa814145df03a7baac9d0077b06d444d3d91`
+- Tree SHA-256: `410df46bb674f56d8bc9c540adefa64f14a5c77c23d4d853b6a65db6d9c9ea39` over 12 files
 
 ## Build
 
@@ -13,12 +13,17 @@
 
 ## Axiom audit
 
-- Modules: 3  Theorems: 38  Clean (only propext/Classical.choice/Quot.sound): 38
+- Modules: 8  Theorems: 101  Clean (only propext/Classical.choice/Quot.sound): 101
 - Nonstandard: 0
 
 | Module | Theorems | Nonstandard |
 |---|---:|---:|
 | `WeightedEnstrophy.Abstract` | 24 | 0 |
+| `WeightedEnstrophy.Fourier.Basic` | 11 | 0 |
+| `WeightedEnstrophy.Fourier.Strain` | 17 | 0 |
+| `WeightedEnstrophy.Lyapunov` | 5 | 0 |
+| `WeightedEnstrophy.Smooth` | 14 | 0 |
+| `WeightedEnstrophy.TorusCalculus` | 16 | 0 |
 | `WeightedEnstrophy.TrigModel` | 14 | 0 |
 
 ## Source scan
