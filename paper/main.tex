@@ -184,7 +184,7 @@ Then let $\varepsilon\to0$. The lower bound follows in the same way.\end{proof}
 \paragraph{Stated, not proved.} \texttt{CalderonZygmundLp}~$p$ is the bound
 $\int|\partial_ju_i|^p\le C\int|\omega|^p$; it is classical for $1<p<\infty$ and is not formalized here.
 \texttt{WeightedToSupReduction} says a bound on $S$ implies a bound on $\sup|\omega|^2$.
-\texttt{PhiSupControl} is a uniform bound on $|\phi|$. These are \texttt{Prop} definitions only, and
+\texttt{PhiSupControl} is, for each horizon $T$, a bound on $|\phi|$ over $[0,T)$ that may depend on $T$. These are \texttt{Prop} definitions only, and
 no theorem uses them. The $L^\infty$ Calder\'on--Zygmund bound is false and is not stated.
 
 \section{Scope}

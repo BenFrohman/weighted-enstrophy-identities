@@ -71,8 +71,8 @@ Stated as `Prop` definitions. They are not proved, and no theorem above uses the
 - `CalderonZygmundLp p`: `∫|∂ⱼuᵢ|^p ≤ C∫|ω|^p` on smooth periodic divergence-free fields. This
   is the classical theorem for `1 < p < ∞`, and it is not formalized here. The `L∞` version is
   false and is not stated.
-- `WeightedToSupReduction κ ν`: a bound on `S` over `[0,T)` would force a bound on `sup|ω|²`.
-- `PhiSupControl ν`: a uniform bound on `|φ|` over `[0,T)`.
+- `WeightedToSupReduction κ ν`: a bound on `S` over `[0,T)` would force a bound on `sup|ω|²` over the same `[0,T)`, with a constant that may depend on `T`.
+- `PhiSupControl ν`: for each horizon `T`, a bound on `|φ|` over `[0,T)`; the bound may depend on `T`.
 
 The repository contains no regularity theorem for Navier–Stokes. The absorption step that uses
 an `L∞` Calderón–Zygmund bound, the reduction from `S` to `M`, and the bootstrap are not proved.

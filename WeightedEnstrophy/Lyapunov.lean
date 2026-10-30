@@ -133,13 +133,16 @@ def CalderonZygmundLp (p : ℝ) : Prop :=
       C * torusIntegral (fun x => (|((vsq w : A) : E → ℝ) x|) ^ (p / 2)) t
 
 /-- The reduction the paper's Section 5 needs: a bound on `S` on `[0,T)` forces a bound on
-`M(t)² = sup |ω(t,·)|²`. Not proved. -/
+`M(t)² = sup |ω(t,·)|²` on the same horizon, with a constant `B'` that may depend on `T`.
+No bound uniform in `T` is asked for. Not proved. -/
 def WeightedToSupReduction (κ ν : ℝ) : Prop :=
   ∀ (u w : Fin 3 → A) (φ : A) (T B : ℝ), div setting u = 0 → VorticityEq setting ν u w →
     WeightEq setting u w φ → (∀ t ∈ Ico 0 T, S κ w φ t ≤ B) →
     ∃ B' : ℝ, ∀ t ∈ Ico 0 T, ∀ x : ℝ × ℝ × ℝ, ((vsq w : A) : E → ℝ) (t, x) ≤ B'
 
-/-- Uniform control of `‖φ(t)‖∞` on `[0,T)` (Section 6). Not proved. -/
+/-- Finite-horizon control of `‖φ(t)‖∞` (Section 6): for each horizon `T` there is a bound `B`,
+which may depend on `T` and on the solution, with `|φ| ≤ B` on `[0,T)`. No bound uniform in `T`
+is asked for. Not proved. -/
 def PhiSupControl (ν : ℝ) : Prop :=
   ∀ (u w : Fin 3 → A) (φ : A) (T : ℝ), div setting u = 0 → VorticityEq setting ν u w →
     WeightEq setting u w φ → ∃ B : ℝ, ∀ t ∈ Ico 0 T, ∀ x : ℝ × ℝ × ℝ, |(φ : E → ℝ) (t, x)| ≤ B
