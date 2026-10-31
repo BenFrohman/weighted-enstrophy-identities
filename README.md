@@ -87,3 +87,9 @@ an `L∞` Calderón–Zygmund bound, the reduction from `S` to `M`, and the boot
   SealGuard and Sentinel-Gate certificates over git-tracked files
 
 License: Apache-2.0. © 2026 Benjamin Stanley Frohman (ORCID 0009-0006-7068-3718).
+
+## Copyright, license and scope
+
+Copyright 2026 Benjamin Stanley Frohman (ORCID [0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718)). Licensed under the Apache License, Version 2.0; see `LICENSE` and `NOTICE`.
+
+What is proved vs. conditional: The balance identities are proved for the class stated in "On what class these are proved"; any remaining assumptions are named `Prop`s passed explicitly. Every hypothesis is a named `Prop` passed as an explicit argument. Nothing in this repository claims to solve the Clay Millennium problem or global regularity for unmodified 3D Navier–Stokes.
