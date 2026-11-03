@@ -6,6 +6,8 @@
 \title{Enstrophy and Weighted-Enstrophy Balance Identities on $\mathbb{T}^3$:\\ a Lean 4 Formalization}
 \author{Benjamin Stanley Frohman\\ ORCID 0009-0006-7068-3718}
 \date{October 2026}
+\usepackage{longtable}
+\usepackage{url}
 \begin{document}\maketitle
 \begin{abstract}
 We formalize in Lean~4 with Mathlib two exact balance identities from the a-posteriori Lyapunov
@@ -197,4 +199,104 @@ bootstrap are not proved. The paper makes no regularity claim.
 \texttt{lake build}: success, 0 \texttt{sorry}. \texttt{lake env lean AxiomAudit.lean}: only
 \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. Toolchain
 \texttt{leanprover/lean4:v4.30.0-rc1}, Mathlib \texttt{v4.30.0-rc1}.
+\appendix
+\section{Verification certificate}\label{app:verification-certificate}
+
+The formal development was machine-checked as follows.
+
+{\raggedright
+\begin{itemize}
+\item Repository:\\ {\footnotesize\url{https://github.com/BenFrohman/weighted-enstrophy-identities}}
+\item Verified commit:\\ {\footnotesize\texttt{d114da00233dee539bc056570ae854cc9585aead}}
+\item Lean toolchain: \texttt{leanprover/lean4:v4.30.0-rc1}
+\item Mathlib: tag \texttt{v4.30.0-rc1}, commit (from \texttt{lake-manifest.json})\\ {\footnotesize\texttt{0c154d67103f74be3a0f2c509f72ccbf5be9f2a7}}
+\item Continuous integration run (build, axiom audit, \texttt{sorry}/\texttt{axiom} scan; passed):\\ {\footnotesize\url{https://github.com/BenFrohman/weighted-enstrophy-identities/actions/runs/41571861702}}
+\item SHA-256 of the GitHub source tarball of the verified commit, downloaded twice with identical result:\\ {\footnotesize\url{https://github.com/BenFrohman/weighted-enstrophy-identities/archive/d114da00233dee539bc056570ae854cc9585aead.tar.gz}}\\
+{\footnotesize\texttt{92da8936c0362517c93034c7c378125223c6166eb626085bb023801c7f16c0ce}}
+\end{itemize}\par}
+
+The tarball hash refers to the verified commit rather than to a release tag, since a document cannot contain the hash of an archive that includes itself. The Lean sources are unchanged between that commit and the release tag.
+
+\textbf{The development contains no \texttt{sorry} and no user-declared axioms.} Every one of the 72 theorems and lemmas listed below depends only on Lean's standard axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} (or on none). The table is the verbatim output of \texttt{lake env lean AxiomAudit.lean} (\texttt{\#print axioms}) on the verified commit.
+
+{\footnotesize
+\begin{longtable}{p{0.55\linewidth}p{0.38\linewidth}}
+\hline
+Lean declaration & \texttt{\#print axioms} \\
+\hline\endhead
+\path{WeightedEnstrophy.I_sum_d} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.PeriodicSetting.int_d} & \texttt{[propext, Quot.sound]} \\
+\path{WeightedEnstrophy.PeriodicSetting.int_dt} & \texttt{[propext, Quot.sound]} \\
+\path{WeightedEnstrophy.adv_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.dt_half_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.dt_vsq_div} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.dt_weighted} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.dt_weighted_div} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.enstrophy_identity} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.int_adv_eq_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.stretch_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.two_w_adv} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.wLapW_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.weighted_identity} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.coeff_eq_mFourierCoeff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.coeff_multiplier} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.ext_coeff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.memℓp_mul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.norm_multiplier_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.nsq_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.parseval_norm_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.summable_coeff_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.two_toReal} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.L2_strain_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.L2_strain_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.curl_deltaH_eq_u} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.curl_sq_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.curl_stream_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.modeEnergy_curl} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.modeEnergy_expand} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.normsq_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.strain_sq_eq_half_curl_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Fourier.strain_sq_le_curl_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Lyapunov.dS_identity_smooth} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Lyapunov.le_integral_sq_of_deriv} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Lyapunov.ode_bounded} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Lyapunov.ode_lower} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Lyapunov.ode_upper} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.D_apply} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.enstrophy_identity_smooth} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.fderiv_mem} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.hasDerivAt_I} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.int_d} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.int_dt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.line_deriv'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.periodic} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.smooth} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Smooth.weighted_identity_smooth} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.cont_i2} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.cont_i3} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.cont_torusIntegral} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.hasDerivAt_integral01} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.hasDerivAt_torusIntegral} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.i2_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.i3_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.integral01_deriv_periodic} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.torusIntegral_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.torusIntegral_deriv_a} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.torusIntegral_deriv_b} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.torusIntegral_deriv_c} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Torus.torusIntegral_smul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.enstrophy_identity_T3} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.integral_dt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.integral_dx} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.leibniz_of_singles} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.mapCoeff_apply} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.mapCoeff_single} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.mulSym_apply} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.mulSym_single} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.sym_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.sym_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{WeightedEnstrophy.Trig.weighted_identity_T3} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\hline
+\end{longtable}}
+
 \end{document}
