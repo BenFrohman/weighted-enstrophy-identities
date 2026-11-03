@@ -1,5 +1,7 @@
 # weighted-enstrophy-identities
 
+[![Lean certificate](https://github.com/BenFrohman/weighted-enstrophy-identities/actions/workflows/certify.yml/badge.svg)](https://github.com/BenFrohman/weighted-enstrophy-identities/actions/workflows/certify.yml)
+
 Lean 4 + Mathlib (`leanprover/lean4:v4.30.0-rc1`, Mathlib `v4.30.0-rc1`) formalization of two
 exact balance identities, and related lemmas, for the 3-D incompressible Navier–Stokes vorticity equation on the
 torus `T³`, from *An a-posteriori Lyapunov functional approach* by Benjamin Stanley Frohman.
