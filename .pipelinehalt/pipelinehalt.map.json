@@ -1,0 +1,141 @@
+{
+  "claims": {
+    "definition-1": {
+      "lean": [
+        "PeriodicSetting"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "definition-2": {
+      "lean": [
+        "setting"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-3": {
+      "lean": [
+        "dx",
+        "dt"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-4": {
+      "lean": [
+        "integral_dx",
+        "integral_dt"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-5": {
+      "lean": [
+        "adv_eq",
+        "int_adv_eq_zero"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-6": {
+      "lean": [
+        "wLapW_eq"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-7": {
+      "lean": [
+        "two_w_adv"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-8": {
+      "lean": [
+        "stretch_eq"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-9": {
+      "lean": [
+        "dt_half_sq",
+        "dt_vsq_div"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-10": {
+      "lean": [
+        "enstrophy_identity",
+        "enstrophy_identity_T3"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-11": {
+      "lean": [
+        "dt_weighted"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-12": {
+      "lean": [
+        "dt_weighted_div"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-13": {
+      "lean": [
+        "weighted_identity",
+        "weighted_identity_T3"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "definition-14": {
+      "lean": [
+        "A",
+        "setting"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-15": {
+      "lean": [
+        "hasDerivAt_integral01"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-16": {
+      "lean": [
+        "hasDerivAt_torusIntegral"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-18": {
+      "lean": [
+        "int_d",
+        "int_dt",
+        "enstrophy_identity_smooth",
+        "weighted_identity_smooth"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-19": {
+      "lean": [
+        "L2_strain_eq",
+        "L2_strain_le"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-20": {
+      "lean": [
+        "dS_identity_smooth"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-21": {
+      "lean": [
+        "le_integral_sq_of_deriv"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-22": {
+      "lean": [
+        "ode_bounded"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    }
+  }
+}
