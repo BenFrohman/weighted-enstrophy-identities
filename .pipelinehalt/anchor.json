@@ -1,0 +1,336 @@
+{
+  "title": "Enstrophy and Weighted-Enstrophy Balance Identities on $\\mathbb{T",
+  "source": "paper/main.tex",
+  "claims": [
+    {
+      "id": "definition-1",
+      "number": "Definition 1",
+      "statement": "A commutative $K$-algebra $A$ with $K$-derivations $\\partial_1,\\partial_2,\\partial_3,\\partial_t$, a $K$-module $B$, a $K$-linear map $I:A\\to B$ and a map $D_t:B\\to B$ such that $I(\\partial_k f)=0$ for all $k,f$ and $I(\\partial_t f)=D_t(If)$.",
+      "kind": "definition",
+      "source": "paper/main.tex:41",
+      "title": "Periodic setting, \\texttt{PeriodicSetting}"
+    },
+    {
+      "id": "definition-2",
+      "number": "Definition 2",
+      "statement": "$A=R[\\mathbb{Z}^3]$ (finite sums $\\sum_n f_n e^{2\\pi i n\\cdot x}$, $f_n\\in R$), where $R$ is a commutative $\\mathbb{C}$-algebra with a derivation $D$. Set $\\partial_k(\\sum f_n e_n)=\\sum 2\\pi i n_k f_n e_n$, $\\partial_t(\\sum f_n e_n)=\\sum D(f_n)e_n$, $I(f)=f_0$, $D_t=D$.",
+      "kind": "definition",
+      "source": "paper/main.tex:48",
+      "title": "Trigonometric model, \\texttt{Trig.setting}"
+    },
+    {
+      "id": "lemma-3",
+      "number": "Lemma 3",
+      "statement": "$\\partial_k$ and $\\partial_t$ are derivations of $R[\\mathbb{Z}^3]$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:55",
+      "title": "\\texttt{dx}, \\texttt{dt}"
+    },
+    {
+      "id": "lemma-4",
+      "number": "Lemma 4",
+      "statement": "$I(\\partial_k f)=2\\pi i\\cdot 0\\cdot f_0=0$ and $I(\\partial_t f)=D(f_0)=D(If)$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:64",
+      "title": "Torus divergence lemma, \\texttt{integral\\_dx}, \\texttt{integral\\_dt}"
+    },
+    {
+      "id": "lemma-5",
+      "number": "Lemma 5",
+      "statement": "$u_k\\partial_k g=\\partial_k(u_k g)-(\\partial_k u_k)g$. Hence (\\texttt{int\\_adv\\_eq\\_zero}) if (\\ref{div}) holds, $I(u_k\\partial_k g)=0$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:70",
+      "title": "\\texttt{adv\\_eq}"
+    },
+    {
+      "id": "lemma-6",
+      "number": "Lemma 6",
+      "statement": "$\\omega_i\\partial_k\\partial_k\\omega_i=\\partial_k(\\omega_i\\partial_k\\omega_i)-\\partial_k\\omega_i\\,\\partial_k\\omega_i$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:76",
+      "title": "\\texttt{wLapW\\_eq}"
+    },
+    {
+      "id": "lemma-7",
+      "number": "Lemma 7",
+      "statement": "$2\\,\\omega_i\\,u_k\\partial_k\\omega_i=u_k\\partial_k|\\omega|^2$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:80",
+      "title": "\\texttt{two\\_w\\_adv}"
+    },
+    {
+      "id": "lemma-8",
+      "number": "Lemma 8",
+      "statement": "$\\omega_i\\omega_j\\partial_ju_i=\\omega\\cdot(\\omega\\cdot\\nabla)u$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:84",
+      "title": "\\texttt{stretch\\_eq}"
+    },
+    {
+      "id": "lemma-9",
+      "number": "Lemma 9",
+      "statement": "Under (\\ref{div}), (\\ref{vort}): \\[\\partial_t|\\omega|^2=2\\,\\omega_i\\omega_j\\partial_ju_i-2\\nu\\,|\\nabla\\omega|^2 +\\partial_k\\big(2\\nu\\,\\omega_i\\partial_k\\omega_i-u_k|\\omega|^2\\big).\\]",
+      "kind": "lemma",
+      "source": "paper/main.tex:89",
+      "title": "\\texttt{dt\\_half\\_sq}, \\texttt{dt\\_vsq\\_div}"
+    },
+    {
+      "id": "theorem-10",
+      "number": "Theorem 10",
+      "statement": "With $E=\\frac12\\int|\\omega|^2$ and $P=\\int\\omega_i\\omega_j\\partial_ju_i$, \\[\\frac{dE}{dt}=P-\\nu\\int_{\\mathbb{T}^3}|\\nabla\\omega|^2 .\\] (Formalized as $D_t\\,I(|\\omega|^2)=2\\,I(\\omega_i\\omega_j\\partial_ju_i)-2\\nu\\,I(|\\nabla\\omega|^2)$.)",
+      "kind": "theorem",
+      "source": "paper/main.tex:103",
+      "title": "Identity (1), \\texttt{enstrophy\\_identity}, \\texttt{enstrophy\\_identity\\_T3}"
+    },
+    {
+      "id": "lemma-11",
+      "number": "Lemma 11",
+      "statement": "Under (\\ref{vort}), (\\ref{wt}): \\[\\partial_t(s^2\\phi)=4s\\phi\\,\\omega_i\\omega_j\\partial_ju_i+4\\nu\\,s\\phi\\,\\omega\\cdot\\Delta\\omega+s^3-u_k\\partial_k(s^2\\phi).\\]",
+      "kind": "lemma",
+      "source": "paper/main.tex:113",
+      "title": "\\texttt{dt\\_weighted}"
+    },
+    {
+      "id": "lemma-12",
+      "number": "Lemma 12",
+      "statement": "Under (\\ref{div}) as well, $\\partial_t(s^2\\phi)=4s\\phi\\,\\omega_i\\omega_j\\partial_ju_i+4\\nu s\\phi\\,\\omega\\cdot\\Delta\\omega+s^3-\\partial_k(u_ks^2\\phi)$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:128",
+      "title": "\\texttt{dt\\_weighted\\_div}"
+    },
+    {
+      "id": "theorem-13",
+      "number": "Theorem 13",
+      "statement": "With $Q=\\int|\\omega|^4\\phi$, \\[\\frac{dQ}{dt}=4\\int|\\omega|^2\\phi\\,\\omega\\cdot(\\omega\\cdot\\nabla)u+4\\nu\\int|\\omega|^2\\phi\\,\\omega\\cdot\\Delta\\omega+\\int|\\omega|^6 .\\]",
+      "kind": "theorem",
+      "source": "paper/main.tex:133",
+      "title": "Identity (2), \\texttt{weighted\\_identity}, \\texttt{weighted\\_identity\\_T3}"
+    },
+    {
+      "id": "definition-14",
+      "number": "Definition 14",
+      "statement": "$A$ is the algebra of $f\\in C^\\infty(\\mathbb{R}\\times\\mathbb{R}^3,\\mathbb{R})$, $f=f(t,a,b,c)$, with $f(p+e_k)=f(p)$ for the unit spatial vectors $e_1,e_2,e_3$. $\\partial_k f(p)=Df(p)e_k$, $\\partial_tf(p)=Df(p)e_t$, $I(f)(t)=\\int_0^1\\!\\int_0^1\\!\\int_0^1 f(t,a,b,c)\\,dc\\,db\\,da$, $D_t=\\frac{d}{dt}$.",
+      "kind": "definition",
+      "source": "paper/main.tex:141",
+      "title": "\\texttt{Smooth.A}, \\texttt{Smooth.setting}"
+    },
+    {
+      "id": "lemma-15",
+      "number": "Lemma 15",
+      "statement": "If $F,\\partial_sF$ are jointly continuous on $\\mathbb{R}\\times\\mathbb{R}$, then $\\frac{d}{ds}\\int_0^1F(s,x)\\,dx=\\int_0^1\\partial_sF(s,x)\\,dx$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:146",
+      "title": "\\texttt{Torus.hasDerivAt\\_integral01}"
+    },
+    {
+      "id": "lemma-16",
+      "number": "Lemma 16",
+      "statement": "If $f,\\partial_tf$ are jointly continuous, then $\\frac{d}{dt}\\int_{\\mathbb{T}^3}f=\\int_{\\mathbb{T}^3}\\partial_tf$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:152",
+      "title": "\\texttt{Torus.hasDerivAt\\_torusIntegral}; (b)"
+    },
+    {
+      "id": "lemma-17",
+      "number": "Lemma 17",
+      "statement": "If $f$ is $C^1$ and $1$-periodic in the differentiated variable, then $\\int_{\\mathbb{T}^3}\\partial_kf=0$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:156",
+      "title": "\\texttt{Torus.torusIntegral\\_deriv\\_a/b/c}; (a)"
+    },
+    {
+      "id": "theorem-18",
+      "number": "Theorem 18",
+      "statement": "The smooth model is a periodic setting. Hence identities (1) and (2) hold for all $u,\\omega,\\phi\\in A$ satisfying (\\ref{div})--(\\ref{wt}).",
+      "kind": "theorem",
+      "source": "paper/main.tex:161",
+      "title": "\\texttt{Smooth.int\\_d}, \\texttt{Smooth.int\\_dt}, \\texttt{Smooth.enstrophy\\_identity\\_smooth}, \\texttt{Smooth.weighted\\_identity\\_smooth}"
+    },
+    {
+      "id": "theorem-19",
+      "number": "Theorem 19",
+      "statement": "Take $u,\\omega,S\\in L^2(\\mathbb{T}^3)$ whose Fourier coefficients are those of a divergence-free velocity, its curl, and $S=\\frac12(\\nabla u+\\nabla u^T)$. Then $\\sum_{ij}\\|S_{ij}\\|_2^2=\\frac12\\sum_i\\|\\omega_i\\|_2^2$, so $\\|S\\|_2\\le\\|\\omega\\|_2$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:167",
+      "title": "\\texttt{Fourier.L2\\_strain\\_eq}, \\texttt{Fourier.L2\\_strain\\_le}"
+    },
+    {
+      "id": "theorem-20",
+      "number": "Theorem 20",
+      "statement": "Let $S=\\frac12\\int|\\omega|^2-\\frac{\\kappa}{2}\\int|\\omega|^4\\phi$. For smooth periodic solutions of (\\ref{div})--(\\ref{wt}), \\[S'=\\int\\omega_i\\omega_j\\partial_ju_i-\\nu\\int|\\nabla\\omega|^2-\\tfrac{\\kappa}{2}\\Big(4\\int|\\omega|^2\\phi\\,\\omega_i\\omega_j\\partial_ju_i+4\\nu\\int|\\omega|^2\\phi\\,\\omega\\cdot\\Delta\\omega+\\int|\\omega|^6\\Big).\\]",
+      "kind": "theorem",
+      "source": "paper/main.tex:173",
+      "title": "\\texttt{Lyapunov.dS\\_identity\\_smooth}"
+    },
+    {
+      "id": "theorem-21",
+      "number": "Theorem 21",
+      "statement": "Let $h,M$ be continuous, $g(0)=0$, and $g'=h\\le M^2$ on $[0,t]$. Then $g(t)\\le\\int_0^tM^2$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:177",
+      "title": "\\texttt{Lyapunov.le\\_integral\\_sq\\_of\\_deriv}"
+    },
+    {
+      "id": "theorem-22",
+      "number": "Theorem 22",
+      "statement": "Let $\\kappa>0$, and let $y'=y^2(C-\\kappa y)$ on $[0,T]$. Then $\\min(y_0,C/\\kappa,0)\\le y(t)\\le\\max(y_0,C/\\kappa,0)$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:182",
+      "title": "\\texttt{Lyapunov.ode\\_bounded}"
+    }
+  ],
+  "clarifications": {
+    "9492e08adf3e": {
+      "claimId": "definition-1",
+      "kind": "ambiguous",
+      "question": "Paper claim Definition 1 (definition-1) states: “A commutative $K$-algebra $A$ with $K$-derivations $\\partial_1,\\partial_2,\\partial_3,\\partial_t$, a $K$-module $B$, a $K$-linear map $I:A\\to B$ and a map $D_t:B\\to B$ such that $I(\\partial_k f)=0$ fo…”. Its title is “Periodic setting, \\texttt{PeriodicSetting}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) PeriodicSetting, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.661Z"
+    },
+    "c6fc7db3b999": {
+      "claimId": "definition-2",
+      "kind": "ambiguous",
+      "question": "Paper claim Definition 2 (definition-2) states: “$A=R[\\mathbb{Z}^3]$ (finite sums $\\sum_n f_n e^{2\\pi i n\\cdot x}$, $f_n\\in R$), where $R$ is a commutative $\\mathbb{C}$-algebra with a derivation $D$. Set $\\partial_k(\\sum f_n e_n)=\\sum 2\\pi i n_k f_…”. Its title is “Trigonometric model, \\texttt{Trig.setting}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) setting, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.700Z"
+    },
+    "7ea0f1767f07": {
+      "claimId": "lemma-3",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 3 (lemma-3) states: “$\\partial_k$ and $\\partial_t$ are derivations of $R[\\mathbb{Z}^3]$.”. Its title is “\\texttt{dx}, \\texttt{dt}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) dx, dt, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.737Z"
+    },
+    "05b77a1e3714": {
+      "claimId": "lemma-4",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 4 (lemma-4) states: “$I(\\partial_k f)=2\\pi i\\cdot 0\\cdot f_0=0$ and $I(\\partial_t f)=D(f_0)=D(If)$.”. Its title is “Torus divergence lemma, \\texttt{integral\\_dx}, \\texttt{integral\\_dt}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) integral_dx, integral_dt, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.776Z"
+    },
+    "ca6497ef1904": {
+      "claimId": "lemma-6",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 6 (lemma-6) states: “$\\omega_i\\partial_k\\partial_k\\omega_i=\\partial_k(\\omega_i\\partial_k\\omega_i)-\\partial_k\\omega_i\\,\\partial_k\\omega_i$.”. Its title is “\\texttt{wLapW\\_eq}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) wLapW_eq, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.813Z"
+    },
+    "2a4bdd4d1d83": {
+      "claimId": "lemma-7",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 7 (lemma-7) states: “$2\\,\\omega_i\\,u_k\\partial_k\\omega_i=u_k\\partial_k|\\omega|^2$.”. Its title is “\\texttt{two\\_w\\_adv}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) two_w_adv, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.856Z"
+    },
+    "72d3156e36e8": {
+      "claimId": "lemma-8",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 8 (lemma-8) states: “$\\omega_i\\omega_j\\partial_ju_i=\\omega\\cdot(\\omega\\cdot\\nabla)u$.”. Its title is “\\texttt{stretch\\_eq}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) stretch_eq, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.932Z"
+    },
+    "202a6b8050c1": {
+      "claimId": "lemma-9",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 9 (lemma-9) states: “Under (\\ref{div}), (\\ref{vort}): \\[\\partial_t|\\omega|^2=2\\,\\omega_i\\omega_j\\partial_ju_i-2\\nu\\,|\\nabla\\omega|^2 +\\partial_k\\big(2\\nu\\,\\omega_i\\partial_k\\omega_i-u_k|\\omega|^2\\big).\\]”. Its title is “\\texttt{dt\\_half\\_sq}, \\texttt{dt\\_vsq\\_div}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) dt_half_sq, dt_vsq_div, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:05.971Z"
+    },
+    "f47b9509bc27": {
+      "claimId": "theorem-10",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 10 (theorem-10) states: “With $E=\\frac12\\int|\\omega|^2$ and $P=\\int\\omega_i\\omega_j\\partial_ju_i$, \\[\\frac{dE}{dt}=P-\\nu\\int_{\\mathbb{T}^3}|\\nabla\\omega|^2 .\\] (Formalized as $D_t\\,I(|\\omega|^2)=2\\,I(\\omega_i\\omega_j\\partial…”. Its title is “Identity (1), \\texttt{enstrophy\\_identity}, \\texttt{enstrophy\\_identity\\_T3}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) enstrophy_identity, enstrophy_identity_T3, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.008Z"
+    },
+    "f103508f9e6c": {
+      "claimId": "lemma-11",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 11 (lemma-11) states: “Under (\\ref{vort}), (\\ref{wt}): \\[\\partial_t(s^2\\phi)=4s\\phi\\,\\omega_i\\omega_j\\partial_ju_i+4\\nu\\,s\\phi\\,\\omega\\cdot\\Delta\\omega+s^3-u_k\\partial_k(s^2\\phi).\\]”. Its title is “\\texttt{dt\\_weighted}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) dt_weighted, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.048Z"
+    },
+    "efe456ccb420": {
+      "claimId": "lemma-12",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 12 (lemma-12) states: “Under (\\ref{div}) as well, $\\partial_t(s^2\\phi)=4s\\phi\\,\\omega_i\\omega_j\\partial_ju_i+4\\nu s\\phi\\,\\omega\\cdot\\Delta\\omega+s^3-\\partial_k(u_ks^2\\phi)$.”. Its title is “\\texttt{dt\\_weighted\\_div}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) dt_weighted_div, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.084Z"
+    },
+    "0c5e2d0f1c0e": {
+      "claimId": "theorem-13",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 13 (theorem-13) states: “With $Q=\\int|\\omega|^4\\phi$, \\[\\frac{dQ}{dt}=4\\int|\\omega|^2\\phi\\,\\omega\\cdot(\\omega\\cdot\\nabla)u+4\\nu\\int|\\omega|^2\\phi\\,\\omega\\cdot\\Delta\\omega+\\int|\\omega|^6 .\\]”. Its title is “Identity (2), \\texttt{weighted\\_identity}, \\texttt{weighted\\_identity\\_T3}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) weighted_identity, weighted_identity_T3, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.120Z"
+    },
+    "335418dfd19a": {
+      "claimId": "definition-14",
+      "kind": "ambiguous",
+      "question": "Paper claim Definition 14 (definition-14) states: “$A$ is the algebra of $f\\in C^\\infty(\\mathbb{R}\\times\\mathbb{R}^3,\\mathbb{R})$, $f=f(t,a,b,c)$, with $f(p+e_k)=f(p)$ for the unit spatial vectors $e_1,e_2,e_3$. $\\partial_k f(p)=Df(p)e_k$, $\\partial_…”. Its title is “\\texttt{Smooth.A}, \\texttt{Smooth.setting}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) A, setting, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.158Z"
+    },
+    "ec2624b11cbe": {
+      "claimId": "lemma-15",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 15 (lemma-15) states: “If $F,\\partial_sF$ are jointly continuous on $\\mathbb{R}\\times\\mathbb{R}$, then $\\frac{d}{ds}\\int_0^1F(s,x)\\,dx=\\int_0^1\\partial_sF(s,x)\\,dx$.”. Its title is “\\texttt{Torus.hasDerivAt\\_integral01}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) hasDerivAt_integral01, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.199Z"
+    },
+    "8cbf18684e05": {
+      "claimId": "lemma-16",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 16 (lemma-16) states: “If $f,\\partial_tf$ are jointly continuous, then $\\frac{d}{dt}\\int_{\\mathbb{T}^3}f=\\int_{\\mathbb{T}^3}\\partial_tf$.”. Its title is “\\texttt{Torus.hasDerivAt\\_torusIntegral}; (b)”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) hasDerivAt_torusIntegral, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.240Z"
+    },
+    "fb29d25ec321": {
+      "claimId": "theorem-18",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 18 (theorem-18) states: “The smooth model is a periodic setting. Hence identities (1) and (2) hold for all $u,\\omega,\\phi\\in A$ satisfying (\\ref{div})--(\\ref{wt}).”. Its title is “\\texttt{Smooth.int\\_d}, \\texttt{Smooth.int\\_dt}, \\texttt{Smooth.enstrophy\\_identity\\_smooth}, \\texttt{Smooth.weighted\\_identity\\_smooth}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) int_d, int_dt, enstrophy_identity_smooth, weighted_identity_smooth, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.278Z"
+    },
+    "021a04368c50": {
+      "claimId": "theorem-20",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 20 (theorem-20) states: “Let $S=\\frac12\\int|\\omega|^2-\\frac{\\kappa}{2}\\int|\\omega|^4\\phi$. For smooth periodic solutions of (\\ref{div})--(\\ref{wt}), \\[S'=\\int\\omega_i\\omega_j\\partial_ju_i-\\nu\\int|\\nabla\\omega|^2-\\tfrac{\\kapp…”. Its title is “\\texttt{Lyapunov.dS\\_identity\\_smooth}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) dS_identity_smooth, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.317Z"
+    },
+    "6bc505068064": {
+      "claimId": "theorem-21",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 21 (theorem-21) states: “Let $h,M$ be continuous, $g(0)=0$, and $g'=h\\le M^2$ on $[0,t]$. Then $g(t)\\le\\int_0^tM^2$.”. Its title is “\\texttt{Lyapunov.le\\_integral\\_sq\\_of\\_deriv}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) le_integral_sq_of_deriv, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.355Z"
+    },
+    "417eec335892": {
+      "claimId": "theorem-22",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 22 (theorem-22) states: “Let $\\kappa>0$, and let $y'=y^2(C-\\kappa y)$ on $[0,T]$. Then $\\min(y_0,C/\\kappa,0)\\le y(t)\\le\\max(y_0,C/\\kappa,0)$.”. Its title is “\\texttt{Lyapunov.ode\\_bounded}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) ode_bounded, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.398Z"
+    }
+  }
+}
