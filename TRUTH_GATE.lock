@@ -1,0 +1,17 @@
+{
+  "semantics_file": "WeightedEnstrophy/Semantics.lean",
+  "semantics_module": "WeightedEnstrophy.Semantics",
+  "paper_path": "paper/main.tex",
+  "paper_sha256": "c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754",
+  "main_theorems": [
+    "WeightedEnstrophy.Smooth.enstrophy_identity_smooth"
+  ],
+  "lock_region_sha256": "00d82aa78e5adca21d967a79ca25814c70266ec4afce71f53ada16d2a2787810",
+  "draft_dirs": [
+    "WeightedEnstrophy/Draft"
+  ],
+  "lean_roots": [
+    "WeightedEnstrophy",
+    "WeightedEnstrophy.lean"
+  ]
+}
