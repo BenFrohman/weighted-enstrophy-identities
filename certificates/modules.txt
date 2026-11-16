@@ -1,0 +1,8 @@
+WeightedEnstrophy
+WeightedEnstrophy.Abstract
+WeightedEnstrophy.Fourier.Basic
+WeightedEnstrophy.Fourier.Strain
+WeightedEnstrophy.Lyapunov
+WeightedEnstrophy.Smooth
+WeightedEnstrophy.TorusCalculus
+WeightedEnstrophy.TrigModel
