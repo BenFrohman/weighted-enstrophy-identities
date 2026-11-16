@@ -1,0 +1,14 @@
+checker: leanchecker source shipped with v4.30.0-rc1 (src/lean/LeanChecker.lean), prefix match -> exact match, run with lean --run
+  patch: 93c93
+  patch: <         if !fresh && target.isPrefixOf m || target == m then
+  patch: ---
+  patch: >         if !fresh && target == m || target == m then
+WeightedEnstrophy: OK (1 module replayed)
+WeightedEnstrophy.Abstract: OK (1 module replayed)
+WeightedEnstrophy.Fourier.Basic: OK (1 module replayed)
+WeightedEnstrophy.Fourier.Strain: OK (1 module replayed)
+WeightedEnstrophy.Lyapunov: OK (1 module replayed)
+WeightedEnstrophy.Smooth: OK (1 module replayed)
+WeightedEnstrophy.TorusCalculus: OK (1 module replayed)
+WeightedEnstrophy.TrigModel: OK (1 module replayed)
+RESULT: 8 of 8 modules replayed through the kernel, 0 failures

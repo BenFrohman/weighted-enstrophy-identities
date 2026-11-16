@@ -1,0 +1,6 @@
+commit: 57ab6dd512bfd17084d57ae3d505b6c7d0d7ce0c
+lean-toolchain: leanprover/lean4:v4.30.0-rc1
+lean --version: Lean (version 4.30.0-rc1, x86_64-unknown-linux-gnu, commit 714601baf118066cbf3f282361339c6d06665b2a, Release)
+lake --version: Lake version 5.0.0-src+714601b (Lean version 4.30.0-rc1)
+date (UTC): 2026-11-16T19:18:18Z
+run: https://github.com/BenFrohman/weighted-enstrophy-identities/actions/runs/43937829839

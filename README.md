@@ -2,6 +2,10 @@
 
 [![certify.yml](https://github.com/BenFrohman/weighted-enstrophy-identities/actions/workflows/certify.yml/badge.svg?branch=main)](https://github.com/BenFrohman/weighted-enstrophy-identities/actions/workflows/certify.yml)
 
+## Kernel certificate
+
+[certificates/CERTIFICATE.md](certificates/CERTIFICATE.md): commit `57ab6dd`, `leanprover/lean4:v4.30.0-rc1`. `lake build` passes; the sorry/axiom scan finds 0 hits; **101 theorems depend only on `propext`, `Classical.choice`, `Quot.sound`**; 8 of 8 modules replayed through the kernel, 0 failures ([CI run](https://github.com/BenFrohman/weighted-enstrophy-identities/actions/runs/43937829839)).
+
 Lean 4 + Mathlib (`leanprover/lean4:v4.30.0-rc1`, Mathlib `v4.30.0-rc1`) formalization of two
 exact balance identities, and related lemmas, for the 3-D incompressible Navier–Stokes vorticity equation on the
 torus `T³`, from *An a-posteriori Lyapunov functional approach* by Benjamin Stanley Frohman.
