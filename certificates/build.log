@@ -1,6 +1,6 @@
-✔ [8264/8272] Built WeightedEnstrophy.TorusCalculus (5.5s)
-✔ [8265/8272] Built WeightedEnstrophy.Fourier.Basic (5.6s)
-⚠ [8266/8272] Built WeightedEnstrophy.Abstract (5.7s)
+✔ [8264/8272] Built WeightedEnstrophy.Fourier.Basic (4.9s)
+✔ [8265/8272] Built WeightedEnstrophy.TorusCalculus (5.5s)
+⚠ [8266/8272] Built WeightedEnstrophy.Abstract (6.3s)
 warning: WeightedEnstrophy/Abstract.lean:64:23: This simp argument is unused:
   map_add
 
@@ -22,7 +22,7 @@ Hint: Omit it from the simp argument list.
   simp only [adv, vsq, map_s̵u̵m̵,̵ ̵m̵ap̵_̵a̵dd, Derivation.leibniz, smul_eq_mul, Fin.sum_univ_three]
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [8267/8272] Built WeightedEnstrophy.Fourier.Strain (5.4s)
+⚠ [8267/8272] Built WeightedEnstrophy.Fourier.Strain (6.3s)
 warning: WeightedEnstrophy/Fourier/Strain.lean:131:40: This simp argument is unused:
   ← Complex.ofReal_pow
 
@@ -32,8 +32,8 @@ Hint: Omit it from the simp argument list.
 Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-✔ [8268/8272] Built WeightedEnstrophy.TrigModel (6.1s)
-✔ [8269/8272] Built WeightedEnstrophy.Smooth (8.6s)
-✔ [8270/8272] Built WeightedEnstrophy.Lyapunov (4.5s)
-✔ [8271/8272] Built WeightedEnstrophy (2.5s)
+✔ [8268/8272] Built WeightedEnstrophy.TrigModel (6.3s)
+✔ [8269/8272] Built WeightedEnstrophy.Smooth (8.3s)
+✔ [8270/8272] Built WeightedEnstrophy.Lyapunov (4.8s)
+✔ [8271/8272] Built WeightedEnstrophy (2.7s)
 Build completed successfully (8272 jobs).
