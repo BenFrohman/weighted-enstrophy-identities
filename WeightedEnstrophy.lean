@@ -11,6 +11,7 @@ import WeightedEnstrophy.Smooth
 import WeightedEnstrophy.Lyapunov
 import WeightedEnstrophy.Fourier.Basic
 import WeightedEnstrophy.Fourier.Strain
+import WeightedEnstrophy.CalderonZygmund
 
 /-!
 # WeightedEnstrophy

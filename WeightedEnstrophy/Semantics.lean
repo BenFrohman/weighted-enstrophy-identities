@@ -301,8 +301,8 @@ theorem paper_claim_holds : paper_claim :=
 
 The hypotheses of `paper_claim` are satisfiable by a non-trivial configuration:
 `ν = 0`, `u = 0`, `ω = (1, 0, 0)` (constant), `φ(t, a, b, c) = t`. Then (div) and (vort) hold
-trivially and (wt) reads `∂ₜφ = 1 = |ω|²`. Identity (2) then says `dQ/dt = ∫|ω|⁶ = 1` with
-`Q(t) = ∫ t = t`, and `φ` is not constant, so the weighted identity is exercised. -/
+trivially and (wt) reads `∂ₜφ = 1 = |ω|²`. Identity (2) then says `d/dt ∫|ω|⁴φ = ∫|ω|⁶ = 1` with
+`∫|ω|⁴φ = ∫ t = t`, and `φ` is not constant, so the weighted identity is exercised. -/
 
 /-- The witness fields. -/
 def witnessU : Fin 3 → ℝ × ℝ × ℝ × ℝ → ℝ := fun _ _ => 0

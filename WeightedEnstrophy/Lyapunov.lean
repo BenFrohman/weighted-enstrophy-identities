@@ -14,8 +14,9 @@ Proved here:
 * `le_integral_sq_of_deriv`: `g(t) ≤ ∫₀ᵗ ‖ω(s)‖²_{L∞} ds` when `g(0)=0`, `g'(s) ≤ ‖ω(s)‖²_{L∞}` (the weight along a path).
 * `ode_bounded`: solutions of `y' = y²(C − κy)` (`κ > 0`) stay in `[min y₀ 0, max y₀ (max (C/κ) 0)]`.
 
-Stated as `Prop`s and **not** proved (the paper's corresponding steps are not established):
-`CalderonZygmundLp`, `WeightedToSupReduction`, `PhiSupControl`.
+Stated as `Prop`s and **not** proved here (the paper's corresponding steps are not established):
+`CalderonZygmundLp` (its `p = 2` case is proved in `WeightedEnstrophy/CalderonZygmund.lean`),
+`WeightedToSupReduction`, `PhiSupControl`.
 -/
 
 open WeightedEnstrophy.Smooth WeightedEnstrophy.Torus Set
@@ -125,8 +126,9 @@ theorem ode_bounded (C κ : ℝ) (hκ : 0 < κ) (y : ℝ → ℝ) (T : ℝ)
 /-! ### Open steps, stated as hypotheses only (not proved, not assumed anywhere above) -/
 
 /-- `L^p` Calderón–Zygmund bound on `T³` for `1 < p < ∞`:
-`∫|∂ⱼuᵢ|^p ≤ C ∫|ω|^p` for divergence-free `u` with `ω = curl u`. (True classical theorem;
-not formalized here. The `L∞` version used in the paper is false and is not stated.) -/
+`∫|∂ⱼuᵢ|^p ≤ C ∫|ω|^p` for divergence-free `u` with `ω = curl u`. (True classical theorem.
+Only `p = 2` is formalized: `calderonZygmundLp_two` in `WeightedEnstrophy/CalderonZygmund.lean`.
+The `L∞` version used in the paper is false and is not stated.) -/
 def CalderonZygmundLp (p : ℝ) : Prop :=
   ∃ C : ℝ, ∀ (u ω : Fin 3 → A), div setting u = 0 →
     (∀ i, ω i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) →
