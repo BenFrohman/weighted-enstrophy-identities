@@ -4,9 +4,10 @@
   "paper_path": "paper/main.tex",
   "paper_sha256": "c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754",
   "main_theorems": [
-    "WeightedEnstrophy.Smooth.enstrophy_identity_smooth"
+    "WeightedEnstrophy.Smooth.enstrophy_identity_smooth",
+    "WeightedEnstrophy.Smooth.weighted_identity_smooth"
   ],
-  "lock_region_sha256": "00d82aa78e5adca21d967a79ca25814c70266ec4afce71f53ada16d2a2787810",
+  "lock_region_sha256": "cf9d3e2f10be6b2e92e00f4f07363bcb03cce0db9fdb84970b42002fac2d249d",
   "draft_dirs": [
     "WeightedEnstrophy/Draft"
   ],
@@ -14,7 +15,18 @@
     "WeightedEnstrophy",
     "WeightedEnstrophy.lean"
   ],
-  "certifying": false,
-  "reopened_reason": "Partial lock. The paper's smooth-model theorem (`Smooth.int_d`, `Smooth.int_dt`, `Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`) states \"identities (1) and (2) hold for all u, ω, φ ∈ A\". Only identity (1) is locked; identity (2), the weighted identity, is not.",
-  "reopened_on": "2026-11-16"
+  "certifying": true,
+  "reaudit_history": [
+    {
+      "reopened_on": "2026-11-16",
+      "reopened_reason": "Partial lock. The paper's smooth-model theorem (`Smooth.int_d`, `Smooth.int_dt`, `Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`) states \"identities (1) and (2) hold for all u, ω, φ ∈ A\". Only identity (1) is locked; identity (2), the weighted identity, is not.",
+      "previous_main_theorems": [
+        "WeightedEnstrophy.Smooth.enstrophy_identity_smooth"
+      ]
+    },
+    {
+      "relocked_on": "2026-11-16",
+      "relocked_as": "the paper's full smooth-model theorem: identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div), (vort), (wt) (`Smooth.enstrophy_identity_smooth` ∧ `Smooth.weighted_identity_smooth`)."
+    }
+  ]
 }

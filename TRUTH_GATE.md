@@ -74,8 +74,8 @@ Reports are written to `truth-gate-report/`.
 
 * Paper: `paper/main.tex`
 * sha256: `c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754`
-* Section: Theorem "Identity (1)" (Section "Identity (1)") in the smooth periodic model (Section "Smooth periodic fields", theorem `Smooth.enstrophy_identity_smooth`), with the Setting equations (div) and (vort)
-* Main theorem(s): `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`
+* Section: The smooth-model theorem of Section "Smooth periodic fields" (`Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`): identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div)–(wt); Theorems "Identity (1)" and "Identity (2)"; Setting equations (div), (vort), (wt)
+* Main theorem(s): `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`, `WeightedEnstrophy.Smooth.weighted_identity_smooth`
 * Lock file: `TRUTH_GATE.lock`; semantics: `WeightedEnstrophy/Semantics.lean`
 
 Verbatim quote:
@@ -85,6 +85,10 @@ Verbatim quote:
 With $E=\frac12\int|\omega|^2$ and $P=\int\omega_i\omega_j\partial_ju_i$,
 \[\frac{dE}{dt}=P-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
 
+\begin{theorem}[Identity (2), \texttt{weighted\_identity}, \texttt{weighted\_identity\_T3}]
+With $Q=\int|\omega|^4\phi$,
+\[\frac{dQ}{dt}=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
+
 \begin{theorem}[\texttt{Smooth.int\_d}, \texttt{Smooth.int\_dt}, \texttt{Smooth.enstrophy\_identity\_smooth}, \texttt{Smooth.weighted\_identity\_smooth}]
 The smooth model is a periodic setting. Hence identities (1) and (2) hold for all
 $u,\omega,\phi\in A$ satisfying (\ref{div})--(\ref{wt}).
@@ -93,6 +97,8 @@ Let $u,\omega:\mathbb{T}^3\to\mathbb{R}^3$ and $\phi:\mathbb{T}^3\to\mathbb{R}$ 
 \begin{align}
 &\partial_k u_k=0, \label{div}\\
 &\partial_t\omega_i=-u_k\partial_k\omega_i+\omega_k\partial_k u_i+\nu\,\partial_k\partial_k\omega_i,\label{vort}\\
+&\partial_t\phi=-u_k\partial_k\phi+|\omega|^2,\label{wt}
+\end{align}
 
 summing over repeated indices. The relation $\omega=\nabla\times u$ is not needed for either identity.
 
@@ -103,28 +109,42 @@ $\partial_tf(p)=Df(p)e_t$, $I(f)(t)=\int_0^1\!\int_0^1\!\int_0^1 f(t,a,b,c)\,dc\
 
 ```lean
 def formal_claim : Prop :=
-  ∀ (ν : ℝ) (u w : Fin 3 → Smooth.A),
+  ∀ (ν : ℝ) (u w : Fin 3 → Smooth.A) (φ : Smooth.A),
     WeightedEnstrophy.div Smooth.setting u = 0 → VorticityEq Smooth.setting ν u w →
+    WeightEq Smooth.setting u w φ →
     deriv (Smooth.I (vsq w)) =
-      (2 : ℝ) • Smooth.I (stretch Smooth.setting u w) - (2 * ν) • Smooth.I (gradSq Smooth.setting w)
+        (2 : ℝ) • Smooth.I (stretch Smooth.setting u w) - (2 * ν) • Smooth.I (gradSq Smooth.setting w)
+      ∧ deriv (Smooth.I (vsq w * vsq w * φ)) =
+        (4 : ℝ) • Smooth.I (vsq w * φ * stretch Smooth.setting u w)
+        + (4 * ν) • Smooth.I (vsq w * φ * wLapW Smooth.setting w)
+        + Smooth.I (vsq w * vsq w * vsq w)
 
 def paper_claim : Prop :=
-  ∀ (ν : ℝ) (u w : Fin 3 → ℝ × ℝ × ℝ × ℝ → ℝ),
-    (∀ i, paperSmooth (u i)) → (∀ i, paperSmooth (w i)) →
+  ∀ (ν : ℝ) (u w : Fin 3 → ℝ × ℝ × ℝ × ℝ → ℝ) (φ : ℝ × ℝ × ℝ × ℝ → ℝ),
+    (∀ i, paperSmooth (u i)) → (∀ i, paperSmooth (w i)) → paperSmooth φ →
     (∀ p, ∑ k, fderiv ℝ (u k) p (paperE k) = 0) →
     (∀ i p, fderiv ℝ (w i) p (1, 0, 0, 0) =
       -(∑ k, u k p * fderiv ℝ (w i) p (paperE k)) + ∑ k, w k p * fderiv ℝ (u i) p (paperE k)
         + ν * ∑ k, fderiv ℝ (fun q => fderiv ℝ (w i) q (paperE k)) p (paperE k)) →
-    ∀ t, deriv (fun s => (1 / 2 : ℝ) * paperInt (fun p => ∑ i, w i p ^ 2) s) t =
-      paperInt (fun p => ∑ i, ∑ j, w i p * w j p * fderiv ℝ (u i) p (paperE j)) t
-        - ν * paperInt (fun p => ∑ i, ∑ k, fderiv ℝ (w i) p (paperE k) ^ 2) t
+    (∀ p, fderiv ℝ φ p (1, 0, 0, 0) =
+      -(∑ k, u k p * fderiv ℝ φ p (paperE k)) + ∑ i, w i p ^ 2) →
+    ∀ t,
+      deriv (fun s => (1 / 2 : ℝ) * paperInt (fun p => ∑ i, w i p ^ 2) s) t =
+        paperInt (fun p => ∑ i, ∑ j, w i p * w j p * fderiv ℝ (u i) p (paperE j)) t
+          - ν * paperInt (fun p => ∑ i, ∑ k, fderiv ℝ (w i) p (paperE k) ^ 2) t
+      ∧ deriv (paperInt (fun p => (∑ i, w i p ^ 2) ^ 2 * φ p)) t =
+        4 * paperInt (fun p => (∑ i, w i p ^ 2) * φ p *
+              ∑ i, w i p * ∑ j, w j p * fderiv ℝ (u i) p (paperE j)) t
+          + 4 * ν * paperInt (fun p => (∑ i, w i p ^ 2) * φ p *
+              ∑ i, w i p * ∑ k, fderiv ℝ (fun q => fderiv ℝ (w i) q (paperE k)) p (paperE k)) t
+          + paperInt (fun p => (∑ i, w i p ^ 2) ^ 3) t
 ```
 
-See the doc comment of `WeightedEnstrophy/Semantics.lean` for the fixed reading of the paper's terms and the scope.
+See the doc comment of `WeightedEnstrophy/Semantics.lean` for the fixed reading of the paper's terms, the scope and the non-vacuity witness.
 
-## Re-audit (2026-11-16): this lock is NOT certifying
+## Re-audit (2026-11-16): the earlier lock was NOT certifying (superseded by the re-lock below)
 
-Status: **REOPENED. The gate is red on purpose.** `TRUTH_GATE.lock` carries `"certifying": false`, and
+Status at the re-audit: **REOPENED. The gate was red on purpose.** `TRUTH_GATE.lock` carries `"certifying": false`, and
 `scripts/truth_gate_check.py` fails while it does. Nothing was deleted: `Semantics.lean`, the quotes,
 the hashes and the history are unchanged.
 
@@ -144,3 +164,13 @@ Why it is reopened:
 * The locked identity itself is real, true and kernel-checked. It is about real objects (smooth ℤ³-periodic fields), and its `paper_claim` is an independent transcription.
 
 What would re-certify it: Re-lock both identities (1) and (2) in the smooth model, independently transcribed.
+
+## Re-lock (2026-11-16): full lock, certifying
+
+With Benjamin Stanley Frohman's approval of 2026-11-16, the lock was replaced by a full lock:
+the paper's full smooth-model theorem: identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div), (vort), (wt) (`Smooth.enstrophy_identity_smooth` ∧ `Smooth.weighted_identity_smooth`).
+
+Previous main theorem(s): `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`. New main theorem(s): `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`, `WeightedEnstrophy.Smooth.weighted_identity_smooth`. `TRUTH_GATE.lock` is back to `"certifying": true`; the reopen record is kept under `reaudit_history`.
+All rules still apply: no `sorry`/`admit`/`native_decide`/new axioms; only `propext`, `Classical.choice`, `Quot.sound`;
+`paper_claim` is an independent transcription of the verbatim quote; the correspondence is substantive (not `rfl`/`Iff.rfl`)
+and does not use the main theorems; a non-vacuity witness is proved in `WeightedEnstrophy/Semantics.lean`.
