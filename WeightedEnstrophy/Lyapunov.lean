@@ -7,11 +7,11 @@ Authors: Benjamin Stanley Frohman
 import WeightedEnstrophy.Smooth
 
 /-!
-# The functional `S = E − (κ/2) Q`, the comparison ODE, and the open steps
+# The functional `½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ`, the comparison ODE, and the open steps
 
 Proved here:
-* `dS_identity_smooth`: exact formula for `dS/dt` for smooth periodic solutions.
-* `le_integral_sq_of_deriv`: `g(t) ≤ ∫₀ᵗ M²` when `g(0)=0`, `g' ≤ M²` (the weight along a path).
+* `dS_identity_smooth`: exact formula for `d/dt (½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ)` for smooth periodic solutions.
+* `le_integral_sq_of_deriv`: `g(t) ≤ ∫₀ᵗ ‖ω(s)‖²_{L∞} ds` when `g(0)=0`, `g'(s) ≤ ‖ω(s)‖²_{L∞}` (the weight along a path).
 * `ode_bounded`: solutions of `y' = y²(C − κy)` (`κ > 0`) stay in `[min y₀ 0, max y₀ (max (C/κ) 0)]`.
 
 Stated as `Prop`s and **not** proved (the paper's corresponding steps are not established):
@@ -22,39 +22,39 @@ open WeightedEnstrophy.Smooth WeightedEnstrophy.Torus Set
 
 namespace WeightedEnstrophy.Lyapunov
 
-/-- `E(t) = ½ ∫|ω|²`. -/
-noncomputable def En (w : Fin 3 → A) (t : ℝ) : ℝ := (1 / 2) * I (vsq w) t
-/-- `Q(t) = ∫ |ω|⁴ φ`. -/
-noncomputable def Q (w : Fin 3 → A) (φ : A) (t : ℝ) : ℝ := I (vsq w * vsq w * φ) t
-/-- `S(t) = E(t) − (κ/2) Q(t)`. -/
-noncomputable def S (κ : ℝ) (w : Fin 3 → A) (φ : A) (t : ℝ) : ℝ := En w t - κ / 2 * Q w φ t
+/-- The enstrophy `‖ω(t)‖²_{L²(𝕋³)} = ∫_{𝕋³} |ω(t,x)|² dx`. -/
+noncomputable def enstrophy (ω : Fin 3 → A) (t : ℝ) : ℝ := I (vsq ω) t
+/-- The functional `½‖ω(t)‖²_{L²(𝕋³)} − (κ/2) ∫_{𝕋³} |ω(t,x)|⁴ φ(t,x) dx`. -/
+noncomputable def lyapunovFunctional (κ : ℝ) (ω : Fin 3 → A) (φ : A) (t : ℝ) : ℝ :=
+  (1 / 2) * enstrophy ω t - κ / 2 * I (vsq ω * vsq ω * φ) t
 
-/-- **Exact evolution of `S`** for smooth periodic solutions (`div u = 0`, vorticity equation,
+/-- **Exact evolution of `½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ`** for smooth periodic solutions (`div u = 0`, vorticity equation,
 weight equation):
-`S' = ∫ωᵢωⱼ∂ⱼuᵢ − ν∫|∇ω|² − (κ/2)(4∫|ω|²φ ωᵢωⱼ∂ⱼuᵢ + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶)`. -/
-theorem dS_identity_smooth (κ ν : ℝ) (u w : Fin 3 → A) (φ : A)
-    (hu : div setting u = 0) (hw : VorticityEq setting ν u w) (hφ : WeightEq setting u w φ)
+`d/dt (½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ) = ∫ωᵢωⱼ∂ⱼuᵢ − ν‖∇ω‖²_{L²} − (κ/2)(4∫|ω|²φ ωᵢωⱼ∂ⱼuᵢ + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶)`. -/
+theorem dS_identity_smooth (κ ν : ℝ) (u ω : Fin 3 → A) (φ : A)
+    (hu : div setting u = 0) (hw : VorticityEq setting ν u ω) (hφ : WeightEq setting u ω φ)
     (t : ℝ) :
-    HasDerivAt (S κ w φ)
-      (I (stretch setting u w) t - ν * I (gradSq setting w) t
-        - κ / 2 * (4 * I (vsq w * φ * stretch setting u w) t
-          + 4 * ν * I (vsq w * φ * wLapW setting w) t + I (vsq w * vsq w * vsq w) t)) t := by
-  have h1 := hasDerivAt_I (vsq w) t
-  have h2 := hasDerivAt_I (vsq w * vsq w * φ) t
-  have e1 := congrFun (enstrophy_identity_smooth ν u w hu hw) t
-  have e2 := congrFun (weighted_identity_smooth ν u w φ hu hw hφ) t
+    HasDerivAt (lyapunovFunctional κ ω φ)
+      (I (stretch setting u ω) t - ν * I (gradSq setting ω) t
+        - κ / 2 * (4 * I (vsq ω * φ * stretch setting u ω) t
+          + 4 * ν * I (vsq ω * φ * wLapW setting ω) t + I (vsq ω * vsq ω * vsq ω) t)) t := by
+  have h1 := hasDerivAt_I (vsq ω) t
+  have h2 := hasDerivAt_I (vsq ω * vsq ω * φ) t
+  have e1 := congrFun (enstrophy_identity_smooth ν u ω hu hw) t
+  have e2 := congrFun (weighted_identity_smooth ν u ω φ hu hw hφ) t
   rw [h1.deriv] at e1; rw [h2.deriv] at e2
   have := (h1.const_mul (1 / 2)).sub (h2.const_mul (κ / 2))
   convert this using 1
   rw [e1, e2]; simp [Pi.add_apply, Pi.sub_apply, Pi.smul_apply]; ring
 
-/-- **Weight along a path.** If `g(0) = 0` and `g'(s) = h(s) ≤ M(s)²` on `[0,t]`
+/-- **Weight along a path.** If `g(0) = 0` and `g'(s) = h(s) ≤ ‖ω(s)‖²_{L∞}` on `[0,t]`
 (e.g. `g(s) = φ(s, X(s))` along a particle path, where `g' = |ω|²(s,X(s))`), then
-`g(t) ≤ ∫₀ᵗ M(s)² ds`. -/
-theorem le_integral_sq_of_deriv (g h M : ℝ → ℝ) (t : ℝ) (ht : 0 ≤ t)
-    (hg : ∀ s ∈ Icc 0 t, HasDerivAt g (h s) s) (hh : Continuous h) (hM : Continuous M)
-    (hle : ∀ s ∈ Icc 0 t, h s ≤ M s ^ 2) (h0 : g 0 = 0) :
-    g t ≤ ∫ s in (0:ℝ)..t, M s ^ 2 := by
+`g(t) ≤ ∫₀ᵗ ‖ω(s)‖²_{L∞} ds`. The argument `vorticityLinfNorm` is the function
+`s ↦ ‖ω(s)‖_{L∞(𝕋³)}`; the lemma is proved for every continuous real function in that slot. -/
+theorem le_integral_sq_of_deriv (g h vorticityLinfNorm : ℝ → ℝ) (t : ℝ) (ht : 0 ≤ t)
+    (hg : ∀ s ∈ Icc 0 t, HasDerivAt g (h s) s) (hh : Continuous h) (hM : Continuous vorticityLinfNorm)
+    (hle : ∀ s ∈ Icc 0 t, h s ≤ vorticityLinfNorm s ^ 2) (h0 : g 0 = 0) :
+    g t ≤ ∫ s in (0:ℝ)..t, vorticityLinfNorm s ^ 2 := by
   have : ∫ s in (0:ℝ)..t, h s = g t - g 0 :=
     intervalIntegral.integral_eq_sub_of_hasDerivAt (fun s hs => hg s (by
       rwa [uIcc_of_le ht] at hs)) (hh.intervalIntegrable 0 t)
@@ -128,24 +128,24 @@ theorem ode_bounded (C κ : ℝ) (hκ : 0 < κ) (y : ℝ → ℝ) (T : ℝ)
 `∫|∂ⱼuᵢ|^p ≤ C ∫|ω|^p` for divergence-free `u` with `ω = curl u`. (True classical theorem;
 not formalized here. The `L∞` version used in the paper is false and is not stated.) -/
 def CalderonZygmundLp (p : ℝ) : Prop :=
-  ∃ C : ℝ, ∀ (u w : Fin 3 → A), div setting u = 0 →
-    (∀ i, w i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) →
-    ∀ t i j, torusIntegral (fun x => |(setting.d j (u i) : E → ℝ) x| ^ p) t ≤
-      C * torusIntegral (fun x => (|((vsq w : A) : E → ℝ) x|) ^ (p / 2)) t
+  ∃ C : ℝ, ∀ (u ω : Fin 3 → A), div setting u = 0 →
+    (∀ i, ω i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) →
+    ∀ t i j, torusIntegral (fun x => |(setting.d j (u i) : SpaceTime → ℝ) x| ^ p) t ≤
+      C * torusIntegral (fun x => (|((vsq ω : A) : SpaceTime → ℝ) x|) ^ (p / 2)) t
 
-/-- The reduction the paper's Section 5 needs: a bound on `S` on `[0,T)` forces a bound on
-`M(t)² = sup |ω(t,·)|²` on the same horizon, with a constant `B'` that may depend on `T`.
+/-- The reduction the paper's Section 5 needs: a bound on `½‖ω(t)‖²_{L²} − (κ/2)∫|ω|⁴φ` on
+`[0,T)` forces a bound on `‖ω(t)‖²_{L∞} = sup_x |ω(t,x)|²` on the same horizon, with a constant `B'` that may depend on `T`.
 No bound uniform in `T` is asked for. Not proved. -/
 def WeightedToSupReduction (κ ν : ℝ) : Prop :=
-  ∀ (u w : Fin 3 → A) (φ : A) (T B : ℝ), div setting u = 0 → VorticityEq setting ν u w →
-    WeightEq setting u w φ → (∀ t ∈ Ico 0 T, S κ w φ t ≤ B) →
-    ∃ B' : ℝ, ∀ t ∈ Ico 0 T, ∀ x : ℝ × ℝ × ℝ, ((vsq w : A) : E → ℝ) (t, x) ≤ B'
+  ∀ (u ω : Fin 3 → A) (φ : A) (T B : ℝ), div setting u = 0 → VorticityEq setting ν u ω →
+    WeightEq setting u ω φ → (∀ t ∈ Ico 0 T, lyapunovFunctional κ ω φ t ≤ B) →
+    ∃ B' : ℝ, ∀ t ∈ Ico 0 T, ∀ x : ℝ × ℝ × ℝ, ((vsq ω : A) : SpaceTime → ℝ) (t, x) ≤ B'
 
 /-- Finite-horizon control of `‖φ(t)‖∞` (Section 6): for each horizon `T` there is a bound `B`,
 which may depend on `T` and on the solution, with `|φ| ≤ B` on `[0,T)`. No bound uniform in `T`
 is asked for. Not proved. -/
 def PhiSupControl (ν : ℝ) : Prop :=
-  ∀ (u w : Fin 3 → A) (φ : A) (T : ℝ), div setting u = 0 → VorticityEq setting ν u w →
-    WeightEq setting u w φ → ∃ B : ℝ, ∀ t ∈ Ico 0 T, ∀ x : ℝ × ℝ × ℝ, |(φ : E → ℝ) (t, x)| ≤ B
+  ∀ (u ω : Fin 3 → A) (φ : A) (T : ℝ), div setting u = 0 → VorticityEq setting ν u ω →
+    WeightEq setting u ω φ → ∃ B : ℝ, ∀ t ∈ Ico 0 T, ∀ x : ℝ × ℝ × ℝ, |(φ : SpaceTime → ℝ) (t, x)| ≤ B
 
 end WeightedEnstrophy.Lyapunov

@@ -73,7 +73,7 @@ Reports are written to `truth-gate-report/`.
 ## The locked claim of this repository
 
 * Paper: `paper/main.tex`
-* sha256: `c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754`
+* sha256: `725ff0ca81fd3ab1c843e4421665accf860369ee43cb44c2ba1e04679c6c5b2d`
 * Section: The smooth-model theorem of Section "Smooth periodic fields" (`Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`): identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div)–(wt); Theorems "Identity (1)" and "Identity (2)"; Setting equations (div), (vort), (wt)
 * Main theorem(s): `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`, `WeightedEnstrophy.Smooth.weighted_identity_smooth`
 * Lock file: `TRUTH_GATE.lock`; semantics: `WeightedEnstrophy/Semantics.lean`
@@ -82,12 +82,11 @@ Verbatim quote:
 
 ```
 \begin{theorem}[Identity (1), \texttt{enstrophy\_identity}, \texttt{enstrophy\_identity\_T3}]
-With $E=\frac12\int|\omega|^2$ and $P=\int\omega_i\omega_j\partial_ju_i$,
-\[\frac{dE}{dt}=P-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
+For the enstrophy $\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}|\omega|^2$,
+\[\frac{d}{dt}\,\frac12\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}\omega_i\omega_j\partial_ju_i-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
 
 \begin{theorem}[Identity (2), \texttt{weighted\_identity}, \texttt{weighted\_identity\_T3}]
-With $Q=\int|\omega|^4\phi$,
-\[\frac{dQ}{dt}=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
+\[\frac{d}{dt}\int_{\mathbb{T}^3}|\omega|^4\phi=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
 
 \begin{theorem}[\texttt{Smooth.int\_d}, \texttt{Smooth.int\_dt}, \texttt{Smooth.enstrophy\_identity\_smooth}, \texttt{Smooth.weighted\_identity\_smooth}]
 The smooth model is a periodic setting. Hence identities (1) and (2) hold for all

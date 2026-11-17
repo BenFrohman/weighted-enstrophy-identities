@@ -11,21 +11,20 @@ import WeightedEnstrophy.Smooth
 
 PAPER_PATH: paper/main.tex
 PAPER_SECTION: The smooth-model theorem of Section "Smooth periodic fields" (`Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`): identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div)–(wt); Theorems "Identity (1)" and "Identity (2)"; Setting equations (div), (vort), (wt)
-PAPER_SHA256: c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754
+PAPER_SHA256: 725ff0ca81fd3ab1c843e4421665accf860369ee43cb44c2ba1e04679c6c5b2d
 
 Locked paper claim, quoted verbatim (identity (1), identity (2), the smooth-model theorem that
 states both, then the paper's definitions it uses):
 
 PAPER_QUOTE_BEGIN
 \begin{theorem}[Identity (1), \texttt{enstrophy\_identity}, \texttt{enstrophy\_identity\_T3}]
-With $E=\frac12\int|\omega|^2$ and $P=\int\omega_i\omega_j\partial_ju_i$,
-\[\frac{dE}{dt}=P-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
+For the enstrophy $\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}|\omega|^2$,
+\[\frac{d}{dt}\,\frac12\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}\omega_i\omega_j\partial_ju_i-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
 PAPER_QUOTE_END
 
 PAPER_QUOTE_BEGIN
 \begin{theorem}[Identity (2), \texttt{weighted\_identity}, \texttt{weighted\_identity\_T3}]
-With $Q=\int|\omega|^4\phi$,
-\[\frac{dQ}{dt}=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
+\[\frac{d}{dt}\int_{\mathbb{T}^3}|\omega|^4\phi=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
 PAPER_QUOTE_END
 
 PAPER_QUOTE_BEGIN
@@ -58,21 +57,21 @@ Reading of the paper's terms (all from the quoted text):
   unit vector `e₁, e₂, e₃` (`paperE`);
 * `∂ₖ f(p) = Df(p) eₖ` and `∂ₜ f(p) = Df(p) e_t` with `e_t = (1,0,0,0)` (Fréchet derivative `fderiv`);
 * `∫_{T³} f` at time `t` is `∫₀¹∫₀¹∫₀¹ f(t,a,b,c) dc db da` (`paperInt`), `d/dt` is `deriv`;
-* `|ω|² = Σᵢ ωᵢ²`, `|∇ω|² = Σᵢ Σₖ (∂ₖωᵢ)²`, `P = ∫ ωᵢωⱼ∂ⱼuᵢ`, summing over repeated indices;
+* `|ω|² = Σᵢ ωᵢ²`, `|∇ω|² = Σᵢ Σₖ (∂ₖωᵢ)²`, `∫ ωᵢωⱼ∂ⱼuᵢ` (the vortex-stretching integral), summing over repeated indices;
 * `|ω|⁴ = (Σᵢ ωᵢ²)²`, `|ω|⁶ = (Σᵢ ωᵢ²)³`, `ω·(ω·∇)u = Σᵢ ωᵢ Σⱼ ωⱼ ∂ⱼuᵢ`,
-  `ω·Δω = Σᵢ ωᵢ Σₖ ∂ₖ∂ₖωᵢ`, `Q = ∫|ω|⁴φ`;
+  `ω·Δω = Σᵢ ωᵢ Σₖ ∂ₖ∂ₖωᵢ`, `∫|ω|⁴φ = ∫(Σᵢ ωᵢ²)²φ`;
 * hypotheses (all three, as the smooth-model theorem says "satisfying (div)–(wt)"): (div)
   `∂ₖuₖ = 0`, (vort) `∂ₜωᵢ = -uₖ∂ₖωᵢ + ωₖ∂ₖuᵢ + ν∂ₖ∂ₖωᵢ`, (wt) `∂ₜφ = -uₖ∂ₖφ + |ω|²`, pointwise,
   with `u, ω, φ ∈ A`;
-* the conclusion is BOTH displayed identities at every `t`: (1) `dE/dt = P - ν∫|∇ω|²` with
-  `E = ½∫|ω|²`, and (2) `dQ/dt = 4∫|ω|²φ ω·(ω·∇)u + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶`.
+* the conclusion is BOTH displayed identities at every `t`: (1) `d/dt (½‖ω‖²_{L²}) = ∫ωᵢωⱼ∂ⱼuᵢ - ν∫|∇ω|²`
+  with the enstrophy `‖ω‖²_{L²} = ∫|ω|²`, and (2) `d/dt ∫|ω|⁴φ = 4∫|ω|²φ ω·(ω·∇)u + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶`.
 
 `formal_claim` is the conjunction of the statements of `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`
 and `WeightedEnstrophy.Smooth.weighted_identity_smooth`, under the common hypotheses (div), (vort),
 (wt), phrased in the repository's subalgebra `Smooth.A` with `div`, `VorticityEq`, `WeightEq`, `vsq`,
 `stretch`, `gradSq`, `wLapW` and the factor-2 form `D_t I(|ω|²) = 2 I(…) - 2ν I(…)`. `paper_claim` uses plain functions, `fderiv` and
 iterated interval integrals. The correspondence packages functions into `Smooth.A` and back and
-converts the factor-2 form into the paper's `E = ½∫|ω|²` form.
+converts the factor-2 form into the paper's `d/dt (½‖ω‖²_{L²})` form.
 
 Scope: two exact identities for smooth periodic solutions of (div), (vort), (wt). It gives no bound
 and makes no regularity claim; the Clay Millennium problem remains open.
