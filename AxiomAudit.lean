@@ -8,6 +8,7 @@ Authors: Benjamin Stanley Frohman
 -- CI fails unless each depends only on propext, Classical.choice, Quot.sound (or none).
 import WeightedEnstrophy
 import WeightedEnstrophy.Abstract
+import WeightedEnstrophy.CalderonZygmund
 import WeightedEnstrophy.Fourier.Basic
 import WeightedEnstrophy.Fourier.Strain
 import WeightedEnstrophy.Lyapunov
@@ -93,3 +94,16 @@ Machine-checked Lean 4 module.
 #print axioms WeightedEnstrophy.Trig.sym_add
 #print axioms WeightedEnstrophy.Trig.sym_zero
 #print axioms WeightedEnstrophy.Trig.weighted_identity_T3
+#print axioms WeightedEnstrophy.gradU_sq_eq
+#print axioms WeightedEnstrophy.int_gradU_sq_eq
+#print axioms WeightedEnstrophy.Lyapunov.calderonZygmundLp_two
+#print axioms WeightedEnstrophy.Lyapunov.cz_hypotheses_nonvacuous
+#print axioms WeightedEnstrophy.Lyapunov.fderiv_sinB
+#print axioms WeightedEnstrophy.Lyapunov.sinB_line
+#print axioms WeightedEnstrophy.Smooth.D_comm
+#print axioms WeightedEnstrophy.Smooth.d_comm
+#print axioms WeightedEnstrophy.Smooth.int_gradU_sq_eq_smooth
+#print axioms WeightedEnstrophy.Smooth.coe_sum
+#print axioms WeightedEnstrophy.Smooth.coe_vsq
+#print axioms WeightedEnstrophy.Smooth.coe_gradUSq
+#print axioms WeightedEnstrophy.Torus.torusIntegral_mono

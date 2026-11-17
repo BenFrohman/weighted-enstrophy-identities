@@ -73,10 +73,20 @@ Proved:
 - `Lyapunov.ode_bounded`: when `κ > 0`, every solution of `y' = y²(C − κy)` on `[0,T]` satisfies
   `min(y₀, C/κ, 0) ≤ y(t) ≤ max(y₀, C/κ, 0)`. This needs no assumption on `T`.
 
+The `p = 2` case of `CalderonZygmundLp` (`WeightedEnstrophy/CalderonZygmund.lean`):
+- `int_gradU_sq_eq` / `Smooth.int_gradU_sq_eq_smooth`: for smooth periodic divergence-free `u`
+  with `ω = curl u`, `∫_{T³} Σᵢⱼ(∂ⱼuᵢ)² = ∫_{T³} |ω|²` (pointwise identity `gradU_sq_eq` plus
+  integration by parts; `Smooth.D_comm`: the derivatives commute).
+- `Lyapunov.calderonZygmundLp_two : CalderonZygmundLp 2`, with constant `C = 1`:
+  `∫_{T³} |∂ⱼuᵢ(t,·)|² ≤ ∫_{T³} |ω(t,·)|²` for every `t, i, j`.
+- `Lyapunov.cz_hypotheses_nonvacuous`: `u = (sin 2πb, 0, 0)` satisfies the hypotheses and has
+  `∂₁u₀ ≠ 0`.
+
 Stated as `Prop` definitions. They are not proved, and no theorem above uses them:
-- `CalderonZygmundLp p`: `∫|∂ⱼuᵢ|^p ≤ C∫|ω|^p` on smooth periodic divergence-free fields. This
-  is the classical theorem for `1 < p < ∞`, and it is not formalized here. The `L∞` version is
-  false and is not stated.
+- `CalderonZygmundLp p` for `p ≠ 2`: `∫|∂ⱼuᵢ|^p ≤ C∫|ω|^p` on smooth periodic divergence-free
+  fields. This is the classical theorem for `1 < p < ∞` (`Lᵖ` boundedness of the Riesz
+  transforms on `T³`), and only `p = 2` is formalized here. The `L∞` version is false and is not
+  stated.
 - `WeightedToSupReduction κ ν`: a bound on `S` over `[0,T)` would force a bound on `sup|ω|²` over the same `[0,T)`, with a constant that may depend on `T`.
 - `PhiSupControl ν`: for each horizon `T`, a bound on `|φ|` over `[0,T)`; the bound may depend on `T`.
 
@@ -86,7 +96,7 @@ an `L∞` Calderón–Zygmund bound, the reduction from `S` to `M`, and the boot
 ## Layout
 
 - `WeightedEnstrophy/Abstract.lean`, `TrigModel.lean`, `TorusCalculus.lean`, `Smooth.lean`,
-  `Lyapunov.lean`, `Fourier/Basic.lean`, `Fourier/Strain.lean`
+  `Lyapunov.lean`, `Fourier/Basic.lean`, `Fourier/Strain.lean`, `CalderonZygmund.lean`
 - `AxiomAudit.lean`: kernel axiom audit
 - `paper/main.tex`: step-by-step derivations
 - `ip_pipeline/seal_and_verify.py`, `audit/`, `PROVENANCE_MERKLE_ROOT.json`: Titan-Audit,
