@@ -13,5 +13,8 @@
   "lean_roots": [
     "WeightedEnstrophy",
     "WeightedEnstrophy.lean"
-  ]
+  ],
+  "certifying": false,
+  "reopened_reason": "Partial lock. The paper's smooth-model theorem (`Smooth.int_d`, `Smooth.int_dt`, `Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`) states \"identities (1) and (2) hold for all u, ω, φ ∈ A\". Only identity (1) is locked; identity (2), the weighted identity, is not.",
+  "reopened_on": "2026-11-16"
 }
