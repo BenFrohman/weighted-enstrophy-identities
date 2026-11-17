@@ -15,7 +15,6 @@ spatial variable, i.e. smooth time-dependent fields on `T³ = (ℝ/ℤ)³`. Deri
 directional derivatives; the integral is `∫_{T³} f(t,·)`, a function of `t`; `Dt = deriv`.
 -/
 
-open scoped ContDiff
 open WeightedEnstrophy.Torus
 
 namespace WeightedEnstrophy.Smooth
@@ -29,6 +28,7 @@ def e : Fin 3 → SpaceTime
 /-- Time unit vector. -/
 def eT : SpaceTime := (1, 0, 0, 0)
 
+open scoped ContDiff in
 /-- Smooth fields on `ℝ × T³`. -/
 def A : Subalgebra ℝ (SpaceTime → ℝ) where
   carrier := {f | ContDiff ℝ ∞ f ∧ ∀ k p, f (p + e k) = f p}
@@ -36,9 +36,11 @@ def A : Subalgebra ℝ (SpaceTime → ℝ) where
   add_mem' := fun {f g} hf hg => ⟨hf.1.add hg.1, fun k p => by simp [hf.2 k p, hg.2 k p]⟩
   algebraMap_mem' := fun r => ⟨contDiff_const, fun _ _ => rfl⟩
 
+open scoped ContDiff in
 lemma smooth (f : A) : ContDiff ℝ ∞ (f : SpaceTime → ℝ) := f.2.1
 lemma periodic (f : A) (k p) : (f : SpaceTime → ℝ) (p + e k) = (f : SpaceTime → ℝ) p := f.2.2 k p
 
+open scoped ContDiff in
 lemma fderiv_mem (f : A) (v : SpaceTime) : (fun p => fderiv ℝ (f : SpaceTime → ℝ) p v) ∈ A := by
   refine ⟨((smooth f).fderiv_right (m := ∞) (by simp)).clm_apply contDiff_const, fun k p => ?_⟩
   have : (fun q => (f : SpaceTime → ℝ) (q + e k)) = f := funext (periodic f k)
