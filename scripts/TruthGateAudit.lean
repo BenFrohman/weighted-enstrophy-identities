@@ -26,7 +26,7 @@ open Lean Meta Elab Command
 namespace TruthGateAudit
 
 def standard : List Name := [``propext, ``Classical.choice, ``Quot.sound]
-def mains : List Name := [`WeightedEnstrophy.Smooth.enstrophy_identity_smooth]
+def mains : List Name := [`WeightedEnstrophy.Smooth.enstrophy_identity_smooth, `WeightedEnstrophy.Smooth.weighted_identity_smooth]
 
 partial def reach (env : Environment) (todo : List Name) (seen : NameSet) : NameSet :=
   match todo with
