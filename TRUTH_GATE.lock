@@ -8,9 +8,6 @@
     "WeightedEnstrophy.Smooth.weighted_identity_smooth"
   ],
   "lock_region_sha256": "cf9d3e2f10be6b2e92e00f4f07363bcb03cce0db9fdb84970b42002fac2d249d",
-  "draft_dirs": [
-    "WeightedEnstrophy/Draft"
-  ],
   "lean_roots": [
     "WeightedEnstrophy",
     "WeightedEnstrophy.lean"

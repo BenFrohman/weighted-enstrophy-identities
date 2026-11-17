@@ -3,8 +3,8 @@
 # Released under Apache 2.0 license as described in the file LICENSE.
 # Authors: Benjamin Stanley Frohman
 #
-# Truth Gate verification (see TRUTH_GATE.md). Fails on: sorry/admit/native_decide/axiom outside
-# the draft directories, a missing or edited correspondence lock, a paper hash/quote mismatch,
+# Truth Gate verification (see TRUTH_GATE.md). Fails on: sorry/admit/native_decide/axiom in any
+# tracked .lean file or anywhere in the full build log (no exempt files or directories), a missing or edited correspondence lock, a paper hash/quote mismatch,
 # a failed lake build, nonstandard axioms in the locked theorems, a definitional (vacuous)
 # correspondence, a correspondence proof that leans on the main theorem, or a paper_claim that
 # reuses repository Props instead of transcribing the paper (lock-form lint).
@@ -36,17 +36,12 @@ if [ -n "$MOD" ]; then
   cat truth-gate-report/build-semantics.log >> truth-gate-report/build.log
 fi
 python3 - <<'PY' > truth-gate-report/sorry.txt
-import json, re
-lock = json.load(open("TRUTH_GATE.lock"))
-drafts = [d.strip("/") for d in lock["draft_dirs"]]
+# Every line of the full build log is checked; no file or directory is exempt.
 for line in open("truth-gate-report/build.log", encoding="utf-8", errors="replace"):
-    if "declaration uses 'sorry'" in line:
-        m = re.search(r"([\w./-]+\.lean)", line)
-        f = m.group(1) if m else ""
-        if not any(f == d or f.startswith(d + "/") or ("/" + d + "/") in f for d in drafts):
-            print("sorry in build outside draft dirs: " + line.strip())
+    if "declaration uses 'sorry'" in line or "sorryAx" in line:
+        print("sorry in build: " + line.strip())
 PY
-if [ -s truth-gate-report/sorry.txt ]; then cat truth-gate-report/sorry.txt; phase sorry 1; else echo "build: no sorry outside draft dirs"; phase sorry 0; fi
+if [ -s truth-gate-report/sorry.txt ]; then cat truth-gate-report/sorry.txt; phase sorry 1; else echo "build: 0 sorry in the full build log"; phase sorry 0; fi
 
 echo "== 5/6 kernel audit of the lock (axioms, non-vacuity, transport)"
 lake env lean scripts/TruthGateAudit.lean > truth-gate-report/audit.txt 2>&1
