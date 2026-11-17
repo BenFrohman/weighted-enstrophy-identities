@@ -21,14 +21,13 @@ Fields `u, ω : T³ → ℝ³` (time-dependent), scalar weight `φ`, with
 ## Theorems
 
 **Identity (1)** (`WeightedEnstrophy.enstrophy_identity`, `Trig.enstrophy_identity_T3`).
-For `E = ½∫|ω|²` and `P = ∫ ωᵢωⱼ∂ⱼuᵢ`:
-`dE/dt = P − ν∫|∇ω|²`
-(formalized as `d/dt ∫|ω|² = 2P − 2ν∫|∇ω|²`). The transport term is
+For the enstrophy `‖ω‖²_{L²} = ∫|ω|²`:
+`d/dt (½‖ω‖²_{L²}) = ∫ ωᵢωⱼ∂ⱼuᵢ − ν∫|∇ω|²`
+(formalized as `d/dt ∫|ω|² = 2∫ωᵢωⱼ∂ⱼuᵢ − 2ν∫|∇ω|²`). The transport term is
 `Σₖ∂ₖ(uₖ|ω|²/2) − (div u)|ω|²/2` and integrates to zero.
 
 **Identity (2)** (`WeightedEnstrophy.weighted_identity`, `Trig.weighted_identity_T3`).
-For `Q = ∫|ω|⁴φ`:
-`dQ/dt = 4∫|ω|²φ ω·(ω·∇)u + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶`.
+`d/dt ∫|ω|⁴φ = 4∫|ω|²φ ω·(ω·∇)u + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶`.
 The two transport terms combine into `(u·∇)(|ω|⁴φ) = Σₖ∂ₖ(uₖ|ω|⁴φ) − (div u)|ω|⁴φ`, which
 integrates to zero. `stretch_eq` identifies `Σᵢⱼ ωᵢωⱼ∂ⱼuᵢ` with `ω·(ω·∇)u`.
 
@@ -64,12 +63,13 @@ Proved:
 - `Fourier.L2_strain_eq`: for `L²(T³)` fields whose Fourier coefficients are those of a
   divergence-free `u`, its vorticity and its strain `S = ½(∇u+∇uᵀ)`,
   `Σᵢⱼ‖Sᵢⱼ‖₂² = ½ Σᵢ‖ωᵢ‖₂²`. `Fourier.L2_strain_le` gives `‖S‖₂ ≤ ‖ω‖₂`.
-- `Lyapunov.dS_identity_smooth`: for `S = ½∫|ω|² − (κ/2)∫|ω|⁴φ` and smooth periodic solutions,
-  `S' = ∫ωᵢωⱼ∂ⱼuᵢ − ν∫|∇ω|² − (κ/2)(4∫|ω|²φ ωᵢωⱼ∂ⱼuᵢ + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶)`. This is an
-  exact identity. It contains no sup-norm `M(t)`.
-- `Lyapunov.le_integral_sq_of_deriv`: if `g(0)=0` and `g' = h ≤ M²` on `[0,t]` (`h, M`
-  continuous), then `g(t) ≤ ∫₀ᵗ M²`. Applied to `g(s) = φ(s,X(s))` along a particle path, this is
-  the bound `φ ≤ ∫₀ᵗ M²`. The chain rule along the path is not formalized.
+- `Lyapunov.dS_identity_smooth`: for smooth periodic solutions,
+  `d/dt (½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ) = ∫ωᵢωⱼ∂ⱼuᵢ − ν∫|∇ω|² − (κ/2)(4∫|ω|²φ ωᵢωⱼ∂ⱼuᵢ + 4ν∫|ω|²φ ω·Δω + ∫|ω|⁶)`. This is an
+  exact identity. It contains no `‖ω(t)‖_{L∞}`.
+- `Lyapunov.le_integral_sq_of_deriv`: if `g(0)=0` and `g'(s) = h(s) ≤ ‖ω(s)‖²_{L∞}` on `[0,t]`
+  (`h` and `s ↦ ‖ω(s)‖_{L∞}` continuous), then `g(t) ≤ ∫₀ᵗ ‖ω(s)‖²_{L∞} ds`. Applied to
+  `g(s) = φ(s,X(s))` along a particle path, this is the bound `φ ≤ ∫₀ᵗ ‖ω(s)‖²_{L∞} ds`. The chain
+  rule along the path is not formalized.
 - `Lyapunov.ode_bounded`: when `κ > 0`, every solution of `y' = y²(C − κy)` on `[0,T]` satisfies
   `min(y₀, C/κ, 0) ≤ y(t) ≤ max(y₀, C/κ, 0)`. This needs no assumption on `T`.
 
@@ -82,16 +82,17 @@ The `p = 2` case of `CalderonZygmundLp` (`WeightedEnstrophy/CalderonZygmund.lean
 - `Lyapunov.cz_hypotheses_nonvacuous`: `u = (sin 2πb, 0, 0)` satisfies the hypotheses and has
   `∂₁u₀ ≠ 0`.
 
-Stated as `Prop` definitions. They are not proved, and no theorem above uses them:
+Stated as `Prop` definitions and not proved (apart from the `p = 2` case above). No theorem
+assumes them as a hypothesis:
 - `CalderonZygmundLp p` for `p ≠ 2`: `∫|∂ⱼuᵢ|^p ≤ C∫|ω|^p` on smooth periodic divergence-free
   fields. This is the classical theorem for `1 < p < ∞` (`Lᵖ` boundedness of the Riesz
   transforms on `T³`), and only `p = 2` is formalized here. The `L∞` version is false and is not
   stated.
-- `WeightedToSupReduction κ ν`: a bound on `S` over `[0,T)` would force a bound on `sup|ω|²` over the same `[0,T)`, with a constant that may depend on `T`.
+- `WeightedToSupReduction κ ν`: a bound on `½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ` over `[0,T)` would force a bound on `‖ω‖²_{L∞}` over the same `[0,T)`, with a constant that may depend on `T`.
 - `PhiSupControl ν`: for each horizon `T`, a bound on `|φ|` over `[0,T)`; the bound may depend on `T`.
 
 The repository contains no regularity theorem for Navier–Stokes. The absorption step that uses
-an `L∞` Calderón–Zygmund bound, the reduction from `S` to `M`, and the bootstrap are not proved.
+an `L∞` Calderón–Zygmund bound, the reduction from `½‖ω‖²_{L²} − (κ/2)∫|ω|⁴φ` to `‖ω‖_{L∞}`, and the bootstrap are not proved.
 
 ## Layout
 

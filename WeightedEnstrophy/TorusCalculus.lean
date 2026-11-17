@@ -42,59 +42,59 @@ theorem integral01_deriv_periodic (g g' : ℝ → ℝ) (hg : ∀ x, HasDerivAt g
   rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun x _ => hg x)
     (hg'.intervalIntegrable 0 1), hp, sub_self]
 
-abbrev E := ℝ × ℝ × ℝ × ℝ
+abbrev SpaceTime := ℝ × ℝ × ℝ × ℝ
 
 /-- Innermost integral `∫₀¹ f(t,a,b,c) dc`. -/
-noncomputable def i3 (f : E → ℝ) (q : ℝ × ℝ × ℝ) : ℝ := ∫ c in (0:ℝ)..1, f (q.1, q.2.1, q.2.2, c)
+noncomputable def i3 (f : SpaceTime → ℝ) (q : ℝ × ℝ × ℝ) : ℝ := ∫ c in (0:ℝ)..1, f (q.1, q.2.1, q.2.2, c)
 /-- `∫₀¹∫₀¹ f(t,a,b,c) dc db`. -/
-noncomputable def i2 (f : E → ℝ) (q : ℝ × ℝ) : ℝ := ∫ b in (0:ℝ)..1, i3 f (q.1, q.2, b)
+noncomputable def i2 (f : SpaceTime → ℝ) (q : ℝ × ℝ) : ℝ := ∫ b in (0:ℝ)..1, i3 f (q.1, q.2, b)
 /-- `∫_{T³} f(t,·) = ∫₀¹∫₀¹∫₀¹ f(t,a,b,c) dc db da`. -/
-noncomputable def torusIntegral (f : E → ℝ) (t : ℝ) : ℝ := ∫ a in (0:ℝ)..1, i2 f (t, a)
+noncomputable def torusIntegral (f : SpaceTime → ℝ) (t : ℝ) : ℝ := ∫ a in (0:ℝ)..1, i2 f (t, a)
 
-lemma cont_i3 {f : E → ℝ} (hf : Continuous f) : Continuous (i3 f) := by
+lemma cont_i3 {f : SpaceTime → ℝ} (hf : Continuous f) : Continuous (i3 f) := by
   unfold i3
   exact intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
     (f := fun (q : ℝ × ℝ × ℝ) (c : ℝ) => f (q.1, q.2.1, q.2.2, c)) (by fun_prop) 0 1
 
-lemma cont_i2 {f : E → ℝ} (hf : Continuous f) : Continuous (i2 f) := by
+lemma cont_i2 {f : SpaceTime → ℝ} (hf : Continuous f) : Continuous (i2 f) := by
   unfold i2
   have := cont_i3 hf
   exact intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
     (f := fun (q : ℝ × ℝ) (b : ℝ) => i3 f (q.1, q.2, b)) (by fun_prop) 0 1
 
-lemma cont_torusIntegral {f : E → ℝ} (hf : Continuous f) : Continuous (torusIntegral f) := by
+lemma cont_torusIntegral {f : SpaceTime → ℝ} (hf : Continuous f) : Continuous (torusIntegral f) := by
   unfold torusIntegral
   have := cont_i2 hf
   exact intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
     (f := fun (t : ℝ) (a : ℝ) => i2 f (t, a)) (by fun_prop) 0 1
 
-lemma i3_add {f g : E → ℝ} (hf : Continuous f) (hg : Continuous g) (q) :
+lemma i3_add {f g : SpaceTime → ℝ} (hf : Continuous f) (hg : Continuous g) (q) :
     i3 (f + g) q = i3 f q + i3 g q := by
   unfold i3; simp only [Pi.add_apply]
   exact intervalIntegral.integral_add (by apply Continuous.intervalIntegrable; fun_prop)
     (by apply Continuous.intervalIntegrable; fun_prop)
 
-lemma i2_add {f g : E → ℝ} (hf : Continuous f) (hg : Continuous g) (q) :
+lemma i2_add {f g : SpaceTime → ℝ} (hf : Continuous f) (hg : Continuous g) (q) :
     i2 (f + g) q = i2 f q + i2 g q := by
   unfold i2; simp only [i3_add hf hg]
   have := cont_i3 hf; have := cont_i3 hg
   exact intervalIntegral.integral_add (by apply Continuous.intervalIntegrable; fun_prop)
     (by apply Continuous.intervalIntegrable; fun_prop)
 
-lemma torusIntegral_add {f g : E → ℝ} (hf : Continuous f) (hg : Continuous g) (t) :
+lemma torusIntegral_add {f g : SpaceTime → ℝ} (hf : Continuous f) (hg : Continuous g) (t) :
     torusIntegral (f + g) t = torusIntegral f t + torusIntegral g t := by
   unfold torusIntegral; simp only [i2_add hf hg]
   have := cont_i2 hf; have := cont_i2 hg
   exact intervalIntegral.integral_add (by apply Continuous.intervalIntegrable; fun_prop)
     (by apply Continuous.intervalIntegrable; fun_prop)
 
-lemma torusIntegral_smul (r : ℝ) (f : E → ℝ) (t) :
+lemma torusIntegral_smul (r : ℝ) (f : SpaceTime → ℝ) (t) :
     torusIntegral (r • f) t = r * torusIntegral f t := by
   simp [torusIntegral, i2, i3, intervalIntegral.integral_const_mul]
 
 /-- **Differentiation under the integral sign on `T³`**:
 `d/dt ∫_{T³} f(t,x) dx = ∫_{T³} ∂ₜf(t,x) dx` for `f`, `∂ₜf` jointly continuous. -/
-theorem hasDerivAt_torusIntegral {f f' : E → ℝ} (hf : Continuous f) (hf' : Continuous f')
+theorem hasDerivAt_torusIntegral {f f' : SpaceTime → ℝ} (hf : Continuous f) (hf' : Continuous f')
     (hd : ∀ t a b c, HasDerivAt (fun s => f (s, a, b, c)) (f' (t, a, b, c)) t) (t : ℝ) :
     HasDerivAt (torusIntegral f) (torusIntegral f' t) t := by
   have c3 := cont_i3 hf; have c3' := cont_i3 hf'
@@ -109,7 +109,7 @@ theorem hasDerivAt_torusIntegral {f f' : E → ℝ} (hf : Continuous f) (hf' : C
       (by fun_prop) (by fun_prop) (fun s a => h2 a s) t
 
 /-- **Torus divergence lemma, direction `c`**: `∫_{T³} ∂_c f = 0` for `f` 1-periodic in `c`. -/
-theorem torusIntegral_deriv_c {f f' : E → ℝ} (hf' : Continuous f')
+theorem torusIntegral_deriv_c {f f' : SpaceTime → ℝ} (hf' : Continuous f')
     (hd : ∀ t a b c, HasDerivAt (fun x => f (t, a, b, x)) (f' (t, a, b, c)) c)
     (hp : ∀ t a b c, f (t, a, b, c + 1) = f (t, a, b, c)) (t : ℝ) : torusIntegral f' t = 0 := by
   have h3 : ∀ q, i3 f' q = 0 := fun q => integral01_deriv_periodic _ _
@@ -117,7 +117,7 @@ theorem torusIntegral_deriv_c {f f' : E → ℝ} (hf' : Continuous f')
   simp [torusIntegral, i2, h3]
 
 /-- **Torus divergence lemma, direction `b`**. -/
-theorem torusIntegral_deriv_b {f f' : E → ℝ} (hf : Continuous f) (hf' : Continuous f')
+theorem torusIntegral_deriv_b {f f' : SpaceTime → ℝ} (hf : Continuous f) (hf' : Continuous f')
     (hd : ∀ t a b c, HasDerivAt (fun x => f (t, a, x, c)) (f' (t, a, b, c)) b)
     (hp : ∀ t a b c, f (t, a, b + 1, c) = f (t, a, b, c)) (t : ℝ) : torusIntegral f' t = 0 := by
   have c3 := cont_i3 hf; have c3' := cont_i3 hf'
@@ -130,7 +130,7 @@ theorem torusIntegral_deriv_b {f f' : E → ℝ} (hf : Continuous f) (hf' : Cont
   simp [torusIntegral, h2]
 
 /-- **Torus divergence lemma, direction `a`**. -/
-theorem torusIntegral_deriv_a {f f' : E → ℝ} (hf : Continuous f) (hf' : Continuous f')
+theorem torusIntegral_deriv_a {f f' : SpaceTime → ℝ} (hf : Continuous f) (hf' : Continuous f')
     (hd : ∀ t a b c, HasDerivAt (fun x => f (t, x, b, c)) (f' (t, a, b, c)) a)
     (hp : ∀ t a b c, f (t, a + 1, b, c) = f (t, a, b, c)) (t : ℝ) : torusIntegral f' t = 0 := by
   have c3 := cont_i3 hf; have c3' := cont_i3 hf'

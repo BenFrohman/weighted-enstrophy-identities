@@ -12,11 +12,11 @@
 \begin{abstract}
 We formalize in Lean~4 with Mathlib two exact balance identities from the a-posteriori Lyapunov
 functional approach to the 3-D incompressible Navier--Stokes vorticity equation on the torus:
-the enstrophy identity $\frac{dE}{dt}=P-\nu\int|\nabla\omega|^2$ and the weighted identity for
-$Q=\int|\omega|^4\phi$. Both are proved for every periodic differential algebra whose integral
+the enstrophy identity $\frac{d}{dt}\frac12\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}\omega_i\omega_j\partial_ju_i-\nu\|\nabla\omega\|_{L^2}^2$ and the weighted identity for
+$\int_{\mathbb{T}^3}|\omega|^4\phi$. Both are proved for every periodic differential algebra whose integral
 annihilates spatial derivatives and commutes with the time derivative, for trigonometric polynomials on $\mathbb{T}^3$, and for smooth ($C^\infty$) fields on
 $\mathbb{R}\times\mathbb{T}^3$. We also formalize the $L^2$ strain identity, the exact evolution of
-$S=E-\frac{\kappa}{2}Q$, a weight-along-paths bound, and boundedness of the comparison ODE. The development has $0$ \texttt{sorry} and uses only
+$\frac12\|\omega\|_{L^2}^2-\frac{\kappa}{2}\int_{\mathbb{T}^3}|\omega|^4\phi$, a weight-along-paths bound, and boundedness of the comparison ODE. The development has $0$ \texttt{sorry} and uses only
 the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}.
 \end{abstract}
 
@@ -25,8 +25,8 @@ the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}.
 Navier--Stokes equations control the kinetic energy but not the enstrophy in three dimensions;
 the vortex-stretching term can produce growth that is difficult to absorb. The approach studies
 the exact classical equations together with an auxiliary scalar field $\phi$ transported by
-$|\omega|^2$, and the two integrals $E=\tfrac12\int|\omega|^2$ and $Q=\int|\omega|^4\phi$. The first
-step is to compute $dE/dt$ and $dQ/dt$ exactly. Those two computations are what this paper
+$|\omega|^2$, and the two integrals $\tfrac12\|\omega\|_{L^2}^2=\tfrac12\int_{\mathbb{T}^3}|\omega|^2$ (half the enstrophy) and $\int_{\mathbb{T}^3}|\omega|^4\phi$. The first
+step is to compute $\frac{d}{dt}\tfrac12\|\omega\|_{L^2}^2$ and $\frac{d}{dt}\int_{\mathbb{T}^3}|\omega|^4\phi$ exactly. Those two computations are what this paper
 formalizes. They are identities: no inequality and no bound on the solution is involved.
 
 \section{Setting}
@@ -101,40 +101,39 @@ the third is $2\nu\,\partial_k(\omega_i\partial_k\omega_i)-2\nu|\nabla\omega|^2$
 \emph{Commentary.} The transport term vanishes by periodicity and $\nabla\cdot u=0$; the viscous
 term integrates by parts to $-\nu\int|\nabla\omega|^2$; the stretching term remains.
 \begin{theorem}[Identity (1), \texttt{enstrophy\_identity}, \texttt{enstrophy\_identity\_T3}]
-With $E=\frac12\int|\omega|^2$ and $P=\int\omega_i\omega_j\partial_ju_i$,
-\[\frac{dE}{dt}=P-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
+For the enstrophy $\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}|\omega|^2$,
+\[\frac{d}{dt}\,\frac12\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}\omega_i\omega_j\partial_ju_i-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
 (Formalized as $D_t\,I(|\omega|^2)=2\,I(\omega_i\omega_j\partial_ju_i)-2\nu\,I(|\nabla\omega|^2)$.)
 \end{theorem}
 \begin{proof}$D_tI(|\omega|^2)=I(\partial_t|\omega|^2)$; apply $I$ to the lemma; the divergence
 term has $I=0$.\end{proof}
 
 \section{Identity (2)}
-Write $s=|\omega|^2$, so $|\omega|^4\phi=s^2\phi$.
+Here $|\omega|^4\phi=(|\omega|^2)^2\phi$.
 \begin{lemma}[\texttt{dt\_weighted}]
 Under (\ref{vort}), (\ref{wt}):
-\[\partial_t(s^2\phi)=4s\phi\,\omega_i\omega_j\partial_ju_i+4\nu\,s\phi\,\omega\cdot\Delta\omega+s^3-u_k\partial_k(s^2\phi).\]
+\[\partial_t(|\omega|^4\phi)=4|\omega|^2\phi\,\omega_i\omega_j\partial_ju_i+4\nu\,|\omega|^2\phi\,\omega\cdot\Delta\omega+|\omega|^6-u_k\partial_k(|\omega|^4\phi).\]
 \end{lemma}
 \begin{proof}
-$\partial_t(s^2\phi)=2s\phi\,\partial_ts+s^2\partial_t\phi$. From the proof of (1),
-$\partial_ts=2\omega_i\omega_j\partial_ju_i+2\nu\,\omega\cdot\Delta\omega-u_k\partial_ks$, and by (\ref{wt})
-$\partial_t\phi=-u_k\partial_k\phi+s$. So
-\[\partial_t(s^2\phi)=4s\phi\,\omega_i\omega_j\partial_ju_i+4\nu s\phi\,\omega\cdot\Delta\omega
--\big(2s\phi\,u_k\partial_ks+s^2u_k\partial_k\phi\big)+s^3,\]
-and $2s\phi\,u_k\partial_ks+s^2u_k\partial_k\phi=u_k\partial_k(s^2\phi)$ by Leibniz.
+$\partial_t(|\omega|^4\phi)=2|\omega|^2\phi\,\partial_t|\omega|^2+|\omega|^4\partial_t\phi$. From the proof of (1),
+$\partial_t|\omega|^2=2\omega_i\omega_j\partial_ju_i+2\nu\,\omega\cdot\Delta\omega-u_k\partial_k|\omega|^2$, and by (\ref{wt})
+$\partial_t\phi=-u_k\partial_k\phi+|\omega|^2$. So
+\[\partial_t(|\omega|^4\phi)=4|\omega|^2\phi\,\omega_i\omega_j\partial_ju_i+4\nu|\omega|^2\phi\,\omega\cdot\Delta\omega
+-\big(2|\omega|^2\phi\,u_k\partial_k|\omega|^2+|\omega|^4u_k\partial_k\phi\big)+|\omega|^6,\]
+and $2|\omega|^2\phi\,u_k\partial_k|\omega|^2+|\omega|^4u_k\partial_k\phi=u_k\partial_k(|\omega|^4\phi)$ by Leibniz.
 \end{proof}
 \emph{Commentary (adapted from the author's paper).} The transport contributions cancel exactly.
 Using $\omega\cdot(u\cdot\nabla)\omega=\frac12(u\cdot\nabla)|\omega|^2$ they combine into the pure
 divergence $-\int u\cdot\nabla(\phi|\omega|^4)$, which vanishes on $\mathbb{T}^3$.
 \begin{lemma}[\texttt{dt\_weighted\_div}]
 Under (\ref{div}) as well,
-$\partial_t(s^2\phi)=4s\phi\,\omega_i\omega_j\partial_ju_i+4\nu s\phi\,\omega\cdot\Delta\omega+s^3-\partial_k(u_ks^2\phi)$.
+$\partial_t(|\omega|^4\phi)=4|\omega|^2\phi\,\omega_i\omega_j\partial_ju_i+4\nu|\omega|^2\phi\,\omega\cdot\Delta\omega+|\omega|^6-\partial_k(u_k|\omega|^4\phi)$.
 \end{lemma}
-\begin{proof}\texttt{adv\_eq} with $g=s^2\phi$ and (\ref{div}).\end{proof}
+\begin{proof}\texttt{adv\_eq} with $g=|\omega|^4\phi$ and (\ref{div}).\end{proof}
 \begin{theorem}[Identity (2), \texttt{weighted\_identity}, \texttt{weighted\_identity\_T3}]
-With $Q=\int|\omega|^4\phi$,
-\[\frac{dQ}{dt}=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
+\[\frac{d}{dt}\int_{\mathbb{T}^3}|\omega|^4\phi=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
 \end{theorem}
-\begin{proof}$D_tI(s^2\phi)=I(\partial_t(s^2\phi))$; apply $I$, the divergence has $I=0$, and use
+\begin{proof}$D_tI(|\omega|^4\phi)=I(\partial_t(|\omega|^4\phi))$; apply $I$, the divergence has $I=0$, and use
 \texttt{stretch\_eq}.\end{proof}
 
 \section{Smooth periodic fields}\label{smooth}
@@ -163,7 +162,7 @@ The smooth model is a periodic setting. Hence identities (1) and (2) hold for al
 $u,\omega,\phi\in A$ satisfying (\ref{div})--(\ref{wt}).
 \end{theorem}
 
-\section{Strain, the functional $S$, the weight, and the comparison ODE}
+\section{Strain, the functional $\frac12\|\omega\|_{L^2}^2-\frac{\kappa}{2}\int_{\mathbb{T}^3}|\omega|^4\phi$, the weight, and the comparison ODE}
 \begin{theorem}[\texttt{Fourier.L2\_strain\_eq}, \texttt{Fourier.L2\_strain\_le}]
 Take $u,\omega,S\in L^2(\mathbb{T}^3)$ whose Fourier coefficients are those of a divergence-free
 velocity, its curl, and $S=\frac12(\nabla u+\nabla u^T)$. Then
@@ -171,13 +170,14 @@ $\sum_{ij}\|S_{ij}\|_2^2=\frac12\sum_i\|\omega_i\|_2^2$, so $\|S\|_2\le\|\omega\
 \end{theorem}
 \begin{proof}Mode by mode, $\sum|\hat S_{ij}|^2=\frac12|\hat\omega|^2$ when $k\cdot\hat u=0$. Then apply Parseval.\end{proof}
 \begin{theorem}[\texttt{Lyapunov.dS\_identity\_smooth}]
-Let $S=\frac12\int|\omega|^2-\frac{\kappa}{2}\int|\omega|^4\phi$. For smooth periodic solutions of (\ref{div})--(\ref{wt}),
-\[S'=\int\omega_i\omega_j\partial_ju_i-\nu\int|\nabla\omega|^2-\tfrac{\kappa}{2}\Big(4\int|\omega|^2\phi\,\omega_i\omega_j\partial_ju_i+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6\Big).\]
+For smooth periodic solutions of (\ref{div})--(\ref{wt}),
+\[\frac{d}{dt}\Big(\frac12\|\omega\|_{L^2}^2-\frac{\kappa}{2}\int_{\mathbb{T}^3}|\omega|^4\phi\Big)=\int\omega_i\omega_j\partial_ju_i-\nu\int|\nabla\omega|^2-\tfrac{\kappa}{2}\Big(4\int|\omega|^2\phi\,\omega_i\omega_j\partial_ju_i+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6\Big).\]
 \end{theorem}
 \begin{theorem}[\texttt{Lyapunov.le\_integral\_sq\_of\_deriv}]
-Let $h,M$ be continuous, $g(0)=0$, and $g'=h\le M^2$ on $[0,t]$. Then $g(t)\le\int_0^tM^2$.
+Let $h$ and $s\mapsto\|\omega(s)\|_{L^\infty}$ be continuous, $g(0)=0$, and $g'(s)=h(s)\le\|\omega(s)\|_{L^\infty}^2$ on $[0,t]$. Then $g(t)\le\int_0^t\|\omega(s)\|_{L^\infty}^2\,ds$.
+(The Lean lemma is proved for every continuous real function in place of $s\mapsto\|\omega(s)\|_{L^\infty}$.)
 \end{theorem}
-Take $g(s)=\phi(s,X(s))$ along a particle path. Then $g'=|\omega|^2(s,X(s))$, so $\phi\le\int_0^tM^2$
+Take $g(s)=\phi(s,X(s))$ along a particle path. Then $g'=|\omega|^2(s,X(s))$, so $\phi\le\int_0^t\|\omega(s)\|_{L^\infty}^2\,ds$
 along paths. The chain rule step is not formalized.
 \begin{theorem}[\texttt{Lyapunov.ode\_bounded}]
 Let $\kappa>0$, and let $y'=y^2(C-\kappa y)$ on $[0,T]$. Then $\min(y_0,C/\kappa,0)\le y(t)\le\max(y_0,C/\kappa,0)$.
@@ -186,13 +186,13 @@ Let $\kappa>0$, and let $y'=y^2(C-\kappa y)$ on $[0,T]$. Then $\min(y_0,C/\kappa
 Then let $\varepsilon\to0$. The lower bound follows in the same way.\end{proof}
 \paragraph{Stated, not proved.} \texttt{CalderonZygmundLp}~$p$ is the bound
 $\int|\partial_ju_i|^p\le C\int|\omega|^p$; it is classical for $1<p<\infty$ and is not formalized here.
-\texttt{WeightedToSupReduction} says a bound on $S$ implies a bound on $\sup|\omega|^2$.
+\texttt{WeightedToSupReduction} says a bound on $\frac12\|\omega\|_{L^2}^2-\frac{\kappa}{2}\int_{\mathbb{T}^3}|\omega|^4\phi$ implies a bound on $\|\omega\|_{L^\infty}^2$.
 \texttt{PhiSupControl} is, for each horizon $T$, a bound on $|\phi|$ over $[0,T)$ that may depend on $T$. These are \texttt{Prop} definitions only, and
 no theorem uses them. The $L^\infty$ Calder\'on--Zygmund bound is false and is not stated.
 
 \section{Scope}
 Identities (1) and (2) and the results of the last section are proved as stated. The absorption
-step that uses an $L^\infty$ Calder\'on--Zygmund bound, the reduction from $S$ to $\sup|\omega|$, and the
+step that uses an $L^\infty$ Calder\'on--Zygmund bound, the reduction from $\frac12\|\omega\|_{L^2}^2-\frac{\kappa}{2}\int_{\mathbb{T}^3}|\omega|^4\phi$ to $\|\omega\|_{L^\infty}$, and the
 bootstrap are not proved. The paper makes no regularity claim.
 
 \section*{Verification}

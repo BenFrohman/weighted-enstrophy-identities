@@ -2,15 +2,12 @@
   "semantics_file": "WeightedEnstrophy/Semantics.lean",
   "semantics_module": "WeightedEnstrophy.Semantics",
   "paper_path": "paper/main.tex",
-  "paper_sha256": "c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754",
+  "paper_sha256": "725ff0ca81fd3ab1c843e4421665accf860369ee43cb44c2ba1e04679c6c5b2d",
   "main_theorems": [
     "WeightedEnstrophy.Smooth.enstrophy_identity_smooth",
     "WeightedEnstrophy.Smooth.weighted_identity_smooth"
   ],
   "lock_region_sha256": "cf9d3e2f10be6b2e92e00f4f07363bcb03cce0db9fdb84970b42002fac2d249d",
-  "draft_dirs": [
-    "WeightedEnstrophy/Draft"
-  ],
   "lean_roots": [
     "WeightedEnstrophy",
     "WeightedEnstrophy.lean"
@@ -27,6 +24,11 @@
     {
       "relocked_on": "2026-11-16",
       "relocked_as": "the paper's full smooth-model theorem: identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div), (vort), (wt) (`Smooth.enstrophy_identity_smooth` ∧ `Smooth.weighted_identity_smooth`)."
+    },
+    {
+      "paper_rehashed_on": "2026-11-17",
+      "reason": "Textbook-notation sweep requested by the author (Nov 16, 2026, 11:58 PM CT): paper/main.tex now writes the enstrophy as \\|\\omega\\|_{L^2}^2 and the other integrals explicitly instead of E, P, Q, S, M. The locked Lean region (formal_claim, paper_claim, intended_correspondence) is byte-identical; only the paper hash and the quoted text changed.",
+      "previous_paper_sha256": "c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754"
     }
   ]
 }

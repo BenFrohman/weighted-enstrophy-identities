@@ -30,7 +30,7 @@ makes (drift), whether by accident or by an injected instruction.
 4. `formal_claim` is exactly the statement of the repository's main theorem, and
    `paper_claim_holds` is the main theorem transported across the correspondence.
 5. Only `propext`, `Classical.choice` and `Quot.sound`. No `sorry`, `admit`, `native_decide` or
-   new `axiom` anywhere outside the draft directories in `TRUTH_GATE.lock`.
+   new `axiom` in any tracked `.lean` file. No file or directory is exempt.
 6. If the paper's English claim cannot be faithfully transcribed, or is not what Lean proves,
    the gate stays **red** and the mismatch is reported. Never patch over it: never weaken
    `paper_claim`, drop a hypothesis, or redefine it to match the formal side. If the
@@ -44,9 +44,9 @@ makes (drift), whether by accident or by an injected instruction.
 
 ## What `scripts/verify-lock.sh` checks mechanically
 
-* `lake build` succeeds, with no `sorry` warning outside the draft directories;
-* no `sorry` / `admit` / `native_decide` / `axiom` token outside the draft directories
-  (comments and strings excluded);
+* `lake build` succeeds, with no `sorry` warning anywhere in the full build log;
+* no `sorry` / `admit` / `native_decide` / `axiom` token in any tracked `.lean` file
+  (comments and strings are not code), and a lock that names any exempt path fails;
 * `Semantics.lean` has `PAPER_PATH`, `PAPER_SHA256`, `PAPER_SECTION` and a verbatim
   `PAPER_QUOTE`; the hash matches the paper file and the quote occurs in it; this file carries
   the same path, hash and quote;
@@ -84,7 +84,7 @@ a proof failure, though every kernel check was green.
 
 | Class | Raised by | What the verdict prints | What fixes it |
 |---|---|---|---|
-| **KERNEL/PROOF** | `lake build` fails; `sorry`/`admit`/`native_decide`/`axiom` outside the draft dirs; nonstandard axioms; a missing or ill-typed locked declaration; `intended_correspondence` fails to check | `KERNEL/PROOF FAILURE (a proof does not check)` and `This is a proof failure`, with the failing lines | Fix the proof. **This is the only class ever described as a proof failure.** |
+| **KERNEL/PROOF** | `lake build` fails; `sorry`/`admit`/`native_decide`/`axiom` in any tracked `.lean` file or anywhere in the build log; nonstandard axioms; a missing or ill-typed locked declaration; `intended_correspondence` fails to check | `KERNEL/PROOF FAILURE (a proof does not check)` and `This is a proof failure`, with the failing lines | Fix the proof. **This is the only class ever described as a proof failure.** |
 | **LOCK-FORM** | `paper_claim` reuses a repository Prop or definition; a vacuous alias of `formal_claim`; an `rfl` correspondence; a partial lock; a lock marked `"certifying": false`; an edited lock region; missing `PAPER_*` fields | `LOCK-FORM: lock wording/form problem, not a math failure`, each offending identifier with `file:line` in the Semantics file and the `file:line` of its repository declaration, then the independent transcription that is required | Rewrite the paper side from the paper's own definition, in the paper's symbols, and prove `intended_correspondence` with real reasoning. A new lock needs the author's sign-off. |
 | **PAPER-HASH** | the paper's sha256 differs from the lock | `PAPER-HASH: the paper changed after the lock (not a math failure)`, the commit whose bytes match the lock, every changed line, whether only copyright/license/attribution lines changed, and whether the locked quote is still verbatim | If the edit is intended, update `paper_sha256` in `TRUTH_GATE.lock`, the `PAPER_SHA256:` line in the Semantics file and the hash in this file, all in one commit. If the quote changed, that is a statement change and needs sign-off. |
 | **STALE-BASE** | a PR's merge ref was built on an older main, and main has since changed the lock, a Semantics file, a paper or a gate script | `STALE-BASE: branch is behind main's lock; update branch (not a math failure)` | The workflow re-merges the PR head onto the current main and judges that merge, which is what would actually land. It goes red only if that merge conflicts, and then it says to update the branch. |
@@ -140,7 +140,7 @@ python3 -m unittest discover -s scripts/tests -p 'test_truth_gate_classify.py' -
 ## The locked claim of this repository
 
 * Paper: `paper/main.tex`
-* sha256: `c23af493e94fb06598dc46b354bd692b977352aebcfd344bd701a2acaa0cd754`
+* sha256: `725ff0ca81fd3ab1c843e4421665accf860369ee43cb44c2ba1e04679c6c5b2d`
 * Section: The smooth-model theorem of Section "Smooth periodic fields" (`Smooth.enstrophy_identity_smooth`, `Smooth.weighted_identity_smooth`): identities (1) AND (2) for all u, ω, φ ∈ A satisfying (div)–(wt); Theorems "Identity (1)" and "Identity (2)"; Setting equations (div), (vort), (wt)
 * Main theorem(s): `WeightedEnstrophy.Smooth.enstrophy_identity_smooth`, `WeightedEnstrophy.Smooth.weighted_identity_smooth`
 * Lock file: `TRUTH_GATE.lock`; semantics: `WeightedEnstrophy/Semantics.lean`
@@ -149,12 +149,11 @@ Verbatim quote:
 
 ```
 \begin{theorem}[Identity (1), \texttt{enstrophy\_identity}, \texttt{enstrophy\_identity\_T3}]
-With $E=\frac12\int|\omega|^2$ and $P=\int\omega_i\omega_j\partial_ju_i$,
-\[\frac{dE}{dt}=P-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
+For the enstrophy $\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}|\omega|^2$,
+\[\frac{d}{dt}\,\frac12\|\omega\|_{L^2}^2=\int_{\mathbb{T}^3}\omega_i\omega_j\partial_ju_i-\nu\int_{\mathbb{T}^3}|\nabla\omega|^2 .\]
 
 \begin{theorem}[Identity (2), \texttt{weighted\_identity}, \texttt{weighted\_identity\_T3}]
-With $Q=\int|\omega|^4\phi$,
-\[\frac{dQ}{dt}=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
+\[\frac{d}{dt}\int_{\mathbb{T}^3}|\omega|^4\phi=4\int|\omega|^2\phi\,\omega\cdot(\omega\cdot\nabla)u+4\nu\int|\omega|^2\phi\,\omega\cdot\Delta\omega+\int|\omega|^6 .\]
 
 \begin{theorem}[\texttt{Smooth.int\_d}, \texttt{Smooth.int\_dt}, \texttt{Smooth.enstrophy\_identity\_smooth}, \texttt{Smooth.weighted\_identity\_smooth}]
 The smooth model is a periodic setting. Hence identities (1) and (2) hold for all

@@ -120,20 +120,20 @@ noncomputable def setting (D : Derivation ℂ R R) : PeriodicSetting ℂ (Field 
   int_dt := integral_dt D
 
 /-- **Identity (1) on trigonometric polynomials on `T³`.** -/
-theorem enstrophy_identity_T3 (D : Derivation ℂ R R) (ν : ℂ) (u w : Fin 3 → Field R)
-    (hu : div (setting D) u = 0) (hw : VorticityEq (setting D) ν u w) :
-    D (integral (vsq w)) = (2 : ℂ) • integral (stretch (setting D) u w)
-      - (2 * ν) • integral (gradSq (setting D) w) := by
-  exact WeightedEnstrophy.enstrophy_identity (setting D) ν u w hu hw
+theorem enstrophy_identity_T3 (D : Derivation ℂ R R) (ν : ℂ) (u ω : Fin 3 → Field R)
+    (hu : div (setting D) u = 0) (hw : VorticityEq (setting D) ν u ω) :
+    D (integral (vsq ω)) = (2 : ℂ) • integral (stretch (setting D) u ω)
+      - (2 * ν) • integral (gradSq (setting D) ω) := by
+  exact WeightedEnstrophy.enstrophy_identity (setting D) ν u ω hu hw
 
 /-- **Identity (2) on trigonometric polynomials on `T³`.** -/
-theorem weighted_identity_T3 (D : Derivation ℂ R R) (ν : ℂ) (u w : Fin 3 → Field R)
-    (φ : Field R) (hu : div (setting D) u = 0) (hw : VorticityEq (setting D) ν u w)
-    (hφ : WeightEq (setting D) u w φ) :
-    D (integral (vsq w * vsq w * φ)) =
-      (4 : ℂ) • integral (vsq w * φ * stretch (setting D) u w)
-      + (4 * ν) • integral (vsq w * φ * wLapW (setting D) w)
-      + integral (vsq w * vsq w * vsq w) := by
-  exact WeightedEnstrophy.weighted_identity (setting D) ν u w φ hu hw hφ
+theorem weighted_identity_T3 (D : Derivation ℂ R R) (ν : ℂ) (u ω : Fin 3 → Field R)
+    (φ : Field R) (hu : div (setting D) u = 0) (hw : VorticityEq (setting D) ν u ω)
+    (hφ : WeightEq (setting D) u ω φ) :
+    D (integral (vsq ω * vsq ω * φ)) =
+      (4 : ℂ) • integral (vsq ω * φ * stretch (setting D) u ω)
+      + (4 * ν) • integral (vsq ω * φ * wLapW (setting D) ω)
+      + integral (vsq ω * vsq ω * vsq ω) := by
+  exact WeightedEnstrophy.weighted_identity (setting D) ν u ω φ hu hw hφ
 
 end WeightedEnstrophy.Trig

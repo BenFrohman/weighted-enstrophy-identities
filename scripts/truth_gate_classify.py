@@ -105,7 +105,7 @@ DECL = re.compile(r"^[ \t]*(?:@\[[^\]]*\][ \t\n]*)?(?:(?:private|protected|nonco
 KEYWORDS = set("""fun λ let have show from by at with match if then else do return Type Sort Prop
                   forall exists in this where deriving open namespace end section variable""".split())
 
-def lean_files(paths, drafts=()):
+def lean_files(paths):
     out = []
     for r in paths:
         base = os.path.join(ROOT, r)
@@ -657,7 +657,7 @@ def cmd_report(args):
     if not kernel_phases:
         out.append("Kernel/proof checks: not run in this invocation.")
     elif kernel_ok:
-        out.append("Kernel/proof checks: PASS (lake build, no sorry outside draft dirs, kernel audit: standard axioms only).")
+        out.append("Kernel/proof checks: PASS (lake build, 0 sorry in the full build log, kernel audit: standard axioms only).")
     else:
         out.append("Kernel/proof checks: FAIL. This is a proof failure (see KERNEL/PROOF below).")
     labels = {

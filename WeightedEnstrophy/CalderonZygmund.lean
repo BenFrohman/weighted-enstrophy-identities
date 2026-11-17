@@ -26,7 +26,6 @@ Not proved here: `CalderonZygmundLp p` for `p ≠ 2`. That is the `Lᵖ` bounded
 Riesz transforms on `T³` (Calderón–Zygmund theory), which Mathlib does not provide.
 -/
 
-open scoped ContDiff
 open WeightedEnstrophy.Smooth WeightedEnstrophy.Torus WeightedEnstrophy.Lyapunov Finset
 
 namespace WeightedEnstrophy
@@ -34,22 +33,22 @@ namespace WeightedEnstrophy
 section Abstract
 
 variable {K A B : Type*} [CommRing K] [CommRing A] [Algebra K A] [AddCommGroup B] [Module K B]
-variable (S : PeriodicSetting K A B)
+variable (setting : PeriodicSetting K A B)
 
 /-- `|∇u|² = Σᵢⱼ (∂ⱼuᵢ)²`. -/
-def gradUSq (u : Fin 3 → A) : A := ∑ i, ∑ j, S.d j (u i) * S.d j (u i)
+def gradUSq (u : Fin 3 → A) : A := ∑ i, ∑ j, setting.d j (u i) * setting.d j (u i)
 
 /-- **Pointwise identity.** If the spatial derivatives commute and `ω = curl u`
 (`ωᵢ = ∂ᵢ₊₁uᵢ₊₂ − ∂ᵢ₊₂uᵢ₊₁`), then
 `|∇u|² = |ω|² + Σⱼ ∂ⱼ(Σᵢ uᵢ ∂ᵢuⱼ) − Σᵢ uᵢ ∂ᵢ(div u)`. -/
-theorem gradU_sq_eq (hcomm : ∀ i j f, S.d i (S.d j f) = S.d j (S.d i f)) (u w : Fin 3 → A)
-    (hw : ∀ i, w i = S.d (i + 1) (u (i + 2)) - S.d (i + 2) (u (i + 1))) :
-    gradUSq S u = vsq w + ∑ j, S.d j (∑ i, u i * S.d i (u j))
-      - ∑ i, u i * S.d i (div S u) := by
-  have h0 : w 0 = S.d 1 (u 2) - S.d 2 (u 1) := hw 0
-  have h1 : w 1 = S.d 2 (u 0) - S.d 0 (u 2) := hw 1
-  have h2 : w 2 = S.d 0 (u 1) - S.d 1 (u 0) := hw 2
-  have c : ∀ i j, S.d j (S.d i (u j)) = S.d i (S.d j (u j)) := fun i j => hcomm j i (u j)
+theorem gradU_sq_eq (hcomm : ∀ i j f, setting.d i (setting.d j f) = setting.d j (setting.d i f)) (u ω : Fin 3 → A)
+    (hw : ∀ i, ω i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) :
+    gradUSq setting u = vsq ω + ∑ j, setting.d j (∑ i, u i * setting.d i (u j))
+      - ∑ i, u i * setting.d i (div setting u) := by
+  have h0 : ω 0 = setting.d 1 (u 2) - setting.d 2 (u 1) := hw 0
+  have h1 : ω 1 = setting.d 2 (u 0) - setting.d 0 (u 2) := hw 1
+  have h2 : ω 2 = setting.d 0 (u 1) - setting.d 1 (u 0) := hw 2
+  have c : ∀ i j, setting.d j (setting.d i (u j)) = setting.d i (setting.d j (u j)) := fun i j => hcomm j i (u j)
   simp only [gradUSq, vsq, div, Fin.sum_univ_three, map_add, Derivation.leibniz,
     smul_eq_mul, h0, h1, h2]
   linear_combination
@@ -58,57 +57,58 @@ theorem gradU_sq_eq (hcomm : ∀ i j f, S.d i (S.d j f) = S.d j (S.d i f)) (u w 
 
 /-- **`∫|∇u|² = ∫|ω|²`** for divergence-free `u` with `ω = curl u`, in any periodic setting
 whose spatial derivatives commute. -/
-theorem int_gradU_sq_eq (hcomm : ∀ i j f, S.d i (S.d j f) = S.d j (S.d i f))
-    (u w : Fin 3 → A) (hu : div S u = 0)
-    (hw : ∀ i, w i = S.d (i + 1) (u (i + 2)) - S.d (i + 2) (u (i + 1))) :
-    S.I (gradUSq S u) = S.I (vsq w) := by
-  rw [gradU_sq_eq S hcomm u w hw, hu, map_sub, map_add, I_sum_d]
+theorem int_gradU_sq_eq (hcomm : ∀ i j f, setting.d i (setting.d j f) = setting.d j (setting.d i f))
+    (u ω : Fin 3 → A) (hu : div setting u = 0)
+    (hw : ∀ i, ω i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) :
+    setting.I (gradUSq setting u) = setting.I (vsq ω) := by
+  rw [gradU_sq_eq setting hcomm u ω hw, hu, map_sub, map_add, I_sum_d]
   simp
 
 end Abstract
 
 namespace Smooth
 
+open scoped ContDiff in
 /-- The spatial (indeed all) directional derivatives on `A` commute. -/
-theorem D_comm (v w : E) (f : A) : D v (D w f) = D w (D v f) := by
+theorem D_comm (v₁ v₂ : SpaceTime) (f : A) : D v₁ (D v₂ f) = D v₂ (D v₁ f) := by
   ext p
   simp only [D_apply]
   have hf := smooth f
-  have hd : ∀ v' : E, ∀ q, fderiv ℝ (fun q => fderiv ℝ (f : E → ℝ) q v') q
-      = (fderiv ℝ (fderiv ℝ (f : E → ℝ)) q).flip v' := by
-    intro v' q
-    have hc : DifferentiableAt ℝ (fderiv ℝ (f : E → ℝ)) q :=
+  have hd : ∀ v : SpaceTime, ∀ q, fderiv ℝ (fun q => fderiv ℝ (f : SpaceTime → ℝ) q v) q
+      = (fderiv ℝ (fderiv ℝ (f : SpaceTime → ℝ)) q).flip v := by
+    intro v q
+    have hc : DifferentiableAt ℝ (fderiv ℝ (f : SpaceTime → ℝ)) q :=
       ((hf.fderiv_right (m := ∞) (by simp)).differentiable (by simp)) q
-    rw [fderiv_clm_apply hc (differentiableAt_const v'), fderiv_const_apply,
+    rw [fderiv_clm_apply hc (differentiableAt_const v), fderiv_const_apply,
       ContinuousLinearMap.comp_zero, zero_add]
-  show fderiv ℝ (fun q => fderiv ℝ (f : E → ℝ) q w) p v
-    = fderiv ℝ (fun q => fderiv ℝ (f : E → ℝ) q v) p w
-  rw [hd w p, hd v p]
+  show fderiv ℝ (fun q => fderiv ℝ (f : SpaceTime → ℝ) q v₂) p v₁
+    = fderiv ℝ (fun q => fderiv ℝ (f : SpaceTime → ℝ) q v₁) p v₂
+  rw [hd v₂ p, hd v₁ p]
   simp only [ContinuousLinearMap.flip_apply]
   exact (hf.contDiffAt.isSymmSndFDerivAt
-    (by simpa using (WithTop.coe_le_coe.2 (le_top : (2 : ℕ∞) ≤ ⊤)))).eq v w
+    (by simpa using (WithTop.coe_le_coe.2 (le_top : (2 : ℕ∞) ≤ ⊤)))).eq v₁ v₂
 
 theorem d_comm (i j : Fin 3) (f : A) : setting.d i (setting.d j f) = setting.d j (setting.d i f) :=
   D_comm (e i) (e j) f
 
 /-- **`∫_{T³} |∇u|² = ∫_{T³} |ω|²`** for smooth periodic divergence-free `u`, `ω = curl u`. -/
-theorem int_gradU_sq_eq_smooth (u w : Fin 3 → A) (hu : div setting u = 0)
-    (hw : ∀ i, w i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) :
-    I (gradUSq setting u) = I (vsq w) :=
-  int_gradU_sq_eq setting d_comm u w hu hw
+theorem int_gradU_sq_eq_smooth (u ω : Fin 3 → A) (hu : div setting u = 0)
+    (hw : ∀ i, ω i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) :
+    I (gradUSq setting u) = I (vsq ω) :=
+  int_gradU_sq_eq setting d_comm u ω hu hw
 
 lemma coe_sum (s : Finset (Fin 3)) (f : Fin 3 → A) :
-    ((∑ i ∈ s, f i : A) : E → ℝ) = ∑ i ∈ s, (f i : E → ℝ) := by
+    ((∑ i ∈ s, f i : A) : SpaceTime → ℝ) = ∑ i ∈ s, (f i : SpaceTime → ℝ) := by
   induction s using Finset.induction_on with
   | empty => simp
   | insert a s ha ih => simp [Finset.sum_insert ha, ih]
 
-lemma coe_vsq (w : Fin 3 → A) (x : E) :
-    ((vsq w : A) : E → ℝ) x = ∑ i, (w i : E → ℝ) x ^ 2 := by
+lemma coe_vsq (ω : Fin 3 → A) (x : SpaceTime) :
+    ((vsq ω : A) : SpaceTime → ℝ) x = ∑ i, (ω i : SpaceTime → ℝ) x ^ 2 := by
   simp [vsq, Finset.sum_apply, sq]
 
-lemma coe_gradUSq (u : Fin 3 → A) (x : E) :
-    ((gradUSq setting u : A) : E → ℝ) x = ∑ i, ∑ j, (setting.d j (u i) : E → ℝ) x ^ 2 := by
+lemma coe_gradUSq (u : Fin 3 → A) (x : SpaceTime) :
+    ((gradUSq setting u : A) : SpaceTime → ℝ) x = ∑ i, ∑ j, (setting.d j (u i) : SpaceTime → ℝ) x ^ 2 := by
   simp [gradUSq, Finset.sum_apply, sq]
 
 end Smooth
@@ -116,7 +116,7 @@ end Smooth
 namespace Torus
 
 /-- Monotonicity of the torus integral for continuous integrands. -/
-theorem torusIntegral_mono {f g : E → ℝ} (hf : Continuous f) (hg : Continuous g)
+theorem torusIntegral_mono {f g : SpaceTime → ℝ} (hf : Continuous f) (hg : Continuous g)
     (h : ∀ x, f x ≤ g x) (t : ℝ) : torusIntegral f t ≤ torusIntegral g t := by
   unfold torusIntegral
   refine intervalIntegral.integral_mono_on zero_le_one
@@ -140,29 +140,29 @@ divergence-free velocity `u` on `ℝ × T³` with vorticity `ω = curl u`, and e
 `∫_{T³} |∂ⱼuᵢ(t,·)|² ≤ ∫_{T³} |ω(t,·)|²`. This is the `p = 2` case of the open step
 `CalderonZygmundLp p`; the cases `p ≠ 2` are not proved. -/
 theorem calderonZygmundLp_two : CalderonZygmundLp 2 := by
-  refine ⟨1, fun u w hu hw t i j => ?_⟩
-  have hL : (fun x => |((setting.d j (u i) : A) : E → ℝ) x| ^ (2 : ℝ))
-      = fun x => ((setting.d j (u i) : A) : E → ℝ) x ^ 2 := by
+  refine ⟨1, fun u ω hu hw t i j => ?_⟩
+  have hL : (fun x => |((setting.d j (u i) : A) : SpaceTime → ℝ) x| ^ (2 : ℝ))
+      = fun x => ((setting.d j (u i) : A) : SpaceTime → ℝ) x ^ 2 := by
     funext x; rw [Real.rpow_two, sq_abs]
-  have hR : (fun x => |((vsq w : A) : E → ℝ) x| ^ ((2 : ℝ) / 2))
-      = ((vsq w : A) : E → ℝ) := by
+  have hR : (fun x => |((vsq ω : A) : SpaceTime → ℝ) x| ^ ((2 : ℝ) / 2))
+      = ((vsq ω : A) : SpaceTime → ℝ) := by
     funext x
     rw [div_self two_ne_zero, Real.rpow_one, abs_of_nonneg]
     rw [coe_vsq]; positivity
   rw [hL, hR, one_mul]
-  have key := congrFun (int_gradU_sq_eq_smooth u w hu hw) t
+  have key := congrFun (int_gradU_sq_eq_smooth u ω hu hw) t
   change torusIntegral _ t = torusIntegral _ t at key
   rw [← key]
   apply torusIntegral_mono ((smooth _).continuous.pow 2) (smooth _).continuous
   intro x
   rw [coe_gradUSq]
-  have hj : ((setting.d j (u i) : A) : E → ℝ) x ^ 2 ≤
-      ∑ j', ((setting.d j' (u i) : A) : E → ℝ) x ^ 2 :=
-    Finset.single_le_sum (f := fun j' => ((setting.d j' (u i) : A) : E → ℝ) x ^ 2)
+  have hj : ((setting.d j (u i) : A) : SpaceTime → ℝ) x ^ 2 ≤
+      ∑ j', ((setting.d j' (u i) : A) : SpaceTime → ℝ) x ^ 2 :=
+    Finset.single_le_sum (f := fun j' => ((setting.d j' (u i) : A) : SpaceTime → ℝ) x ^ 2)
       (fun _ _ => sq_nonneg _) (Finset.mem_univ j)
-  have hi : ∑ j', ((setting.d j' (u i) : A) : E → ℝ) x ^ 2 ≤
-      ∑ i', ∑ j', ((setting.d j' (u i') : A) : E → ℝ) x ^ 2 :=
-    Finset.single_le_sum (f := fun i' => ∑ j', ((setting.d j' (u i') : A) : E → ℝ) x ^ 2)
+  have hi : ∑ j', ((setting.d j' (u i) : A) : SpaceTime → ℝ) x ^ 2 ≤
+      ∑ i', ∑ j', ((setting.d j' (u i') : A) : SpaceTime → ℝ) x ^ 2 :=
+    Finset.single_le_sum (f := fun i' => ∑ j', ((setting.d j' (u i') : A) : SpaceTime → ℝ) x ^ 2)
       (fun _ _ => Finset.sum_nonneg fun _ _ => sq_nonneg _) (Finset.mem_univ i)
   exact hj.trans hi
 
@@ -175,7 +175,7 @@ noncomputable def sinB : A :=
       fin_cases k <;> simp [e]
       rw [mul_add, mul_one, Real.sin_add_two_pi]⟩⟩
 
-lemma sinB_line (p : E) (v : E) (x : ℝ) :
+lemma sinB_line (p : SpaceTime) (v : SpaceTime) (x : ℝ) :
     HasDerivAt (fun s => Real.sin (2 * Real.pi * (p + s • v).2.2.1))
       (Real.cos (2 * Real.pi * (p + x • v).2.2.1) * (2 * Real.pi * v.2.2.1)) x := by
   have : HasDerivAt (fun s => 2 * Real.pi * (p + s • v).2.2.1) (2 * Real.pi * v.2.2.1) x := by
@@ -183,8 +183,8 @@ lemma sinB_line (p : E) (v : E) (x : ℝ) :
     simpa using ((hasDerivAt_id x).mul_const v.2.2.1).const_add p.2.2.1 |>.const_mul (2 * Real.pi)
   exact (Real.hasDerivAt_sin _).comp x this
 
-lemma fderiv_sinB (p v : E) :
-    fderiv ℝ (sinB : E → ℝ) p v = Real.cos (2 * Real.pi * p.2.2.1) * (2 * Real.pi * v.2.2.1) := by
+lemma fderiv_sinB (p v : SpaceTime) :
+    fderiv ℝ (sinB : SpaceTime → ℝ) p v = Real.cos (2 * Real.pi * p.2.2.1) * (2 * Real.pi * v.2.2.1) := by
   have h1 := line_deriv' sinB p v 0 (fun s => p + s • v) (fun _ => rfl)
   have h2 := sinB_line p v 0
   simp only [zero_smul, add_zero] at h1 h2
@@ -193,8 +193,8 @@ lemma fderiv_sinB (p v : E) :
 /-- **Non-vacuity.** The hypotheses of `CalderonZygmundLp` are satisfied by the smooth periodic
 field `u = (sin 2πb, 0, 0)`, `ω = curl u`, which has `∂₁u₀ ≠ 0`. -/
 theorem cz_hypotheses_nonvacuous :
-    ∃ u w : Fin 3 → A, div setting u = 0 ∧
-      (∀ i, w i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) ∧
+    ∃ u ω : Fin 3 → A, div setting u = 0 ∧
+      (∀ i, ω i = setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1))) ∧
       setting.d 1 (u 0) ≠ 0 := by
   let u : Fin 3 → A := ![sinB, 0, 0]
   refine ⟨u, fun i => setting.d (i + 1) (u (i + 2)) - setting.d (i + 2) (u (i + 1)),
@@ -202,12 +202,12 @@ theorem cz_hypotheses_nonvacuous :
   · ext p
     simp only [div, Fin.sum_univ_three, u, Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, map_zero, add_zero]
-    show fderiv ℝ (sinB : E → ℝ) p (e 0) = 0
+    show fderiv ℝ (sinB : SpaceTime → ℝ) p (e 0) = 0
     rw [fderiv_sinB]; simp [e]
   · intro h
-    have := congrArg (fun f : A => (f : E → ℝ) 0) h
+    have := congrArg (fun f : A => (f : SpaceTime → ℝ) 0) h
     simp only [u, Matrix.cons_val_zero] at this
-    change fderiv ℝ (sinB : E → ℝ) 0 (e 1) = ((0 : A) : E → ℝ) 0 at this
+    change fderiv ℝ (sinB : SpaceTime → ℝ) 0 (e 1) = ((0 : A) : SpaceTime → ℝ) 0 at this
     rw [fderiv_sinB] at this
     simp [e, Real.pi_ne_zero] at this
 

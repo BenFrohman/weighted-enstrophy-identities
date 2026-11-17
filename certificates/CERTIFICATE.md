@@ -5,13 +5,16 @@ This file records a reproducible machine check of the Lean 4 development in this
 | Item | Value |
 |---|---|
 | Repository | https://github.com/BenFrohman/weighted-enstrophy-identities |
-| Certified commit | `57ab6dd512bfd17084d57ae3d505b6c7d0d7ce0c` (branch `chore/kernel-certificate`) |
-| Lean sources | identical to `main` at `e7fd027d71229e3e479d2845ece3d5ece6f29392`: no `.lean`, lakefile, manifest or toolchain file differs; the certified commit only adds CI and the scripts in `certificates/tools/` |
+| Certified commit | `d573271942483ddb756063829a839eb55a6b0e99` (branch `fix/textbook-notation-20261116`) |
+| Lean sources | `.lean`, lakefile, manifest and toolchain files exactly as at the certified commit; the commit that adds this certificate changes only files under `certificates/` |
+| lake | Lake version 5.0.0-src+714601b (Lean version 4.30.0-rc1) |
+| elan | installed in CI by `elan-init.sh` from leanprover/elan (master), toolchain taken from `lean-toolchain`; the workflow does not print the elan version |
+| lake-manifest.json sha256 | `c555d6ea977bf91b2e18686450cdd4d22cb5936fa63e782319b27f152c2b0560` |
 | lean-toolchain | `leanprover/lean4:v4.30.0-rc1` |
 | Lean | Lean (version 4.30.0-rc1, x86_64-unknown-linux-gnu, commit 714601baf118066cbf3f282361339c6d06665b2a, Release) |
 | Mathlib | `0c154d67103f74be3a0f2c509f72ccbf5be9f2a7` (lake-manifest.json; inputRev `v4.30.0-rc1`) |
-| Date (UTC) | 2026-11-16T19:18:18Z |
-| CI run | https://github.com/BenFrohman/weighted-enstrophy-identities/actions/runs/43937829839 |
+| Date (UTC) | 2026-11-17T06:50:03Z |
+| CI run | https://github.com/BenFrohman/weighted-enstrophy-identities/actions/runs/44034090289 |
 | `lake build` | `Build completed successfully (8272 jobs).` ([build.log](build.log)) |
 | sorry / admit / native_decide / axiom scan | `RESULT: 0 hits` ([sorry-scan.txt](sorry-scan.txt)) |
 | `#print axioms` | `AUDIT PASS: 101 theorems in 7 modules depend only on propext, Classical.choice, Quot.sound (or on no axioms)` ([axioms.txt](axioms.txt)) |
@@ -31,5 +34,5 @@ The axiom result says the listed theorems are proved from Lean's standard axioms
 ## Rebuild
 
 ```
-git clone https://github.com/BenFrohman/weighted-enstrophy-identities.git && cd weighted-enstrophy-identities && git checkout 57ab6dd512bfd17084d57ae3d505b6c7d0d7ce0c && lake exe cache get && lake build && python3 certificates/tools/sorry_scan.py && python3 certificates/tools/gen_audit.py /tmp/KernelCertificateAudit.lean /tmp/modules.txt && lake env lean /tmp/KernelCertificateAudit.lean > /tmp/axioms.raw.txt && python3 certificates/tools/check_audit.py /tmp/axioms.raw.txt | tail -n 1
+git clone https://github.com/BenFrohman/weighted-enstrophy-identities.git && cd weighted-enstrophy-identities && git checkout d573271942483ddb756063829a839eb55a6b0e99 && lake exe cache get && lake build && python3 certificates/tools/sorry_scan.py && python3 certificates/tools/gen_audit.py /tmp/KernelCertificateAudit.lean /tmp/modules.txt && lake env lean /tmp/KernelCertificateAudit.lean > /tmp/axioms.raw.txt && python3 certificates/tools/check_audit.py /tmp/axioms.raw.txt | tail -n 1
 ```
